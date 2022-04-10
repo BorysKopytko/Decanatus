@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9p96V2CWyMZtFA9Zs22u91TjGvwybRnlIBDIi5zMFWm2nSN8WbV+VZ3iKD442/GcREiJ99ZrUiisiSuYFQoIWA==",
+  "dgSpecHash": "XGe8Z1RbLYj3WVpq/qyZ+xQMqXAc8IufHveyF7FjPnv43Tx6jTWO0NSW/tW+2fBIm1IT5Ssg8x2W9ZW1Q1lU3g==",
   "success": true,
   "projectFilePath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,7 @@
     "C:\\Users\\kopyt\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\kopyt\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",

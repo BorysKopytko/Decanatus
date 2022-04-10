@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cnqRUoNScwaiQLZ3akxWV+ImIQbJnAzxD+XS7ypyTlXZWsinM2wuGAKd5sAzzFkR1LDXvv+vgjgY1bEGA6Rfhg==",
+  "dgSpecHash": "nl5vFa6Z9txIvcAL4MLYRtjLD86IreU/AgjpfE3qxAIQ1mgpxaVYRSZBjdCpUTl2jB9vNcQ2bhy/PSgYuU4bQA==",
   "success": true,
   "projectFilePath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Logging\\Decanatus.Logging.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\kopyt\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
+  ],
   "logs": []
 }

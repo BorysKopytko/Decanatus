@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/g4LWh7h8+FNmLAT2XVrgFm08XMN+c4K+zdVzDVNMP1DNyAKkgEqAAnvzdg6ukegd/TBZ7W9aLkSBF2Sgzv4QA==",
+  "dgSpecHash": "NV2jYo/TsHUvA666dLbAFVmPqwH35a2pFf1GcCsv2FePRabmCDVRm1eiWdXsZEw4RNzGBg1RoUfvIv2fUUGDYA==",
   "success": true,
   "projectFilePath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Testing\\Decanatus.Testing.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,7 @@
     "C:\\Users\\kopyt\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\kopyt\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\kopyt\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
