@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Decanatus.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220410181440_AddEntities")]
-    partial class AddEntities
+    [Migration("20220412161605_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,44 +24,199 @@ namespace Decanatus.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Decanatus.DAL.Models.Audience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Audiences");
+                });
+
             modelBuilder.Entity("Decanatus.DAL.Models.Faculty", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasKey("Name");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Faculties");
                 });
 
+            modelBuilder.Entity("Decanatus.DAL.Models.Grade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasMaxLength(3)
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GradeType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxAmount")
+                        .HasMaxLength(3)
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Grades");
+                });
+
             modelBuilder.Entity("Decanatus.DAL.Models.Group", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SpecialityName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Name");
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SpecialityName");
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecialityId");
 
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Decanatus.DAL.Models.Lecturer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAdress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobilePhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lecturers");
+                });
+
+            modelBuilder.Entity("Decanatus.DAL.Models.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AudienceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonWeekType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudienceId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Lessons");
+                });
+
             modelBuilder.Entity("Decanatus.DAL.Models.Speciality", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FacultyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
-                    b.HasIndex("FacultyName");
+                    b.HasIndex("FacultyId");
 
                     b.ToTable("Specialities");
                 });
@@ -91,9 +246,8 @@ namespace Decanatus.Web.Migrations
                     b.Property<DateTime>("GraduateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GroupName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -117,11 +271,61 @@ namespace Decanatus.Web.Migrations
                     b.Property<int>("Sex")
                         .HasColumnType("int");
 
+                    b.Property<int>("StudyingForm")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupName");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("Decanatus.DAL.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("GroupLesson", b =>
+                {
+                    b.Property<int>("GroupsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupsId", "LessonsId");
+
+                    b.HasIndex("LessonsId");
+
+                    b.ToTable("GroupLesson");
+                });
+
+            modelBuilder.Entity("LecturerLesson", b =>
+                {
+                    b.Property<int>("LecturersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LecturersId", "LessonsId");
+
+                    b.HasIndex("LessonsId");
+
+                    b.ToTable("LecturerLesson");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -326,22 +530,60 @@ namespace Decanatus.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Decanatus.DAL.Models.Grade", b =>
+                {
+                    b.HasOne("Decanatus.DAL.Models.Student", "Student")
+                        .WithMany("Grades")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Decanatus.DAL.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("Decanatus.DAL.Models.Group", b =>
                 {
                     b.HasOne("Decanatus.DAL.Models.Speciality", "Speciality")
                         .WithMany("Groups")
-                        .HasForeignKey("SpecialityName")
+                        .HasForeignKey("SpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Speciality");
                 });
 
+            modelBuilder.Entity("Decanatus.DAL.Models.Lesson", b =>
+                {
+                    b.HasOne("Decanatus.DAL.Models.Audience", "Audience")
+                        .WithMany()
+                        .HasForeignKey("AudienceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Decanatus.DAL.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Audience");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("Decanatus.DAL.Models.Speciality", b =>
                 {
                     b.HasOne("Decanatus.DAL.Models.Faculty", "Faculty")
                         .WithMany("Specialities")
-                        .HasForeignKey("FacultyName")
+                        .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -352,11 +594,41 @@ namespace Decanatus.Web.Migrations
                 {
                     b.HasOne("Decanatus.DAL.Models.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupName")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("GroupLesson", b =>
+                {
+                    b.HasOne("Decanatus.DAL.Models.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Decanatus.DAL.Models.Lesson", null)
+                        .WithMany()
+                        .HasForeignKey("LessonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LecturerLesson", b =>
+                {
+                    b.HasOne("Decanatus.DAL.Models.Lecturer", null)
+                        .WithMany()
+                        .HasForeignKey("LecturersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Decanatus.DAL.Models.Lesson", null)
+                        .WithMany()
+                        .HasForeignKey("LessonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,6 +695,11 @@ namespace Decanatus.Web.Migrations
             modelBuilder.Entity("Decanatus.DAL.Models.Speciality", b =>
                 {
                     b.Navigation("Groups");
+                });
+
+            modelBuilder.Entity("Decanatus.DAL.Models.Student", b =>
+                {
+                    b.Navigation("Grades");
                 });
 #pragma warning restore 612, 618
         }

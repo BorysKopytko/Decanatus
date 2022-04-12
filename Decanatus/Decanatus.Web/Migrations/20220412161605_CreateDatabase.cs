@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Decanatus.Web.Migrations
 {
-    public partial class AddEntities : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,14 +49,62 @@ namespace Decanatus.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Faculties",
+                name: "Audiences",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Faculties", x => x.Name);
+                    table.PrimaryKey("PK_Audiences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faculties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faculties", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lecturers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<int>(type: "int", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EmailAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MobilePhoneNumber = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lecturers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,17 +217,49 @@ namespace Decanatus.Web.Migrations
                 name: "Specialities",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FacultyName = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacultyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialities", x => x.Name);
+                    table.PrimaryKey("PK_Specialities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Specialities_Faculties_FacultyName",
-                        column: x => x.FacultyName,
+                        name: "FK_Specialities_Faculties_FacultyId",
+                        column: x => x.FacultyId,
                         principalTable: "Faculties",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lessons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonType = table.Column<int>(type: "int", nullable: false),
+                    LessonWeekType = table.Column<int>(type: "int", nullable: false),
+                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
+                    LessonNumber = table.Column<int>(type: "int", nullable: false),
+                    AudienceId = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Audiences_AudienceId",
+                        column: x => x.AudienceId,
+                        principalTable: "Audiences",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -187,17 +267,67 @@ namespace Decanatus.Web.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SpecialityName = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpecialityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Name);
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Groups_Specialities_SpecialityName",
-                        column: x => x.SpecialityName,
+                        name: "FK_Groups_Specialities_SpecialityId",
+                        column: x => x.SpecialityId,
                         principalTable: "Specialities",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LecturerLesson",
+                columns: table => new
+                {
+                    LecturersId = table.Column<int>(type: "int", nullable: false),
+                    LessonsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LecturerLesson", x => new { x.LecturersId, x.LessonsId });
+                    table.ForeignKey(
+                        name: "FK_LecturerLesson_Lecturers_LecturersId",
+                        column: x => x.LecturersId,
+                        principalTable: "Lecturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LecturerLesson_Lessons_LessonsId",
+                        column: x => x.LessonsId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupLesson",
+                columns: table => new
+                {
+                    GroupsId = table.Column<int>(type: "int", nullable: false),
+                    LessonsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupLesson", x => new { x.GroupsId, x.LessonsId });
+                    table.ForeignKey(
+                        name: "FK_GroupLesson_Groups_GroupsId",
+                        column: x => x.GroupsId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupLesson_Lessons_LessonsId",
+                        column: x => x.LessonsId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -211,7 +341,8 @@ namespace Decanatus.Web.Migrations
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GraduateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GroupName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    GroupId = table.Column<int>(type: "int", nullable: false),
+                    StudyingForm = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -224,10 +355,41 @@ namespace Decanatus.Web.Migrations
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Groups_GroupName",
-                        column: x => x.GroupName,
+                        name: "FK_Students_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Grades",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<int>(type: "int", maxLength: 3, nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    GradeType = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MaxAmount = table.Column<int>(type: "int", maxLength: 3, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Grades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Grades_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Grades_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -271,19 +433,49 @@ namespace Decanatus.Web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groups_SpecialityName",
+                name: "IX_Grades_StudentId",
+                table: "Grades",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_SubjectId",
+                table: "Grades",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupLesson_LessonsId",
+                table: "GroupLesson",
+                column: "LessonsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_SpecialityId",
                 table: "Groups",
-                column: "SpecialityName");
+                column: "SpecialityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Specialities_FacultyName",
+                name: "IX_LecturerLesson_LessonsId",
+                table: "LecturerLesson",
+                column: "LessonsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lessons_AudienceId",
+                table: "Lessons",
+                column: "AudienceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lessons_SubjectId",
+                table: "Lessons",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Specialities_FacultyId",
                 table: "Specialities",
-                column: "FacultyName");
+                column: "FacultyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_GroupName",
+                name: "IX_Students_GroupId",
                 table: "Students",
-                column: "GroupName");
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -304,7 +496,13 @@ namespace Decanatus.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "GroupLesson");
+
+            migrationBuilder.DropTable(
+                name: "LecturerLesson");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -313,7 +511,22 @@ namespace Decanatus.Web.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Lecturers");
+
+            migrationBuilder.DropTable(
+                name: "Lessons");
+
+            migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "Audiences");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "Specialities");

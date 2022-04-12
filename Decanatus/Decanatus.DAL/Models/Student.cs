@@ -24,12 +24,15 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Дата закінчення навчання")]
         public DateTime GraduateDate { get; set; }
 
-        [Required]
-        [Display(Name = "Група")]
-        
+        public int GroupId { get; set; }
         public Group Group { get; set; }
 
+        [Required]
+        [EnumDataType(typeof(StudyingForm))]
+        [Display(Name = "Форма навчання")]
+        public StudyingForm StudyingForm { get; set; }
 
+        public ICollection<Grade> Grades { get; set; }
     }
 
     public enum StudyingForm
