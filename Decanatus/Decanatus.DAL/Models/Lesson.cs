@@ -12,7 +12,6 @@ namespace Decanatus.DAL.Models
         [EnumDataType(typeof(LessonType))]
         public LessonType LessonType { get; set; }
 
-        [Required]
         public ICollection<Group> Groups { get; set; }
 
         [Required]

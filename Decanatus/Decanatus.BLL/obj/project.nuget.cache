@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hsS3V+k8U8vI48Dj1ksMP6lXl1WXWwKgZvn72w810AKv7p6Iu7EE46kI7jIbFPl1v03wvy9Jh1IJBPsQ1wJRTA==",
+  "dgSpecHash": "M1mnXcfyve6KbfzuAkLEp4hHRA9A/72APvDoZo0E+tOWmzgaeW3q12pW2cLStzue/GsptSq7dPVV19PPojp+ug==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.BLL\\Decanatus.BLL.csproj",
+  "projectFilePath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.BLL\\Decanatus.BLL.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kopyt\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
+    "C:\\Users\\swatik\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
   ],
   "logs": []
 }

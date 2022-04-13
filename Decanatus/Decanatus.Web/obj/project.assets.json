@@ -2315,19 +2315,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kopyt\\.nuget\\packages\\": {}
+    "C:\\Users\\swatik\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
+      "projectUniqueName": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
       "projectName": "Decanatus.Web",
-      "projectPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
-      "packagesPath": "C:\\Users\\kopyt\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\obj\\",
+      "projectPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
+      "packagesPath": "C:\\Users\\swatik\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\kopyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\swatik\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2341,8 +2341,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
-              "projectPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj"
+            "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
+              "projectPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj"
             }
           }
         }
@@ -2402,7 +2402,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
