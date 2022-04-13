@@ -1,0 +1,12 @@
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\bin\Debug\net6.0\Decanatus.BLL.deps.json
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\bin\Debug\net6.0\Decanatus.BLL.dll
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\bin\Debug\net6.0\Decanatus.BLL.pdb
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.csproj.AssemblyReference.cache
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.AssemblyInfoInputs.cache
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.AssemblyInfo.cs
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.csproj.CoreCompileInputs.cache
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.dll
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\refint\Decanatus.BLL.dll
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\Decanatus.BLL.pdb
+C:\Users\kopyt\Repositories\University\Decanatus\Decanatus\Decanatus.BLL\obj\Debug\net6.0\ref\Decanatus.BLL.dll

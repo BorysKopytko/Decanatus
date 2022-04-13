@@ -1,21 +1,26 @@
 ﻿using Decanatus.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Decanatus.DAL.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var students = _dbContext.Students.Include(x=>x.Group);
+            return View(students);
         }
 
         public IActionResult Privacy()

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj": {}
+    "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
+    "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj",
+        "projectUniqueName": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj",
         "projectName": "Decanatus.DAL",
-        "projectPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj",
-        "packagesPath": "C:\\Users\\kopyt\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\obj\\",
+        "projectPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj",
+        "packagesPath": "C:\\Users\\swatik\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kopyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\swatik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.3, )"
@@ -47,6 +51,12 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.3, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
             }
           },
           "imports": [
@@ -64,21 +74,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj": {
+    "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
+        "projectUniqueName": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
         "projectName": "Decanatus.Web",
-        "projectPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
-        "packagesPath": "C:\\Users\\kopyt\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.Web\\obj\\",
+        "projectPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\Decanatus.Web.csproj",
+        "packagesPath": "C:\\Users\\swatik\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kopyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\swatik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -92,8 +102,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
-                "projectPath": "C:\\Users\\kopyt\\Repositories\\University\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj"
+              "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj": {
+                "projectPath": "D:\\Projects\\C#\\ASP\\decanatus\\Decanatus\\Decanatus\\Decanatus.DAL\\Decanatus.DAL.csproj"
               }
             }
           }
@@ -127,6 +137,12 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[6.0.3, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
             }
           },
           "imports": [
@@ -147,7 +163,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
