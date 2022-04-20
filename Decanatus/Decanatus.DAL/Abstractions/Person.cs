@@ -2,11 +2,8 @@
 
 namespace Decanatus.DAL.Abstractions
 {
-    public abstract class Person
+    public abstract class Person : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Ім'я")]

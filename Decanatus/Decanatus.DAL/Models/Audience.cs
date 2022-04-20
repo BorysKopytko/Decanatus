@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Audience
+    public class Audience : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [DataType(DataType.Text)]
         public string Name { get; set; }

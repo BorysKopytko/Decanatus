@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Decanatus.DAL.Models
 {
-    public class Lecturer: Person
+    public class Lecturer : Person
     {
 
         [Required]

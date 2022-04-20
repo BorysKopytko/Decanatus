@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Lesson
+    public class Lesson : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [Display(Name = "Тип заняття")]
         [EnumDataType(typeof(LessonType))]

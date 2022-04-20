@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Grade
+    public class Grade : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [Range(0,100)]
         [MaxLength(3)]

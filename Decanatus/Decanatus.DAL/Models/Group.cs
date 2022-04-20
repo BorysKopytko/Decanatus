@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Group
+    public class Group : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Display(Name = "Назва групи")]
         [DataType(DataType.Text)]
         public string Name { get; set; }

@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Speciality
-    {
-        [Key]
-        public int Id { get; set; }
-
-        
+    public class Speciality : Entity
+    {   
         [Display(Name = "Спеціальність")]
         [DataType(DataType.Text)]
         public string Name { get; set; }
