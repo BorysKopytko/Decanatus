@@ -1,54 +1,7 @@
-﻿@model IEnumerable<Decanatus.DAL.Models.Student>
-
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Головна сторінка";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <td>FirstName</td>
-                <td>LastName</td>
-                <td>MiddleName</td>
-                <td>MobilePhoneNumber</td>
-                <td>EmailAdress</td>
-                <td>Group.Name</td>
-                <td>GraduateDate</td>
-                <td>GradebookNumber</td>
-                <td>OrderDate</td>
-                <td>OrderNumber</td>
-                <td>Sex</td>
-                <td>BirthDate</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model)
-            {
-
-                <tr>
-                    <td>@obj.FirstName</td>
-                    <td>@obj.LastName</td>
-                    <td>@obj.MiddleName</td>
-                    <td>@obj.MobilePhoneNumber</td>
-                    <td>@obj.EmailAdress</td>
-                    <td>@obj.Group.Name</td>
-                    <td>@obj.GraduateDate</td>
-                    <td>@obj.GradebookNumber</td>
-                    <td>@obj.OrderDate</td>
-                    <td>@obj.OrderNumber</td>
-                    <td>@obj.Sex</td>
-                    <td>@obj.BirthDate</td>
-
-
-                </tr>
-            }
-
-
-        </tbody>
-    </table>
-
+    
 </div>
