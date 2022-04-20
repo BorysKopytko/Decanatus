@@ -27,4 +27,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Decanatus.BLL\Decanatus.BLL.csproj" />
+    <ProjectReference Include="..\Decanatus.DAL\Decanatus.DAL.csproj" />
+    <ProjectReference Include="..\Decanatus.Logging\Decanatus.Logging.csproj" />
+    <ProjectReference Include="..\Decanatus.Web\Decanatus.Web.csproj" />
+  </ItemGroup>
+
 </Project>

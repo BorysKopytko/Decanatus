@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Decanatus.DAL.Models;
 
 namespace Decanatus.DAL.Data
 {
@@ -11,15 +11,23 @@ namespace Decanatus.DAL.Data
         {
             Database.EnsureCreated();
         }
+
         public DbSet<Student> Students { get; set; }
+
         public DbSet<Group> Groups { get; set; }
+
         public DbSet<Speciality> Specialities { get; set; }
+
         public DbSet<Faculty> Faculties { get; set; }
 
         public DbSet<Lecturer> Lecturers { get; set; }
+
         public DbSet<Lesson> Lessons { get; set; }
+
         public DbSet<Subject> Subjects { get; set; }
+
         public DbSet<Grade> Grades { get; set; }
+
         public DbSet<Audience> Audiences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,9 +45,7 @@ namespace Decanatus.DAL.Data
                         Id = 2,
                         Name = "Електроніки та комп'ютерних технологій",
                     },
-
-                }
-                );
+                });
             modelBuilder.Entity<Speciality>().HasData(
             new Speciality[]
                 {
@@ -47,16 +53,15 @@ namespace Decanatus.DAL.Data
                     {
                         Id = 1,
                         Name = "Комп'ютерні науки",
-                        FacultyId = 1
+                        FacultyId = 1,
                     },
                     new Speciality
                     {
                         Id = 2,
                         Name = "Біологічний",
-                        FacultyId = 1
+                        FacultyId = 1,
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Group>().HasData(
             new Group[]
                 {
@@ -64,22 +69,21 @@ namespace Decanatus.DAL.Data
                     {
                         Id = 1,
                         Name = "ПМІ-31",
-                        SpecialityId = 1
+                        SpecialityId = 1,
                     },
                     new Group
                     {
                         Id = 2,
                         Name = "ПМІ-32",
-                        SpecialityId = 1
+                        SpecialityId = 1,
                     },
                     new Group
                     {
                         Id = 3,
                         Name = "ПМІ-33",
-                        SpecialityId = 1
+                        SpecialityId = 1,
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Student>().HasData(
             new Student[]
                 {
@@ -151,8 +155,7 @@ namespace Decanatus.DAL.Data
                         StudyingForm = StudyingForm.FullTime,
                         GroupId = 2,
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Lecturer>().HasData(
             new Lecturer[]
                 {
@@ -181,8 +184,7 @@ namespace Decanatus.DAL.Data
                         Position = Position.Assistant,
                     },
 
-                }
-                );
+                });
             modelBuilder.Entity<Lesson>().HasData(
             new Lesson[]
                 {
@@ -206,8 +208,7 @@ namespace Decanatus.DAL.Data
                         AudienceId = 1,
                         SubjectId = 2,
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Audience>().HasData(
             new Audience[]
                 {
@@ -221,8 +222,7 @@ namespace Decanatus.DAL.Data
                         Id = 2,
                         Name = "439",
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Subject>().HasData(
             new Subject[]
                 {
@@ -236,8 +236,7 @@ namespace Decanatus.DAL.Data
                         Id = 2,
                         Name = "subj2",
                     },
-                }
-                );
+                });
             modelBuilder.Entity<Grade>().HasData(
             new Grade[]
                 {
@@ -263,8 +262,7 @@ namespace Decanatus.DAL.Data
                         Description = "asd",
                         MaxAmount = 10,
                     },
-                }
-                );
+                });
 
             modelBuilder
             .Entity<Group>()
@@ -274,8 +272,7 @@ namespace Decanatus.DAL.Data
                     new { LessonsId = 1, GroupsId = 1 },
                     new { LessonsId = 1, GroupsId = 2 },
                     new { LessonsId = 1, GroupsId = 3 },
-                    new { LessonsId = 2, GroupsId = 1 }
-                ));
+                    new { LessonsId = 2, GroupsId = 1 }));
 
             modelBuilder
             .Entity<Lecturer>()
@@ -284,8 +281,7 @@ namespace Decanatus.DAL.Data
             .UsingEntity(j => j.ToTable("LessonsLecturers").HasData(
                     new { LessonsId = 1, LecturersId = 1 },
                     new { LessonsId = 1, LecturersId = 2 },
-                    new { LessonsId = 2, LecturersId = 2 }
-                ));
+                    new { LessonsId = 2, LecturersId = 2 }));
 
             base.OnModelCreating(modelBuilder);
         }

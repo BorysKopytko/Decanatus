@@ -1,17 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Faculty
+    public class Faculty : Entity
     {
-
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [DataType(DataType.Text)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public ICollection<Speciality> Specialities { get; set; }
+        public ICollection<Speciality> Specialities { get; set; } = new List<Speciality>();
     }
 }

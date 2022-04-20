@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Decanatus.DAL\Decanatus.DAL.csproj" />
+    <ProjectReference Include="..\Decanatus.BLL\Decanatus.BLL.csproj" />
   </ItemGroup>
 
 </Project>
