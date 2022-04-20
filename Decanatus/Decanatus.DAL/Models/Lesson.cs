@@ -3,6 +3,24 @@ using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
+    public enum LessonType
+    {
+        [Display(Name = "Лекція")]
+        Lecture,
+        [Display(Name = "Лабораторна робота")]
+        Laboratory,
+    }
+
+    public enum LessonWeekType
+    {
+        [Display(Name = "Чисельник")]
+        Numerator,
+        [Display(Name = "Знаменник")]
+        Denominator,
+        [Display(Name = "Кожен тиждень")]
+        Both,
+    }
+
     public class Lesson : Entity
     {
         [Required]
@@ -27,31 +45,13 @@ namespace Decanatus.DAL.Models
         public int LessonNumber { get; set; }
 
         public int AudienceId { get; set; }
+
         public Audience Audience { get; set; }
 
         public ICollection<Lecturer> Lecturers { get; set; }
 
         public int SubjectId { get; set; }
+
         public Subject Subject { get; set; }
-
-    }
-
-    public enum LessonType
-    {
-        [Display(Name = "Лекція")]
-        Lecture,
-        [Display(Name = "Лабораторна робота")]
-        Laboratory
-
-    }
-
-    public enum LessonWeekType
-    {
-        [Display(Name = "Чисельник")]
-        Numerator,
-        [Display(Name = "Знаменник")]
-        Denominator,
-        [Display(Name = "Кожен тиждень")]
-        Both
     }
 }

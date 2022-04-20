@@ -1,19 +1,8 @@
-﻿using Decanatus.DAL.Abstractions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Decanatus.DAL.Abstractions;
 
 namespace Decanatus.DAL.Models
 {
-    public class Lecturer : Person
-    {
-
-        [Required]
-        [Display(Name = "Посада")]
-        [EnumDataType(typeof(Position))]
-        public Position Position { get; set; }
-
-        public ICollection<Lesson> Lessons { get; set; }    
-    }
-
     public enum Position
     {
         [Display(Name = "Асистент")]
@@ -21,6 +10,16 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Доцент")]
         Docent,
         [Display(Name = "Професор")]
-        Professor
+        Professor,
+    }
+
+    public class Lecturer : Person
+    {
+        [Required]
+        [Display(Name = "Посада")]
+        [EnumDataType(typeof(Position))]
+        public Position Position { get; set; }
+
+        public ICollection<Lesson> Lessons { get; set; }
     }
 }
