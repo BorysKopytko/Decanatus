@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Decanatus.BLL\Decanatus.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Lesson\" />
+  </ItemGroup>
+
 </Project>
