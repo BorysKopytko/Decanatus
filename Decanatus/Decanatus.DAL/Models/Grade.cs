@@ -20,6 +20,7 @@ namespace Decanatus.DAL.Models
     public class Grade : Entity
     {
         [Required]
+        [Display(Name = "Оцінка")]
         [Range(0,100)]
         [MaxLength(3)]
         public int Amount { get; set; }
@@ -30,6 +31,7 @@ namespace Decanatus.DAL.Models
         public Student Student { get; set; }
 
         [Required]
+        [Display(Name = "Тип оцінки")]
         [EnumDataType(typeof(GradeType))]
         public GradeType GradeType { get; set; }
 
@@ -39,6 +41,7 @@ namespace Decanatus.DAL.Models
         public Subject Subject { get; set; }
 
         [Required]
+        [Display(Name = "Дата")]
         public DateTime Date { get; set; } = DateTime.Now;
 
         [Required]
@@ -48,6 +51,7 @@ namespace Decanatus.DAL.Models
         [Required]
         [MaxLength(3)]
         [Range(0,100)]
+        [Display(Name = "Максимальна оцінка")]
         public int MaxAmount { get; set; }
     }
 }

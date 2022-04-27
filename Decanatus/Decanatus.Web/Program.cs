@@ -1,6 +1,7 @@
 using Decanatus.BLL.Interfaces;
 using Decanatus.BLL.Repositories;
 using Decanatus.BLL.Services;
+using Decanatus.BLL.Services.Implementations;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
 using Microsoft.AspNetCore.Identity;
@@ -27,11 +28,13 @@ try
         options.UseSqlServer(connectionString, a => a.MigrationsAssembly("Decanatus.Web")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-    builder.Services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
-    builder.Services.AddTransient<ILessonRepositoryAsync, LessonRepositoryAsync>();
+    builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+    builder.Services.AddTransient<ILessonRepository, LessonRepository>();
+    builder.Services.AddTransient<IGradeRepository, GradeRepository>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     builder.Services.AddScoped<IScheduleService, ScheduleService>();
+    builder.Services.AddScoped<IGradeService, GradeService>();
 
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();
