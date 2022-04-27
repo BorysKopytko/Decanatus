@@ -1,5 +1,7 @@
 using Decanatus.BLL.Interfaces;
 using Decanatus.BLL.Repositories;
+using Decanatus.BLL.Services;
+using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -28,6 +30,8 @@ try
     builder.Services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
     builder.Services.AddTransient<ILessonRepositoryAsync, LessonRepositoryAsync>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+    builder.Services.AddScoped<IScheduleService, ScheduleService>();
 
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();
