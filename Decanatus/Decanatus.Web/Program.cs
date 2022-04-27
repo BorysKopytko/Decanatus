@@ -1,5 +1,6 @@
 using Decanatus.BLL.Interfaces;
 using Decanatus.BLL.Repositories;
+using Decanatus.BLL.Services;
 using Decanatus.BLL.Services.Implementations;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
@@ -32,6 +33,7 @@ try
     builder.Services.AddTransient<IGradeRepository, GradeRepository>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+    builder.Services.AddScoped<IScheduleService, ScheduleService>();
     builder.Services.AddScoped<IGradeService, GradeService>();
 
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

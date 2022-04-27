@@ -18,7 +18,7 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Знаменник")]
         Denominator,
         [Display(Name = "Кожен тиждень")]
-        Both,
+        Both
     }
 
     public class Lesson : Entity
