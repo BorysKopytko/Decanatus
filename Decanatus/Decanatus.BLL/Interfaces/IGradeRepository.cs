@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Decanatus.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Decanatus.DAL.Models;
 
 namespace Decanatus.BLL.Interfaces
 {
-    public interface ILessonRepositoryAsync : IGenericRepositoryAsync<Lesson>
+    public interface IGradeRepository : IGenericRepository<Grade>
     {
     }
 }

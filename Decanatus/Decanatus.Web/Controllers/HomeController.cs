@@ -14,9 +14,9 @@ namespace Decanatus.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
-        private readonly ILessonRepositoryAsync _lesson;
+        private readonly ILessonRepository _lesson;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, ILessonRepositoryAsync lesson)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, ILessonRepository lesson)
         {
             _logger = logger;
             _dbContext = dbContext;

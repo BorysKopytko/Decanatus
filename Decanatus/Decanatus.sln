@@ -7,11 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.Web", "Decanatus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.DAL", "Decanatus.DAL\Decanatus.DAL.csproj", "{3E386778-5E37-4CF8-BC65-BC1BFE39784C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decanatus.BLL", "Decanatus.BLL\Decanatus.BLL.csproj", "{0BA0ABF5-1823-45F7-A7A2-5FEC2CB15A88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.BLL", "Decanatus.BLL\Decanatus.BLL.csproj", "{0BA0ABF5-1823-45F7-A7A2-5FEC2CB15A88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decanatus.Logging", "Decanatus.Logging\Decanatus.Logging.csproj", "{729C4808-8EE5-4C95-875A-992024C7217F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.Logging", "Decanatus.Logging\Decanatus.Logging.csproj", "{729C4808-8EE5-4C95-875A-992024C7217F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decanatus.Testing", "Decanatus.Testing\Decanatus.Testing.csproj", "{E14DE721-A5E5-46EB-9043-E8A755B05DA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.Testing", "Decanatus.Testing\Decanatus.Testing.csproj", "{E14DE721-A5E5-46EB-9043-E8A755B05DA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AC4176D-7993-4E72-ACE6-A31A3D503A08}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

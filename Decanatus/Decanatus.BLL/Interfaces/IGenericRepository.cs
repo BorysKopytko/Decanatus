@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Decanatus.BLL.Interfaces
 {
-    public interface IGenericRepositoryAsync<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
