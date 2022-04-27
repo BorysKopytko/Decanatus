@@ -20,6 +20,10 @@
 
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+
+
 
 
 </head>
@@ -211,5 +215,21 @@
 
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/scheduleDatatable.js"></script>
+    <script>
+    $(document).ready(function () {
+    $('#scheduleDatatable').dataTable({
+        language: {
+            url: 'dataTables.ukrainian.json'
+        }
+    });
+});</script>
+
 </body>
+
+
 </html>
+
+

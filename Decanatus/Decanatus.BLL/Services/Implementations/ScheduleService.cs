@@ -8,7 +8,7 @@ namespace Decanatus.BLL.Services
 {
     public class ScheduleService: IScheduleService
     {
-        private readonly ILessonRepositoryAsync _lessonRepository;
+        private readonly ILessonRepository _lessonRepository;
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> GetInclude()
         {
@@ -16,7 +16,7 @@ namespace Decanatus.BLL.Services
             return expr;
         }
 
-        public ScheduleService(ILessonRepositoryAsync lessonRepository)
+        public ScheduleService(ILessonRepository lessonRepository)
         {
             _lessonRepository = lessonRepository;
         }

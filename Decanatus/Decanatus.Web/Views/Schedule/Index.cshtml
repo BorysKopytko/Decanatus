@@ -4,14 +4,10 @@
     ViewData["Title"] = "Розклад занять";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>     
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
 
-<table class="table" id="scheduleTable">
+
+<table id="scheduleDatatable" class="table">
     <thead>
         <tr>
             <th>
@@ -45,28 +41,28 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LessonType);
+                    @Html.DisplayFor(modelItem => item.LessonType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LessonNumber);
+                    @Html.DisplayFor(modelItem => item.LessonNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LessonWeekType);
+                    @Html.DisplayFor(modelItem => item.LessonWeekType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DayOfWeek);
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Audience.Name);
+                    @Html.DisplayFor(modelItem => item.Audience.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Audience.Name);
+                    @Html.DisplayFor(modelItem => item.Audience.Name)
                 </td>
                 <td>
                     @foreach (var item2 in item.Groups)
                     {
                         <p>
-                            @Html.DisplayFor(modelItem2 => item2.Name);
+                            @Html.DisplayFor(modelItem2 => item2.Name)
                         </p>
                     }
                 </td>
@@ -82,8 +78,8 @@
 
 </table>
 
-<script>
-    $(document).ready(function () {
-        $("#scheduleTable").DataTable();
-    });
-</script>
+
+
+
+
+
