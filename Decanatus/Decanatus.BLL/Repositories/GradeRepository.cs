@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace Decanatus.BLL.Repositories
 {
-    public class LessonRepositoryAsync : GenericRepositoryAsync<Lesson>, ILessonRepositoryAsync
+    public class GradeRepository : GenericRepository<Grade>, IGradeRepository
     {
-        private readonly DbSet<Lesson> _lesson;
-        public LessonRepositoryAsync(ApplicationDbContext dbContext) : base(dbContext)
+        private readonly DbSet<Grade> _grade;
+
+        public GradeRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _lesson = dbContext.Set<Lesson>();
+            _grade = dbContext.Set<Grade>();
         }
     }
 }

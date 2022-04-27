@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Decanatus.DAL.Models.Grade>
+
+@{
+    ViewData["Title"] = "Всі оцінки";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.GradebookNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.Group.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.GradebookNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GradeType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -5,7 +5,7 @@ namespace Decanatus.DAL.Models
 {
     public class Group : Entity
     {
-        [Display(Name = "Назва групи")]
+        [Display(Name = "Група")]
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
