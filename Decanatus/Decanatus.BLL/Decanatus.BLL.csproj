@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Decanatus.DAL\Decanatus.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>
