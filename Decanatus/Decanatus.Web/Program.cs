@@ -31,10 +31,12 @@ try
     builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     builder.Services.AddTransient<ILessonRepository, LessonRepository>();
     builder.Services.AddTransient<IGradeRepository, GradeRepository>();
+    builder.Services.AddTransient<IStudentRepository, StudentRepository>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     builder.Services.AddScoped<IScheduleService, ScheduleService>();
     builder.Services.AddScoped<IGradeService, GradeService>();
+    builder.Services.AddScoped<IHomeService, HomeService>();
 
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();

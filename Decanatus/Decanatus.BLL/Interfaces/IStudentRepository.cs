@@ -7,7 +7,7 @@ using Decanatus.DAL.Models;
 
 namespace Decanatus.BLL.Interfaces
 {
-    public interface IGradeRepository : IGenericRepository<Grade>
+    public interface IStudentRepository : IGenericRepository<Student>
     {
     }
 }

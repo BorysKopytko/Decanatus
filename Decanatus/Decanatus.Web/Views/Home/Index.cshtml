@@ -12,7 +12,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Факультет</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Faculty.Name</div>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Спеціальність</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Name</div>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Група</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Name</div>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Форма навчання</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.StudyingForm</div>
                     </div>
                 </div>
             </div>
@@ -75,8 +75,8 @@
         <div class="col-lg-14 mb-4">
             <div class="card bg-success text-white shadow">
                 <div class="card-body">
-                    остання оцінка...
-                    <div class="text-white-50 small">#1cc88a</div>
+                    Остання оцінка
+                    <div class="text-white-50 small">@ViewData["LatestGradeAmount"]/@ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
                 </div>
             </div>
         </div>

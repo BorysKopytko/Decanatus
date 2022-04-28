@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
 using Decanatus.BLL.Interfaces;
+using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
 using Decanatus.DAL.Models;
 using Decanatus.Web.Models;
@@ -12,33 +13,22 @@ namespace Decanatus.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILessonRepository _lesson;
+        private readonly IHomeService _homeService;
 
-        public HomeController(ILessonRepository lesson)
+        public HomeController(IHomeService homeService)
         {
-            _lesson = lesson;
+            _homeService = homeService;
         }
 
-        private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> GetInclude()
+        public IActionResult Index(int id = 1)
         {
-            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers);
-            return expr;
-        }
+            var student = _homeService.GetStudent(id);
+            var latestGrade = student.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
+            ViewData["LatestGradeAmount"] = latestGrade.Amount;
+            ViewData["LatestGradeMaxAmount"] = latestGrade.MaxAmount;
+            ViewData["LatestGradeSubject"] = latestGrade.Subject.Name;
 
-        private Expression<Func<Lesson, Lesson>> GetSelector()
-        {
-            Expression<Func<Lesson, Lesson>> expr = x => x;
-            return expr;
-        }
-
-        public IActionResult Index()
-        {
-            //var include = GetInclude();
-            //var select = GetSelector();
-            //var lessons = _lesson.Includer(include);
-
-            //return View(lessons.Result);
-            return View();
+            return View(student);
         }
 
         public IActionResult Privacy()
