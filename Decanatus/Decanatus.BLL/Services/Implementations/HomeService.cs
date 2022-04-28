@@ -26,7 +26,20 @@ namespace Decanatus.BLL.Services.Implementations
                 x => x.Include(student => student.Group)
                 .ThenInclude(group => group.Speciality)
                 .ThenInclude(speciality => speciality.Faculty)
-                .Include(student => student.Grades).ThenInclude(grade => grade.Subject).Include(student => student.Group).ThenInclude(group => group.Lessons);
+                .Include(student => student.Grades)
+                .ThenInclude(grade => grade.Subject)
+                .Include(student => student.Group)
+                .ThenInclude(group => group.Lessons)
+                .ThenInclude(lesson => lesson.LessonNumber)
+                .Include(student => student.Group)
+                .ThenInclude(group => group.Lessons)
+                .ThenInclude(lesson => lesson.Subject)
+                .Include(student => student.Group)
+                .ThenInclude(group => group.Lessons)
+                .ThenInclude(lesson => lesson.Audience)
+                .Include(student => student.Group)
+                .ThenInclude(group => group.Lessons)
+                .ThenInclude(lesson => lesson.Lecturers);
             return expr;
         }
 

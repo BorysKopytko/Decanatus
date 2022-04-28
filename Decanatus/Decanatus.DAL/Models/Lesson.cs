@@ -18,7 +18,7 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Знаменник")]
         Denominator,
         [Display(Name = "Кожен тиждень")]
-        Both
+        Both,
     }
 
     public class Lesson : Entity
@@ -40,9 +40,10 @@ namespace Decanatus.DAL.Models
         public DayOfWeek DayOfWeek { get; set; }
 
         [Required]
-        [Range(1, 7)]
         [Display(Name = "Номер пари")]
-        public int LessonNumber { get; set; }
+        public LessonNumber LessonNumber { get; set; }
+
+        public int LessonNumberId { get; set; }
 
         public int AudienceId { get; set; }
 
