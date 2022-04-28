@@ -11,3 +11,6 @@ dotnet_diagnostic.CS8603.severity = none
 
 # CS8602: Dereference of a possibly null reference.
 dotnet_diagnostic.CS8602.severity = none
+
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = none
