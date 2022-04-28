@@ -2,6 +2,7 @@
 
 @{
     @using Decanatus.BLL.Classes;
+    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek == DateTime.Today.DayOfWeek);
     ViewData["Title"] = "Головна сторінка";
 }
 
@@ -67,34 +68,33 @@
      <div class="col-lg-6 mb-4">
         <div class="col-lg-14 mb-4">
             @{
-                var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek == DateTime.Today.DayOfWeek);
-                    <div class="card bg-info text-white shadow">
-                        <div class="card-body">
-                            @if (lessons == null)
-                            {
-                            <p>Сьогодні пар немає</p>
-                        }
-                        else
+            <div class="card bg-info text-white shadow">
+                <div class="card-body">
+                    @if (lessons == null)
+                    {
+                        <p>Сьогодні пар немає</p>
+                    }
+                    else
+                    {
+                        bool found = false;
+                        foreach (var lesson in lessons)
                         {
-                            bool found = false;
-                            foreach (var item in lessons)
+                            if (DateTime.Now.TimeOfDay > lesson.LessonNumber.StartTime
+                                && DateTime.Now.TimeOfDay < lesson.LessonNumber.EndTime)
                             {
-                                if (DateTime.Now.TimeOfDay > item.LessonNumber.StartTime
-                                    && DateTime.Now.TimeOfDay < item.LessonNumber.EndTime)
-                                {
-                                    found = true;
-                                    <p> @item.Subject.Name, @item.LessonType.GetDisplayName(), аудиторія @item.Audience.Name, викладач - @foreach (var lecturer in item.Lecturers) {<p>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName</p>} </p>
+                                found = true;
+                                <p> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>} </p>
 
-                                }
-                            }
-                            if (!found)
-                            {
-                                <p>Зараз пари немає</p>
                             }
                         }
-                        <div class="text-white-50 small">Поточна пара</div>
-                        </div>
-                    </div>
+                        if (!found)
+                        {
+                            <p>Зараз пари немає</p>
+                        }
+                    }
+                    <div class="text-white-50 small">Поточна пара</div>
+                </div>
+            </div>
             }
         </div>
         <div class="col-lg-14 mb-4">
@@ -123,17 +123,19 @@
         </div>
     </div>
     <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Розклад на сьогодні</h6>
+        @if (lessons != null)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Розклад на сьогодні</h6>
+                </div>
+                <div class="card-body">
+                    @foreach (var lesson in lessons)
+                    {
+                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number:</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
+                    }
+                </div>
             </div>
-            <div class="card-body">
-                <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                    CSS bloat and poor page performance. Custom CSS classes are used to create
-                    custom components and custom utility classes.</p>
-                <p class="mb-0">Before working with this theme, you should become familiar with the
-                    Bootstrap framework, especially the utility classes.</p>
-            </div>
-        </div>
+        }
     </div>
 </div>
