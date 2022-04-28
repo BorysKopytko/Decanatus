@@ -28,10 +28,16 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-    builder.Services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
-    builder.Services.AddTransient<ILessonRepository, LessonRepository>();
+    builder.Services.AddTransient<IAudienceRepository, AudienceRepository>();
+    builder.Services.AddTransient<IFacultyRepository, FacultyRepository>();       
     builder.Services.AddTransient<IGradeRepository, GradeRepository>();
+    builder.Services.AddTransient<IGroupRepository, GroupRepository>();
+    builder.Services.AddTransient<ILecturerRepository, LecturerRepository>();
+    builder.Services.AddTransient<ILessonRepository, LessonRepository>();
+    builder.Services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+    builder.Services.AddTransient<ISpecialityRepository, SpecialityRepository>();
     builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+    builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     builder.Services.AddScoped<IScheduleService, ScheduleService>();
