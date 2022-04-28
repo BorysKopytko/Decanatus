@@ -10,23 +10,39 @@ namespace Decanatus.BLL.Services
     public class ScheduleService: IScheduleService
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> GetInclude()
+        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork)
+        {
+            _repositoryWrapper = repositoryWrapper;
+            _unitOfWork = unitOfWork;
+        }
+
+        private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> LessonsInclude()
         {
             Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber);
             return expr;
         }
 
-        public ScheduleService(IRepositoryWrapper repositoryWrapper)
+        public async Task<IEnumerable<Lesson>> GetLessonsAsync() 
         {
-            _repositoryWrapper = repositoryWrapper;
+            var include = LessonsInclude();
+            var lessons = await _repositoryWrapper.LessonRepository.Includer(include);
+            return lessons;
         }
 
-        public IEnumerable<Lesson> GetLessonsAsync() 
+        public async Task<IEnumerable<Lesson>> GetStudentLessonsAsync(string dayType)
         {
-            var include = GetInclude();
-            var lessons = _repositoryWrapper.LessonRepository.Includer(include);
-            return lessons.Result;
+
+            var include = LessonsInclude();
+            var lessons = await _repositoryWrapper.LessonRepository.Includer(include);
+            return lessons;
+        }
+
+        public void AddNewLessonAsync(Lesson newLesson)
+        {
+            _repositoryWrapper.LessonRepository.UpdateAsync(newLesson);
+            _unitOfWork.Commit();
         }
 
         public Lesson FindLessonAsync(int? id)
