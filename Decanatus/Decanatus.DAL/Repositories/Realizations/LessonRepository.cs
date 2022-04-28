@@ -1,14 +1,9 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.DAL.Data;
+﻿using Decanatus.DAL.Data;
 using Decanatus.DAL.Models;
+using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Decanatus.BLL.Repositories
+namespace Decanatus.DAL.Repositories.Realizations
 {
     public class LessonRepository : GenericRepository<Lesson>, ILessonRepository
     {

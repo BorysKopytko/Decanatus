@@ -1,6 +1,6 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Services.Interfaces;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Models;
+using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
@@ -8,7 +8,7 @@ namespace Decanatus.BLL.Services
 {
     public class ScheduleService: IScheduleService
     {
-        private readonly ILessonRepository _lessonRepository;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> GetInclude()
         {
@@ -16,15 +16,15 @@ namespace Decanatus.BLL.Services
             return expr;
         }
 
-        public ScheduleService(ILessonRepository lessonRepository)
+        public ScheduleService(IRepositoryWrapper repositoryWrapper)
         {
-            _lessonRepository = lessonRepository;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         public IEnumerable<Lesson> GetLessonsAsync() 
         {
             var include = GetInclude();
-            var lessons = _lessonRepository.Includer(include);
+            var lessons = _repositoryWrapper.LessonRepository.Includer(include);
             return lessons.Result;
         }
     }

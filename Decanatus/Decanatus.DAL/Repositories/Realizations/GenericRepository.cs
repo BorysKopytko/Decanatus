@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Decanatus.BLL.Interfaces;
-using Decanatus.DAL.Data;
+﻿using Decanatus.DAL.Data;
+using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace Decanatus.BLL.Repositories
+namespace Decanatus.DAL.Repositories.Realizations
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

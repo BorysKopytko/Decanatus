@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Services.Interfaces;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Models;
+using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
@@ -14,11 +8,11 @@ namespace Decanatus.BLL.Services.Implementations
 {
     public class GradeService : IGradeService
     {
-        private readonly IGradeRepository _gradeRepository;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public GradeService(IGradeRepository gradeRepository)
+        public GradeService(IRepositoryWrapper repositoryWrapper)
         {
-            _gradeRepository = gradeRepository;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         public Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> GetInclude()
@@ -35,7 +29,7 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetAllGrades()
         {
             var include = GetInclude();
-            var grades = _gradeRepository.Includer(include);
+            var grades = _repositoryWrapper.GradeRepository.Includer(include);
 
             return grades.Result;
         }
@@ -43,7 +37,7 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetGradesByStudentId(int id)
         {
             var include = GetInclude();
-            var grades = _gradeRepository.Includer(include).Result.Where(grade => grade.StudentId == id);
+            var grades = _repositoryWrapper.GradeRepository.Includer(include).Result.Where(grade => grade.StudentId == id);
 
             return grades;
         }
