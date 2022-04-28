@@ -9,6 +9,7 @@ namespace Decanatus.DAL.Repositories.Realizations
         private IGradeRepository _gradeRepository;
         private ILessonRepository _lessonRepository;
         private IStudentRepository _studentRepository;
+        private ILessonNumberRepository _lessonNumberRepository;
 
         public IGradeRepository GradeRepository
         {
@@ -45,6 +46,19 @@ namespace Decanatus.DAL.Repositories.Realizations
                 return _studentRepository;
             }
         }
+
+        public ILessonNumberRepository LessonNumberRepository
+        {
+            get
+            {
+                if (_lessonNumberRepository == null)
+                {
+                    _lessonNumberRepository = new LessonNumberRepository(_dbContext);
+                }
+                return _lessonNumberRepository;
+            }
+        }
+
         public RepositoryWrapper(ApplicationDbContext applicationDBContext)
         {
             _dbContext = applicationDBContext;

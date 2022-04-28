@@ -9,7 +9,7 @@
         <div class="table-responsive">
             <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
                 <thead>
-                    <tr >
+                    <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.LessonWeekType)
                         </th>
@@ -86,8 +86,8 @@
                             </td>
                             <td>
                                 <div class="btn-group-vertical w-100">
-                                    <button type="button" class="btn btn-warning"><i class="fa fa-edit"></i><br>Редагувати</button>
-                                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i><br>Видалити</button>
+                                    <a class="btn btn-warning" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                    <a class="btn btn-danger" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-trash"></i><br>Видалити</a>
                                 </div>
                             </td>
                         </tr>

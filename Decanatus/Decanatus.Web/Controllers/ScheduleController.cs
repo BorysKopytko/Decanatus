@@ -17,5 +17,23 @@ namespace Decanatus.Web.Controllers
             var model = _scheduleService.GetLessonsAsync();
             return View(model);
         }
+
+        //GET
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                NotFound();
+            }
+
+            var lessonViewModel = _scheduleService.GetLessonViewModel(id); 
+
+            if (lessonViewModel == null)
+            {
+                return NotFound();
+            }
+            
+            return View(lessonViewModel);
+        }
     }
 }

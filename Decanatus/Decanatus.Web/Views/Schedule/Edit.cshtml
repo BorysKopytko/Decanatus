@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Decanatus.BLL.ViewModels.LessonViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Lesson.LessonWeekType" class="control-label"></label>
+                <input asp-for="Lesson.LessonWeekType" class="form-control" />
+                <span asp-validation-for="Lesson.LessonWeekType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lesson.DayOfWeek" class="control-label"></label>
+                <input asp-for="Lesson.DayOfWeek" class="form-control" />
+                <span asp-validation-for="Lesson.DayOfWeek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lesson.LessonNumber.Number" class="control-label"></label>
+                <input asp-for="Lesson.LessonNumber.Number" class="form-control" />
+                <span asp-validation-for="Lesson.LessonNumber.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lesson.Subject.Name" class="control-label"></label>
+                <input asp-for="Lesson.Subject.Name" class="form-control" />
+                <span asp-validation-for="Lesson.Subject.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lesson.Audience.Name" class="control-label"></label>
+                <input asp-for="Lesson.Audience.Name" class="form-control" />
+                <span asp-validation-for="Lesson.Audience.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*                <label asp-for="Lecturers." class="control-label"></label>
+                    <input asp-for="Audience.Name" class="form-control" />
+                    <span asp-validation-for="Audience.Name" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
