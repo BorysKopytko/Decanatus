@@ -45,5 +45,13 @@ namespace Decanatus.BLL.Services.Implementations
 
             return grades.Result;
         }
+
+        public IEnumerable<Grade> GetGradesByStudentId(int id)
+        {
+            var include = GetInclude();
+            var grades = _gradeRepository.Includer(include).Result.Where(grade => grade.StudentId == id);
+
+            return grades;
+        }
     }
 }

@@ -16,5 +16,7 @@ namespace Decanatus.BLL.Services.Interfaces
         Expression<Func<Grade, Grade>> GetSelector();
 
         IEnumerable<Grade> GetAllGrades();
+
+        IEnumerable<Grade> GetGradesByStudentId(int id);
     }
 }
