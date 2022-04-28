@@ -1,6 +1,4 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Services.Interfaces;
-using Decanatus.DAL.Data;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Decanatus.Web.Controllers

@@ -1,11 +1,10 @@
-using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Repositories;
 using Decanatus.BLL.Services;
 using Decanatus.BLL.Services.Implementations;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
+using Decanatus.DAL.Repositories.Interfaces;
+using Decanatus.DAL.Repositories.Realizations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -29,6 +28,7 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+    builder.Services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
     builder.Services.AddTransient<ILessonRepository, LessonRepository>();
     builder.Services.AddTransient<IGradeRepository, GradeRepository>();
     builder.Services.AddTransient<IStudentRepository, StudentRepository>();

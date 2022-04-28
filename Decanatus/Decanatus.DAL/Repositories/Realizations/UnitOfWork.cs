@@ -1,12 +1,7 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.DAL.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Decanatus.DAL.Data;
+using Decanatus.DAL.Repositories.Interfaces;
 
-namespace Decanatus.BLL.Repositories
+namespace Decanatus.DAL.Repositories.Realizations
 {
     public class UnitOfWork : IUnitOfWork
     {

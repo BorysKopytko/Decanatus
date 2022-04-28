@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Services.Interfaces;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Models;
+using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
@@ -13,11 +8,11 @@ namespace Decanatus.BLL.Services.Implementations
 {
     public class HomeService : IHomeService
     {
-        private readonly IStudentRepository _studentRepository;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public HomeService(IStudentRepository studentRepository)
+        public HomeService(IRepositoryWrapper repositoryWrapper)
         {
-            _studentRepository = studentRepository;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         public Func<IQueryable<Student>, IIncludableQueryable<Student, object>> GetInclude()
@@ -46,7 +41,7 @@ namespace Decanatus.BLL.Services.Implementations
         public Student GetStudent(int id)
         {
             var include = GetInclude();
-            var students = _studentRepository.Includer(include);
+            var students = _repositoryWrapper.StudentRepository.Includer(include);
             var student = students.Result.FirstOrDefault(student => student.Id == id);
 
             return student;

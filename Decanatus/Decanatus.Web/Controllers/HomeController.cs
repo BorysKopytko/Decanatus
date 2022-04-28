@@ -1,13 +1,7 @@
-﻿using System.Diagnostics;
-using System.Linq.Expressions;
-using Decanatus.BLL.Interfaces;
-using Decanatus.BLL.Services.Interfaces;
-using Decanatus.DAL.Data;
-using Decanatus.DAL.Models;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+using System.Diagnostics;
 
 namespace Decanatus.Web.Controllers
 {
@@ -23,11 +17,6 @@ namespace Decanatus.Web.Controllers
         public IActionResult Index(int id = 1)
         {
             return View(_homeService.GetStudent(id));
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

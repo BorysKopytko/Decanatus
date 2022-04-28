@@ -1,7 +1,4 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.DAL.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Decanatus.DAL.Models;
 
 namespace Decanatus.BLL.Services.Interfaces
 {
