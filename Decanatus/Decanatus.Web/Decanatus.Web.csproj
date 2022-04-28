@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Lesson\**" />
+    <Content Remove="Views\Lesson\**" />
+    <EmbeddedResource Remove="Views\Lesson\**" />
+    <None Remove="Views\Lesson\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
@@ -24,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Decanatus.BLL\Decanatus.BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Lesson\" />
   </ItemGroup>
 
   <ItemGroup>
