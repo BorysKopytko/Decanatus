@@ -1,45 +1,143 @@
-﻿@model IEnumerable<Decanatus.DAL.Models.Lesson>
+﻿@model Decanatus.DAL.Models.Student
 
 @{
     ViewData["Title"] = "Головна сторінка";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Audience.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Subject.Name)
-            </th>
-            <th>
-                Lecturers
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Audience.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Subject.Name)
-                </td>
-                <td>
-                    @foreach (var lecturer in item.Lecturers)
-                    {
-                        <p>@lecturer.LastName @lecturer.FirstName[0] @lecturer.MiddleName[0]</p>
-                    }
-                </td>
-                @*<td>
-                    <a asp-action="Edit" asp-route-id="@item.CourseID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CourseID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CourseID">Delete</a>
-                </td>*@
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Факультет</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Спеціальність</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Група</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Форма навчання</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-6 mb-4">
+
+        <!-- Project Card Example -->
+                            
+
+        <!-- Color System -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-primary text-white shadow">
+                    <div class="card-body">
+                        Primary
+                        <div class="text-white-50 small">#4e73df</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-success text-white shadow">
+                    <div class="card-body">
+                        Success
+                        <div class="text-white-50 small">#1cc88a</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        Info
+                        <div class="text-white-50 small">#36b9cc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                        Warning
+                        <div class="text-white-50 small">#f6c23e</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-danger text-white shadow">
+                    <div class="card-body">
+                        Danger
+                        <div class="text-white-50 small">#e74a3b</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-secondary text-white shadow">
+                    <div class="card-body">
+                        Secondary
+                        <div class="text-white-50 small">#858796</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-light text-black shadow">
+                    <div class="card-body">
+                        Light
+                        <div class="text-black-50 small">#f8f9fc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-dark text-white shadow">
+                    <div class="card-body">
+                        Dark
+                        <div class="text-white-50 small">#5a5c69</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>                      
+</div>
