@@ -12,7 +12,7 @@ namespace Decanatus.BLL.Services
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> GetInclude()
         {
-            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups);
+            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber);
             return expr;
         }
 
