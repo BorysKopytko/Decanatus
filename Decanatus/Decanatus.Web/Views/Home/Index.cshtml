@@ -1,6 +1,7 @@
 ﻿@model Decanatus.DAL.Models.Student
 
 @{
+    @using Decanatus.BLL.Classes;
     ViewData["Title"] = "Головна сторінка";
 }
 
@@ -65,24 +66,47 @@
 <div class="row">
      <div class="col-lg-6 mb-4">
         <div class="col-lg-14 mb-4">
-            <div class="card bg-info text-white shadow">
-                <div class="card-body">
-                    пара...
-                    <div class="text-white-50 small">#4e73df</div>
-                </div>
-            </div>
+            @{
+                var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek == DateTime.Today.DayOfWeek);
+                    <div class="card bg-info text-white shadow">
+                        <div class="card-body">
+                            @if (lessons == null)
+                            {
+                            <p>Сьогодні пар немає</p>
+                        }
+                        else
+                        {
+                            bool found = false;
+                            foreach (var item in lessons)
+                            {
+                                if (DateTime.Now.TimeOfDay > item.LessonNumber.StartTime
+                                    && DateTime.Now.TimeOfDay < item.LessonNumber.EndTime)
+                                {
+                                    found = true;
+                                    <p> @item.Subject.Name, @item.LessonType.GetDisplayName(), аудиторія @item.Audience.Name, викладач - @foreach (var lecturer in item.Lecturers) {<p>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName</p>} </p>
+
+                                }
+                            }
+                            if (!found)
+                            {
+                                <p>Зараз пари немає</p>
+                            }
+                        }
+                        <div class="text-white-50 small">Поточна пара</div>
+                        </div>
+                    </div>
+            }
         </div>
         <div class="col-lg-14 mb-4">
             @{
-                int amount = Int32.Parse(ViewData["LatestGradeAmount"].ToString());
-                int maxAmount = Int32.Parse(ViewData["LatestGradeMaxAmount"].ToString());
+                var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
 
-                if (amount / maxAmount > 0.5)
+                if (latestGrade.Amount / latestGrade.MaxAmount > 0.5)
                 {
                     <div class="card bg-danger text-white shadow">
                         <div class="card-body">
-                                Остання оцінка
-                            <div class="text-white-50 small">@ViewData["LatestGradeAmount"] / @ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
+                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                            <div class="text-white-50 small">Остання оцінка</div>
                         </div>
                     </div>
                 }
@@ -90,8 +114,8 @@
                 {
                     <div class="card bg-success text-white shadow">
                         <div class="card-body">
-                                Остання оцінка
-                            <div class="text-white-50 small">@ViewData["LatestGradeAmount"] / @ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
+                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                            <div class="text-white-50 small">Остання оцінка</div>
                         </div>
                     </div>
                 }

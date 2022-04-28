@@ -22,13 +22,7 @@ namespace Decanatus.Web.Controllers
 
         public IActionResult Index(int id = 1)
         {
-            var student = _homeService.GetStudent(id);
-            var latestGrade = student.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
-            ViewData["LatestGradeAmount"] = latestGrade.Amount;
-            ViewData["LatestGradeMaxAmount"] = latestGrade.MaxAmount;
-            ViewData["LatestGradeSubject"] = latestGrade.Subject.Name;
-
-            return View(student);
+            return View(_homeService.GetStudent(id));
         }
 
         public IActionResult Privacy()

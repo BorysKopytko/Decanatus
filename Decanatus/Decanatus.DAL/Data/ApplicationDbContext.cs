@@ -30,8 +30,63 @@ namespace Decanatus.DAL.Data
 
         public DbSet<Audience> Audiences { get; set; }
 
+        public DbSet<LessonNumber> LessonNumbers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<LessonNumber>().HasData(
+            new LessonNumber[]
+                {
+                    new LessonNumber
+                    {
+                        Id = 1,
+                        Number = 1,
+                        StartTime = TimeSpan.Parse("8:30"),
+                        EndTime = TimeSpan.Parse("9:50"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 2,
+                        Number = 2,
+                        StartTime = TimeSpan.Parse("10:10"),
+                        EndTime = TimeSpan.Parse("11:30"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 3,
+                        Number = 3,
+                        StartTime = TimeSpan.Parse("11:50"),
+                        EndTime = TimeSpan.Parse("13:10"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 4,
+                        Number = 4,
+                        StartTime = TimeSpan.Parse("13:30"),
+                        EndTime = TimeSpan.Parse("14:50"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 5,
+                        Number = 5,
+                        StartTime = TimeSpan.Parse("15:05"),
+                        EndTime = TimeSpan.Parse("16:25"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 6,
+                        Number = 6,
+                        StartTime = TimeSpan.Parse("16:40"),
+                        EndTime = TimeSpan.Parse("18:00"),
+                    },
+                    new LessonNumber
+                    {
+                        Id = 7,
+                        Number = 7,
+                        StartTime = TimeSpan.Parse("18:10"),
+                        EndTime = TimeSpan.Parse("19:30"),
+                    },
+                });
             modelBuilder.Entity<Faculty>().HasData(
             new Faculty[]
                 {
@@ -258,7 +313,7 @@ namespace Decanatus.DAL.Data
                         LessonType = LessonType.Laboratory,
                         LessonWeekType = LessonWeekType.Both,
                         DayOfWeek = DayOfWeek.Monday,
-                        LessonNumber = 1,
+                        LessonNumberId = 1,
                         AudienceId = 1,
                         SubjectId = 1,
                     },
@@ -268,7 +323,7 @@ namespace Decanatus.DAL.Data
                         LessonType = LessonType.Laboratory,
                         LessonWeekType = LessonWeekType.Both,
                         DayOfWeek = DayOfWeek.Monday,
-                        LessonNumber = 2,
+                        LessonNumberId = 2,
                         AudienceId = 1,
                         SubjectId = 2,
                     },
@@ -278,7 +333,7 @@ namespace Decanatus.DAL.Data
                         LessonType = LessonType.Laboratory,
                         LessonWeekType = LessonWeekType.Both,
                         DayOfWeek = DayOfWeek.Monday,
-                        LessonNumber = 3,
+                        LessonNumberId = 3,
                         AudienceId = 1,
                         SubjectId = 3,
                     },
@@ -288,7 +343,7 @@ namespace Decanatus.DAL.Data
                         LessonType = LessonType.Laboratory,
                         LessonWeekType = LessonWeekType.Both,
                         DayOfWeek = DayOfWeek.Tuesday,
-                        LessonNumber = 1,
+                        LessonNumberId = 1,
                         AudienceId = 2,
                         SubjectId = 2,
                     },
@@ -298,7 +353,17 @@ namespace Decanatus.DAL.Data
                         LessonType = LessonType.Laboratory,
                         LessonWeekType = LessonWeekType.Both,
                         DayOfWeek = DayOfWeek.Tuesday,
-                        LessonNumber = 2,
+                        LessonNumberId = 2,
+                        AudienceId = 3,
+                        SubjectId = 3,
+                    },
+                    new Lesson
+                    {
+                        Id = 6,
+                        LessonType = LessonType.Laboratory,
+                        LessonWeekType = LessonWeekType.Both,
+                        DayOfWeek = DayOfWeek.Thursday,
+                        LessonNumberId = 7,
                         AudienceId = 3,
                         SubjectId = 3,
                     },
@@ -430,7 +495,8 @@ namespace Decanatus.DAL.Data
                     new { LessonsId = 4, GroupsId = 3 },
                     new { LessonsId = 5, GroupsId = 5 },
                     new { LessonsId = 4, GroupsId = 4 },
-                    new { LessonsId = 5, GroupsId = 6 }));
+                    new { LessonsId = 5, GroupsId = 6 },
+                    new { LessonsId = 6, GroupsId = 1 }));
 
             modelBuilder
             .Entity<Lecturer>()
@@ -443,7 +509,8 @@ namespace Decanatus.DAL.Data
                     new { LessonsId = 3, LecturersId = 3 },
                     new { LessonsId = 3, LecturersId = 2 },
                     new { LessonsId = 4, LecturersId = 4 },
-                    new { LessonsId = 5, LecturersId = 4 }));
+                    new { LessonsId = 5, LecturersId = 4 },
+                    new { LessonsId = 6, LecturersId = 4 }));
 
             base.OnModelCreating(modelBuilder);
         }
