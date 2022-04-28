@@ -1,12 +1,12 @@
-﻿using Decanatus.BLL.Interfaces;
-using Decanatus.DAL.Data;
-using Decanatus.DAL.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Decanatus.BLL.Interfaces;
+using Decanatus.DAL.Data;
+using Decanatus.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.BLL.Repositories
 {
@@ -18,5 +18,7 @@ namespace Decanatus.BLL.Repositories
         {
             _grade = dbContext.Set<Grade>();
         }
+
+
     }
 }

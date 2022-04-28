@@ -38,9 +38,8 @@ namespace Decanatus.Web.Controllers
         public IActionResult Index()
         {
             var include = GetInclude();
-            //var select = GetSelector();
+            var select = GetSelector();
             var lessons = _lesson.Includer(include);
-
 
             return View(lessons.Result);
         }

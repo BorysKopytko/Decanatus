@@ -9,5 +9,6 @@ namespace Decanatus.BLL.Interfaces
 {
     public interface IGradeRepository : IGenericRepository<Grade>
     {
+
     }
 }
