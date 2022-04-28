@@ -23,7 +23,12 @@ namespace Decanatus.BLL.Services.Implementations
 
         public Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> GetInclude()
         {
-            Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> expr = x => x.Include(grade => grade.Student).ThenInclude(student => student.Group).Include(grade => grade.Subject);
+            Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> expr = 
+                x => x.Include(grade => grade.Student)
+                .ThenInclude(student => student.Group)
+                .ThenInclude(group => group.Speciality)
+                .ThenInclude(speciality => speciality.Faculty)
+                .Include(grade => grade.Subject);
             return expr;
         }
 
