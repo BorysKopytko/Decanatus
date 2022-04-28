@@ -11,7 +11,8 @@ namespace Decanatus.Web.Controllers
         {
             _scheduleService = scheduleService;
         }
-        public IActionResult Index()
+
+        public IActionResult Setup()
         {
             var model = _scheduleService.GetLessonsAsync();
             return View(model);

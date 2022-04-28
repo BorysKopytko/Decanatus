@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $('#Datatable').dataTable({
         language: {
-            url: 'dataTables.ukrainian.json'
+            url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/uk.json'
         }
     });
 });

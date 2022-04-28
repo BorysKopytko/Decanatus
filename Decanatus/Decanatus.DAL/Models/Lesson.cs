@@ -7,7 +7,7 @@ namespace Decanatus.DAL.Models
     {
         [Display(Name = "Лекція")]
         Lecture,
-        [Display(Name = "Лабораторна робота")]
+        [Display(Name = "Практична робота")]
         Laboratory,
     }
 
@@ -28,6 +28,7 @@ namespace Decanatus.DAL.Models
         [EnumDataType(typeof(LessonType))]
         public LessonType LessonType { get; set; }
 
+        [Display(Name = "Групи")]
         public ICollection<Group> Groups { get; set; }
 
         [Required]
@@ -41,17 +42,20 @@ namespace Decanatus.DAL.Models
 
         [Required]
         [Range(1, 7)]
-        [Display(Name = "Номер пари")]
+        [Display(Name = "Номер заняття")]
         public int LessonNumber { get; set; }
 
         public int AudienceId { get; set; }
 
+        [Display(Name ="Аудиторія")]
         public Audience Audience { get; set; }
 
+        [Display(Name = "Викладачі")]
         public ICollection<Lecturer> Lecturers { get; set; }
 
         public int SubjectId { get; set; }
 
+        [Display(Name = "Предмет")]
         public Subject Subject { get; set; }
     }
 }
