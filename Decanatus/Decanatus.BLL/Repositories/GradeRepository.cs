@@ -18,7 +18,5 @@ namespace Decanatus.BLL.Repositories
         {
             _grade = dbContext.Set<Grade>();
         }
-
-
     }
 }

@@ -1,25 +1,21 @@
-﻿using Decanatus.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Decanatus.DAL.Data;
-using Microsoft.EntityFrameworkCore;
-using Decanatus.DAL.Models;
-using Microsoft.EntityFrameworkCore.Query;
-using Decanatus.BLL.Interfaces;
+﻿using System.Diagnostics;
 using System.Linq.Expressions;
+using Decanatus.BLL.Interfaces;
+using Decanatus.DAL.Data;
+using Decanatus.DAL.Models;
+using Decanatus.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Decanatus.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _dbContext;
         private readonly ILessonRepository _lesson;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, ILessonRepository lesson)
+        public HomeController(ILessonRepository lesson)
         {
-            _logger = logger;
-            _dbContext = dbContext;
             _lesson = lesson;
         }
 
@@ -37,11 +33,12 @@ namespace Decanatus.Web.Controllers
 
         public IActionResult Index()
         {
-            var include = GetInclude();
-            var select = GetSelector();
-            var lessons = _lesson.Includer(include);
+            //var include = GetInclude();
+            //var select = GetSelector();
+            //var lessons = _lesson.Includer(include);
 
-            return View(lessons.Result);
+            //return View(lessons.Result);
+            return View();
         }
 
         public IActionResult Privacy()
