@@ -58,7 +58,13 @@ namespace Decanatus.DAL.Data
                     new Speciality
                     {
                         Id = 2,
-                        Name = "Біологічний",
+                        Name = "Прикладна математика",
+                        FacultyId = 2,
+                    },
+                    new Speciality
+                    {
+                        Id = 3,
+                        Name = "Програмна інженерія",
                         FacultyId = 1,
                     },
                 });
@@ -83,6 +89,24 @@ namespace Decanatus.DAL.Data
                         Name = "ПМІ-33",
                         SpecialityId = 1,
                     },
+                    new Group
+                    {
+                        Id = 4,
+                        Name = "ПМА-31",
+                        SpecialityId = 2,
+                    },
+                    new Group
+                    {
+                        Id = 5,
+                        Name = "ПМА-32",
+                        SpecialityId = 2,
+                    },
+                    new Group
+                    {
+                        Id = 6,
+                        Name = "ПМА-33",
+                        SpecialityId = 2,
+                    },
                 });
             modelBuilder.Entity<Student>().HasData(
             new Student[]
@@ -90,14 +114,14 @@ namespace Decanatus.DAL.Data
                     new Student
                     {
                         Id = 1,
-                        FirstName = "firstname1",
-                        LastName = "lastname1",
-                        MiddleName = "middlename1",
+                        FirstName = "Святослав",
+                        LastName = "Боліщук",
+                        MiddleName = "Андрійович",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
                         MobilePhoneNumber = "393848543",
-                        GradebookNumber = 123123,
+                        GradebookNumber = "c214c12",
                         OrderNumber = 123123,
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
@@ -107,53 +131,70 @@ namespace Decanatus.DAL.Data
                     new Student
                     {
                         Id = 2,
-                        FirstName = "firstname2",
-                        LastName = "lastname2",
-                        MiddleName = "middlename2",
+                        FirstName = "Борис",
+                        LastName = "Копитко",
+                        MiddleName = "Володимирович",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
                         MobilePhoneNumber = "393848543",
-                        GradebookNumber = 123123,
+                        GradebookNumber = "1234c1c21",
                         OrderNumber = 123123,
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 1,
+                        GroupId = 2,
                     },
                     new Student
                     {
                         Id = 3,
-                        FirstName = "firstname3",
-                        LastName = "lastname3",
-                        MiddleName = "middlename3",
+                        FirstName = "Дмитро",
+                        LastName = "Дяківський",
+                        MiddleName = "Дмитрович",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
                         MobilePhoneNumber = "393848543",
-                        GradebookNumber = 123123,
+                        GradebookNumber = "21cr23cq",
                         OrderNumber = 123123,
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 2,
+                        GroupId = 4,
                     },
                     new Student
                     {
                         Id = 4,
-                        FirstName = "firstname4",
-                        LastName = "lastname4",
-                        MiddleName = "middlename4",
+                        FirstName = "Андрій",
+                        LastName = "Полянський",
+                        MiddleName = "",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
                         MobilePhoneNumber = "393848543",
-                        GradebookNumber = 123123,
+                        GradebookNumber = "asdc23cd2",
                         OrderNumber = 123123,
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 2,
+                        GroupId = 5,
+                    },
+                    new Student
+                    {
+                        Id = 5,
+                        FirstName = "Олег",
+                        LastName = "Бурдяк",
+                        MiddleName = "Володимирович",
+                        Sex = Abstractions.Sex.Male,
+                        BirthDate = DateTime.Parse("01.01.2021"),
+                        EmailAdress = "asdasd@gmail.com",
+                        MobilePhoneNumber = "393848543",
+                        GradebookNumber = "ac2r32r43c",
+                        OrderNumber = 123123,
+                        OrderDate = DateTime.Parse("01.01.2021"),
+                        GraduateDate = DateTime.Parse("01.01.2021"),
+                        StudyingForm = StudyingForm.FullTime,
+                        GroupId = 6,
                     },
                 });
             modelBuilder.Entity<Lecturer>().HasData(
@@ -162,9 +203,33 @@ namespace Decanatus.DAL.Data
                     new Lecturer
                     {
                         Id = 1,
-                        FirstName = "firstname5",
-                        LastName = "lastname5",
-                        MiddleName = "middlename5",
+                        FirstName = "Юрій",
+                        LastName = "Щербина",
+                        MiddleName = "Миколайович",
+                        Sex = Abstractions.Sex.Male,
+                        BirthDate = DateTime.Parse("01.01.2021"),
+                        EmailAdress = "asdasd@gmail.com",
+                        MobilePhoneNumber = "393848543",
+                        Position = Position.Professor,
+                    },
+                    new Lecturer
+                    {
+                        Id = 2,
+                        FirstName = "Анатолій",
+                        LastName = "Музичук",
+                        MiddleName = "Омелянович",
+                        Sex = Abstractions.Sex.Male,
+                        BirthDate = DateTime.Parse("01.01.2021"),
+                        EmailAdress = "asdasd@gmail.com",
+                        MobilePhoneNumber = "393848543",
+                        Position = Position.Professor,
+                    },
+                    new Lecturer
+                    {
+                        Id = 3,
+                        FirstName = "Андрій",
+                        LastName = "Глова",
+                        MiddleName = "Романович",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
@@ -173,17 +238,16 @@ namespace Decanatus.DAL.Data
                     },
                     new Lecturer
                     {
-                        Id = 2,
-                        FirstName = "firstname6",
-                        LastName = "lastname6",
-                        MiddleName = "middlename6",
+                        Id = 4,
+                        FirstName = "Святослав",
+                        LastName = "Тарасюк",
+                        MiddleName = "Іванович",
                         Sex = Abstractions.Sex.Male,
                         BirthDate = DateTime.Parse("01.01.2021"),
                         EmailAdress = "asdasd@gmail.com",
                         MobilePhoneNumber = "393848543",
-                        Position = Position.Assistant,
+                        Position = Position.Professor,
                     },
-
                 });
             modelBuilder.Entity<Lesson>().HasData(
             new Lesson[]
@@ -208,6 +272,36 @@ namespace Decanatus.DAL.Data
                         AudienceId = 1,
                         SubjectId = 2,
                     },
+                    new Lesson
+                    {
+                        Id = 3,
+                        LessonType = LessonType.Laboratory,
+                        LessonWeekType = LessonWeekType.Both,
+                        DayOfWeek = DayOfWeek.Monday,
+                        LessonNumber = 3,
+                        AudienceId = 1,
+                        SubjectId = 3,
+                    },
+                    new Lesson
+                    {
+                        Id = 4,
+                        LessonType = LessonType.Laboratory,
+                        LessonWeekType = LessonWeekType.Both,
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        LessonNumber = 1,
+                        AudienceId = 2,
+                        SubjectId = 2,
+                    },
+                    new Lesson
+                    {
+                        Id = 5,
+                        LessonType = LessonType.Laboratory,
+                        LessonWeekType = LessonWeekType.Both,
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        LessonNumber = 2,
+                        AudienceId = 3,
+                        SubjectId = 3,
+                    },
                 });
             modelBuilder.Entity<Audience>().HasData(
             new Audience[]
@@ -215,12 +309,22 @@ namespace Decanatus.DAL.Data
                     new Audience
                     {
                         Id = 1,
-                        Name = "301",
+                        Name = "111",
                     },
                     new Audience
                     {
                         Id = 2,
                         Name = "439",
+                    },
+                    new Audience
+                    {
+                        Id = 3,
+                        Name = "109",
+                    },
+                    new Audience
+                    {
+                        Id = 4,
+                        Name = "145",
                     },
                 });
             modelBuilder.Entity<Subject>().HasData(
@@ -229,12 +333,17 @@ namespace Decanatus.DAL.Data
                     new Subject
                     {
                         Id = 1,
-                        Name = "subj1",
+                        Name = "Програмна інженерія",
                     },
                     new Subject
                     {
                         Id = 2,
-                        Name = "subj2",
+                        Name = "Математичний аналіз",
+                    },
+                    new Subject
+                    {
+                        Id = 3,
+                        Name = "Дискретна математика",
                     },
                 });
             modelBuilder.Entity<Grade>().HasData(
@@ -243,9 +352,9 @@ namespace Decanatus.DAL.Data
                     new Grade
                     {
                         Id = 1,
-                        Amount = 10,
+                        Amount = 6,
                         StudentId = 1,
-                        GradeType = GradeType.Laboratory,
+                        GradeType = GradeType.Module,
                         SubjectId = 1,
                         Date = DateTime.Now,
                         Description = "asd",
@@ -254,9 +363,42 @@ namespace Decanatus.DAL.Data
                     new Grade
                     {
                         Id = 2,
-                        Amount = 10,
+                        Amount = 8,
                         StudentId = 2,
-                        GradeType = GradeType.Laboratory,
+                        GradeType = GradeType.Module,
+                        SubjectId = 1,
+                        Date = DateTime.Now,
+                        Description = "asd",
+                        MaxAmount = 10,
+                    },
+                    new Grade
+                    {
+                        Id = 3,
+                        Amount = 9,
+                        StudentId = 3,
+                        GradeType = GradeType.Module,
+                        SubjectId = 1,
+                        Date = DateTime.Now,
+                        Description = "asd",
+                        MaxAmount = 10,
+                    },
+                    new Grade
+                    {
+                        Id = 4,
+                        Amount = 4,
+                        StudentId = 4,
+                        GradeType = GradeType.Module,
+                        SubjectId = 1,
+                        Date = DateTime.Now,
+                        Description = "asd",
+                        MaxAmount = 10,
+                    },
+                    new Grade
+                    {
+                        Id = 5,
+                        Amount = 5,
+                        StudentId = 5,
+                        GradeType = GradeType.Module,
                         SubjectId = 1,
                         Date = DateTime.Now,
                         Description = "asd",
@@ -272,7 +414,12 @@ namespace Decanatus.DAL.Data
                     new { LessonsId = 1, GroupsId = 1 },
                     new { LessonsId = 1, GroupsId = 2 },
                     new { LessonsId = 1, GroupsId = 3 },
-                    new { LessonsId = 2, GroupsId = 1 }));
+                    new { LessonsId = 2, GroupsId = 1 },
+                    new { LessonsId = 3, GroupsId = 2 },
+                    new { LessonsId = 4, GroupsId = 3 },
+                    new { LessonsId = 5, GroupsId = 5 },
+                    new { LessonsId = 4, GroupsId = 4 },
+                    new { LessonsId = 5, GroupsId = 6 }));
 
             modelBuilder
             .Entity<Lecturer>()
@@ -280,8 +427,12 @@ namespace Decanatus.DAL.Data
             .WithMany(p => p.Lecturers)
             .UsingEntity(j => j.ToTable("LessonsLecturers").HasData(
                     new { LessonsId = 1, LecturersId = 1 },
-                    new { LessonsId = 1, LecturersId = 2 },
-                    new { LessonsId = 2, LecturersId = 2 }));
+                    new { LessonsId = 2, LecturersId = 3 },
+                    new { LessonsId = 2, LecturersId = 2 },
+                    new { LessonsId = 3, LecturersId = 3 },
+                    new { LessonsId = 3, LecturersId = 2 },
+                    new { LessonsId = 4, LecturersId = 4 },
+                    new { LessonsId = 5, LecturersId = 4 }));
 
             base.OnModelCreating(modelBuilder);
         }

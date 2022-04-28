@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#scheduleDatatable').dataTable({
+    $('#Datatable').dataTable({
         language: {
             url: 'dataTables.ukrainian.json'
         }
