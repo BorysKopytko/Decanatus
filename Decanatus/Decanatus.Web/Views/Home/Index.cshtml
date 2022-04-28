@@ -54,7 +54,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Форма навчання</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.StudyingForm</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(model => model.StudyingForm)</div>
                     </div>
                 </div>
             </div>
@@ -73,12 +73,29 @@
             </div>
         </div>
         <div class="col-lg-14 mb-4">
-            <div class="card bg-success text-white shadow">
-                <div class="card-body">
-                    Остання оцінка
-                    <div class="text-white-50 small">@ViewData["LatestGradeAmount"]/@ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
-                </div>
-            </div>
+            @{
+                int amount = Int32.Parse(ViewData["LatestGradeAmount"].ToString());
+                int maxAmount = Int32.Parse(ViewData["LatestGradeMaxAmount"].ToString());
+
+                if (amount / maxAmount > 0.5)
+                {
+                    <div class="card bg-danger text-white shadow">
+                        <div class="card-body">
+                                Остання оцінка
+                            <div class="text-white-50 small">@ViewData["LatestGradeAmount"] / @ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card bg-success text-white shadow">
+                        <div class="card-body">
+                                Остання оцінка
+                            <div class="text-white-50 small">@ViewData["LatestGradeAmount"] / @ViewData["LatestGradeMaxAmount"] - @ViewData["LatestGradeSubject"]</div>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
     <div class="col-lg-6 mb-4">
