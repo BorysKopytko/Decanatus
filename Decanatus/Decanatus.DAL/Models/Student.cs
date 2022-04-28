@@ -16,7 +16,7 @@ namespace Decanatus.DAL.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Номер залікової книги")]
-        public int GradebookNumber { get; set; }
+        public string GradebookNumber { get; set; }
 
         [Required]
         [Display(Name = "Номер наказу")]
