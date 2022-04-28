@@ -10,6 +10,7 @@
             url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/uk.json'
         },
         orderCellsTop: true,
+        
         fixedHeader: true,
         initComplete: function () {
             var api = this.api();
@@ -25,7 +26,14 @@
                     );
                     var title = $(cell).text();
 
-                    $(cell).html('<input type="text" class="form-control" placeholder="' + '" />');
+                    if ($(cell).hasClass('dontNeedFilter')) {
+                        $(cell).html('<div class="btn-group-vertical w-100"><button type = "button" class= "btn btn-success"><i class="fa fa-plus-square"></i><br>Створити</button></div>');
+                    }
+                    else
+                    {
+                        $(cell).html('<input type="text" class="form-control" placeholder="' + '" />');
+                    }
+                    
 
                     // On every keypress in this input
                     $(
@@ -59,5 +67,9 @@
                         });
                 });
         },
+        columnDefs: [
+            { orderable: false, targets: -1 }
+        ],
+
     });
 });
