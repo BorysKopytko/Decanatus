@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.BLL.Repositories
 {
-    public class GradeRepository : GenericRepository<Grade>, IGradeRepository
+    public class StudentRepository : GenericRepository<Student>, IStudentRepository
     {
-        private readonly DbSet<Grade> _grade;
+        private readonly DbSet<Student> _student;
 
-        public GradeRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public StudentRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _grade = dbContext.Set<Grade>();
+            _student = dbContext.Set<Student>();
         }
     }
 }

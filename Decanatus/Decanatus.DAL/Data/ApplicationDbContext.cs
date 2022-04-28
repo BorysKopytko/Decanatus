@@ -356,13 +356,24 @@ namespace Decanatus.DAL.Data
                         StudentId = 1,
                         GradeType = GradeType.Module,
                         SubjectId = 1,
-                        Date = DateTime.Now,
+                        Date = DateTime.Parse("2021-03-21 13:26"),
                         Description = "asd",
                         MaxAmount = 10,
                     },
                     new Grade
                     {
                         Id = 2,
+                        Amount = 8,
+                        StudentId = 1,
+                        GradeType = GradeType.Practice,
+                        SubjectId = 1,
+                        Date = DateTime.Parse("2022-03-21 13:26"),
+                        Description = "asd",
+                        MaxAmount = 10,
+                    },
+                    new Grade
+                    {
+                        Id = 3,
                         Amount = 8,
                         StudentId = 2,
                         GradeType = GradeType.Module,
@@ -373,7 +384,7 @@ namespace Decanatus.DAL.Data
                     },
                     new Grade
                     {
-                        Id = 3,
+                        Id = 4,
                         Amount = 9,
                         StudentId = 3,
                         GradeType = GradeType.Module,
@@ -384,7 +395,7 @@ namespace Decanatus.DAL.Data
                     },
                     new Grade
                     {
-                        Id = 4,
+                        Id = 5,
                         Amount = 4,
                         StudentId = 4,
                         GradeType = GradeType.Module,
@@ -395,7 +406,7 @@ namespace Decanatus.DAL.Data
                     },
                     new Grade
                     {
-                        Id = 5,
+                        Id = 6,
                         Amount = 5,
                         StudentId = 5,
                         GradeType = GradeType.Module,

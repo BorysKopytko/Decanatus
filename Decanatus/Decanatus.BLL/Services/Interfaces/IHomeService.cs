@@ -9,12 +9,10 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace Decanatus.BLL.Services.Interfaces
 {
-    public interface IGradeService
+    public interface IHomeService
     {
-        Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> GetInclude();
+        Func<IQueryable<Student>, IIncludableQueryable<Student, object>> GetInclude();
 
-        IEnumerable<Grade> GetAllGrades();
-
-        IEnumerable<Grade> GetGradesByStudentId(int id);
+        public Student GetStudent(int id);
     }
 }

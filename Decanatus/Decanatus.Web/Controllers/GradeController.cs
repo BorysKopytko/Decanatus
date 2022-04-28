@@ -19,7 +19,7 @@ namespace Decanatus.Web.Controllers
             return View("AllGrades", _gradeService.GetAllGrades());
         }
 
-        public IActionResult GradesByStudentId(int id)
+        public IActionResult GradesByStudentId(int id = 1)
         {
             return View("StudentGrades", _gradeService.GetGradesByStudentId(id));
         }

@@ -32,12 +32,6 @@ namespace Decanatus.BLL.Services.Implementations
             return expr;
         }
 
-        public Expression<Func<Grade, Grade>> GetSelector()
-        {
-            Expression<Func<Grade, Grade>> expr = x => x;
-            return expr;
-        }
-
         public IEnumerable<Grade> GetAllGrades()
         {
             var include = GetInclude();
