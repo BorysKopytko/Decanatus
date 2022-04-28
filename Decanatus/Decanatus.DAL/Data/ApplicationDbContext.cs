@@ -58,7 +58,7 @@ namespace Decanatus.DAL.Data
                     new Speciality
                     {
                         Id = 2,
-                        Name = "Прикладна математикка",
+                        Name = "Прикладна математика",
                         FacultyId = 2,
                     },
                     new Speciality
@@ -143,7 +143,7 @@ namespace Decanatus.DAL.Data
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 1,
+                        GroupId = 2,
                     },
                     new Student
                     {
@@ -160,7 +160,7 @@ namespace Decanatus.DAL.Data
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 2,
+                        GroupId = 4,
                     },
                     new Student
                     {
@@ -177,7 +177,7 @@ namespace Decanatus.DAL.Data
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 2,
+                        GroupId = 5,
                     },
                     new Student
                     {
@@ -194,7 +194,7 @@ namespace Decanatus.DAL.Data
                         OrderDate = DateTime.Parse("01.01.2021"),
                         GraduateDate = DateTime.Parse("01.01.2021"),
                         StudyingForm = StudyingForm.FullTime,
-                        GroupId = 2,
+                        GroupId = 6,
                     },
                 });
             modelBuilder.Entity<Lecturer>().HasData(
