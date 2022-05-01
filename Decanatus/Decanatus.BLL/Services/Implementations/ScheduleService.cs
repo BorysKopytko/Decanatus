@@ -17,19 +17,17 @@ namespace Decanatus.BLL.Services
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _context;
 
-        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, ApplicationDbContext context, IMapper mapper)
+        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
-            _context = context;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> LessonsInclude()
         {
-            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber);
+            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber).Include(k=>k.LessonGroups).Include(k => k.LessonLecturers);
             return expr;
         }
 
@@ -95,37 +93,36 @@ namespace Decanatus.BLL.Services
         public async Task<bool> UpdateLessonAsync(LessonViewModel lessonViewModel)
         {
             var include = LessonsInclude();
-            var lesson2 = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == lessonViewModel.Id);
+            var preLesson = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == lessonViewModel.Id);
 
-            await _repositoryWrapper.LessonRepository.DeleteAsync(lesson2);
+            var lesson = new Lesson();
+
+            await _repositoryWrapper.LessonRepository.DeleteAsync(preLesson);
             await _unitOfWork.Commit();
 
-            var lesson = lesson2;
-
-            lesson.Id = lessonViewModel.Id; 
             lesson.LessonType = lessonViewModel.LessonType;
             lesson.LessonWeekType = lessonViewModel.LessonWeekType;
             lesson.DayOfWeek = lessonViewModel.DayOfWeek;
-            lesson.LessonNumber = _repositoryWrapper.LessonNumberRepository.GetByIdAsync(Convert.ToInt32(lessonViewModel.LessonNumber)).Result;
-            lesson.Audience = _repositoryWrapper.AudienceRepository.GetByIdAsync(Convert.ToInt32(lessonViewModel.Audience)).Result;
-            lesson.Subject = _repositoryWrapper.SubjectRepository.GetByIdAsync(Convert.ToInt32(lessonViewModel.Subject)).Result;
+            lesson.LessonNumber = _repositoryWrapper.LessonNumberRepository.GetByIdAsync(lessonViewModel.LessonNumber).Result;
+            lesson.Audience = _repositoryWrapper.AudienceRepository.GetByIdAsync(lessonViewModel.Audience).Result;
+            lesson.Subject = _repositoryWrapper.SubjectRepository.GetByIdAsync(lessonViewModel.Subject).Result;
             lesson.LessonNumberId = lessonViewModel.LessonNumber;
-            lesson.AudienceId = _repositoryWrapper.AudienceRepository.GetByIdAsync(Convert.ToInt32(lessonViewModel.Audience)).Result.Id;
-            lesson.SubjectId = _repositoryWrapper.SubjectRepository.GetByIdAsync(Convert.ToInt32(lessonViewModel.Subject)).Result.Id;
+            lesson.AudienceId = _repositoryWrapper.AudienceRepository.GetByIdAsync(lessonViewModel.Audience).Result.Id;
+            lesson.SubjectId = _repositoryWrapper.SubjectRepository.GetByIdAsync(lessonViewModel.Subject).Result.Id;
             lesson.Lecturers = new Collection<Lecturer>();
             lesson.Groups = new Collection<Group>();
+            lesson.LessonGroups = new Collection<LessonGroup>();
+            lesson.LessonLecturers = new Collection<LessonLecturer>();
 
             foreach (var lecturer in lessonViewModel.Lecturers)
             {
-                lesson.Lecturers.Add(_repositoryWrapper.LecturerRepository.GetByIdAsync(Convert.ToInt32(lecturer)).Result);
+                lesson.Lecturers.Add(_repositoryWrapper.LecturerRepository.GetByIdAsync(lecturer).Result);
             }
 
             foreach (var group in lessonViewModel.Groups)
             {
-                lesson.Groups.Add(_repositoryWrapper.GroupRepository.GetByIdAsync(Convert.ToInt32(group)).Result);
+                lesson.Groups.Add(_repositoryWrapper.GroupRepository.GetByIdAsync(group).Result);
             }
-
-
 
             await _repositoryWrapper.LessonRepository.AddAsync(lesson);
             await _unitOfWork.Commit();

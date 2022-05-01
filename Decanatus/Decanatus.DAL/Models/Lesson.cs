@@ -59,5 +59,7 @@ namespace Decanatus.DAL.Models
         public Subject Subject { get; set; }
 
         public ICollection<LessonGroup> LessonGroups { get; set; }
+        public ICollection<LessonLecturer> LessonLecturers { get; set; }
+
     }
 }
