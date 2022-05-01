@@ -1,20 +1,25 @@
-﻿using Decanatus.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using Decanatus.BLL.Services.Interfaces;
+using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.Web.Controllers
-{    
+{
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;
+        //public readonly IMapper _mapper;
 
-        public ScheduleController(IScheduleService scheduleService)
+        public ScheduleController(IScheduleService scheduleService, IMapper mapper)
         {
             _scheduleService = scheduleService;
+            //_mapper = mapper;
+
         }
 
-        public async Task<IActionResult> Setup()
+        public async Task<IActionResult> Configure()
         {
             var model = await _scheduleService.GetLessonsAsync();
             return View(model);
@@ -55,17 +60,25 @@ namespace Decanatus.Web.Controllers
         {
             if (id == null || id == 0)
             {
-                NotFound();
+                return NotFound();
             }
 
-            var lessonViewModel = _scheduleService.GetLessonViewModel(id); 
+            var lessonViewModel = _scheduleService.GetLessonViewModel(id);
 
             if (lessonViewModel == null)
             {
                 return NotFound();
             }
-            
+
             return View(lessonViewModel);
+        }
+
+        //POST
+        [HttpPost]
+        public async Task<IActionResult> Edit(LessonViewModel lessonViewModel)
+        {
+            await _scheduleService.UpdateLessonAsync(lessonViewModel);
+            return RedirectToAction(nameof(Configure));
         }
     }
 }

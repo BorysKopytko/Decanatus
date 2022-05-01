@@ -1,27 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Decanatus.DAL.Abstractions;
+using Decanatus.DAL.Models;
 
-namespace Decanatus.DAL.Models
+namespace Decanatus.BLL.DTOs
 {
-    public enum LessonType
-    {
-        [Display(Name = "Лекція")]
-        Lecture,
-        [Display(Name = "Практична робота")]
-        Laboratory,
-    }
-
-    public enum LessonWeekType
-    {
-        [Display(Name = "Чисельник")]
-        Numerator,
-        [Display(Name = "Знаменник")]
-        Denominator,
-        [Display(Name = "Кожен тиждень")]
-        Both,
-    }
-
-    public class Lesson : Entity
+    public class LessonDTO : Entity
     {
         [Required]
         [Display(Name = "Тип заняття")]
@@ -47,7 +30,7 @@ namespace Decanatus.DAL.Models
 
         public int AudienceId { get; set; }
 
-        [Display(Name ="Аудиторія")]
+        [Display(Name = "Аудиторія")]
         public Audience Audience { get; set; }
 
         [Display(Name = "Викладачі")]
@@ -57,7 +40,5 @@ namespace Decanatus.DAL.Models
 
         [Display(Name = "Предмет")]
         public Subject Subject { get; set; }
-
-        public ICollection<LessonGroup> LessonGroups { get; set; }
     }
 }

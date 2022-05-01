@@ -1,4 +1,5 @@
 ﻿@model Decanatus.BLL.ViewModels.LessonViewModel
+@using Decanatus.DAL.Models;
 
 <div class="row">
     <div class="col-md-4">
@@ -6,37 +7,53 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Lesson.LessonWeekType" class="control-label"></label>
-                <input asp-for="Lesson.LessonWeekType" class="form-control" />
-                <span asp-validation-for="Lesson.LessonWeekType" class="text-danger"></span>
+                <label asp-for="LessonWeekType" class="control-label"></label>
+                <select asp-for="LessonWeekType" class="form-control"
+                        asp-items="Html.GetEnumSelectList<LessonWeekType>()">
+                </select>
+                <span asp-validation-for="LessonWeekType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lesson.DayOfWeek" class="control-label"></label>
-                <input asp-for="Lesson.DayOfWeek" class="form-control" />
-                <span asp-validation-for="Lesson.DayOfWeek" class="text-danger"></span>
+                <label asp-for="DayOfWeek" class="control-label"></label>
+                <select asp-for="DayOfWeek" class="form-control"
+                        asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+                </select>
+                <span asp-validation-for="DayOfWeek" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lesson.LessonNumber.Number" class="control-label"></label>
-                <input asp-for="Lesson.LessonNumber.Number" class="form-control" />
-                <span asp-validation-for="Lesson.LessonNumber.Number" class="text-danger"></span>
+                <label asp-for="LessonNumber" class="control-label"></label>
+                <select asp-for="LessonNumber" asp-items="Model.AllLessonNumbers"></select>
+                <span asp-validation-for="LessonNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lesson.Subject.Name" class="control-label"></label>
-                <input asp-for="Lesson.Subject.Name" class="form-control" />
-                <span asp-validation-for="Lesson.Subject.Name" class="text-danger"></span>
+                <label asp-for="Subject" class="control-label"></label>
+                <select asp-for="Subject" asp-items="Model.AllSubjects"></select>
+                <span asp-validation-for="Subject" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lesson.Audience.Name" class="control-label"></label>
-                <input asp-for="Lesson.Audience.Name" class="form-control" />
-                <span asp-validation-for="Lesson.Audience.Name" class="text-danger"></span>
+                <label asp-for="LessonType" class="control-label"></label>
+                <select asp-for="LessonType" class="form-control"
+                        asp-items="Html.GetEnumSelectList<LessonType>()">
+                </select>
+                <span asp-validation-for="LessonType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @*                <label asp-for="Lecturers." class="control-label"></label>
-                    <input asp-for="Audience.Name" class="form-control" />
-                    <span asp-validation-for="Audience.Name" class="text-danger"></span>*@
+                <label asp-for="Audience" class="control-label"></label>
+                <select asp-for="Audience" asp-items="Model.AllAudiences"></select>
+                <span asp-validation-for="Audience" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Lecturers" class="control-label"></label>
+                <select asp-for="Lecturers" asp-items="Model.AllLecturers"></select>
+                <span asp-validation-for="Lecturers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Groups" class="control-label"></label>
+                <select asp-for="Groups" asp-items="Model.AllGroups"></select>
+                <span asp-validation-for="Groups" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -44,9 +61,9 @@
 
 @section Scripts {
     @{
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 }

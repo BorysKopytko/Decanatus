@@ -5,13 +5,13 @@ namespace Decanatus.BLL.Services.Interfaces
 {
     public interface IScheduleService
     {
-        Task<IEnumerable<Lesson>> GetLessonsAsync();
 
         void AddNewLessonAsync(Lesson lesson);
 
         Task<IEnumerable<Lesson>> GetStudentLessonsAsync(string dayType);
-        IEnumerable<Lesson> GetLessonsAsync();
+        Task<IEnumerable<Lesson>> GetLessonsAsync();
         Lesson FindLessonAsync(int? id);
         LessonViewModel GetLessonViewModel(int? id);
+        Task <bool> UpdateLessonAsync(LessonViewModel obj);
     }
 }

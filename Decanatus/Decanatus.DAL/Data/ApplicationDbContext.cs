@@ -32,6 +32,8 @@ namespace Decanatus.DAL.Data
 
         public DbSet<LessonNumber> LessonNumbers { get; set; }
 
+        public DbSet<LessonGroup> LessonGroups { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LessonNumber>().HasData(
@@ -482,21 +484,52 @@ namespace Decanatus.DAL.Data
                     },
                 });
 
-            modelBuilder
-            .Entity<Group>()
-            .HasMany(p => p.Lessons)
-            .WithMany(p => p.Groups)
-            .UsingEntity(j => j.ToTable("LessonsGroups").HasData(
-                    new { LessonsId = 1, GroupsId = 1 },
-                    new { LessonsId = 1, GroupsId = 2 },
-                    new { LessonsId = 1, GroupsId = 3 },
-                    new { LessonsId = 2, GroupsId = 1 },
-                    new { LessonsId = 3, GroupsId = 2 },
-                    new { LessonsId = 4, GroupsId = 3 },
-                    new { LessonsId = 5, GroupsId = 5 },
-                    new { LessonsId = 4, GroupsId = 4 },
-                    new { LessonsId = 5, GroupsId = 6 },
-                    new { LessonsId = 6, GroupsId = 1 }));
+            //modelBuilder
+            //.Entity<Group>()
+            //.HasMany(p => p.Lessons)
+            //.WithMany(p => p.Groups)
+            //.UsingEntity(j => j.ToTable("LessonGroups").HasData(
+            //        new { Id = 1, LessonId = 1, GroupId = 1 },
+            //        new { Id = 2, LessonId = 1, GroupId = 2 },
+            //        new { Id = 3, LessonId = 1, GroupId = 3 },
+            //        new { Id = 4, LessonId = 2, GroupId = 1 },
+            //        new { Id = 5, LessonId = 3, GroupId = 2 },
+            //        new { Id = 6, LessonId = 4, GroupId = 3 },
+            //        new { Id = 7, LessonId = 5, GroupId = 5 },
+            //        new { Id = 8, LessonId = 4, GroupId = 4 },
+            //        new { Id = 9, LessonId = 5, GroupId = 6 },
+            //        new { Id = 10, LessonId = 6, GroupId = 1 }));
+
+            modelBuilder.Entity<Lesson>()
+            .HasMany(p => p.Groups)
+            .WithMany(p => p.Lessons)
+            .UsingEntity<LessonGroup>(
+                j => j
+                    .HasOne(pt => pt.Group)
+                    .WithMany(t => t.LessonGroups)
+                    .HasForeignKey(pt => pt.GroupId),
+                j => j
+                    .HasOne(pt => pt.Lesson)
+                    .WithMany(p => p.LessonGroups)
+                    .HasForeignKey(pt => pt.LessonId),
+                j =>
+                {
+                    j.HasKey(t => new { t.LessonId, t.GroupId });
+                });
+            
+            modelBuilder.Entity<LessonGroup>().HasData(
+                    new { Id = 1, LessonId = 1, GroupId = 1 },
+                    new { Id = 2, LessonId = 1, GroupId = 2 },
+                    new { Id = 3, LessonId = 1, GroupId = 3 },
+                    new { Id = 4, LessonId = 2, GroupId = 1 },
+                    new { Id = 5, LessonId = 3, GroupId = 2 },
+                    new { Id = 6, LessonId = 4, GroupId = 3 },
+                    new { Id = 7, LessonId = 5, GroupId = 5 },
+                    new { Id = 8, LessonId = 4, GroupId = 4 },
+                    new { Id = 9, LessonId = 5, GroupId = 6 },
+                    new { Id = 10, LessonId = 6, GroupId = 1 });
+
+
 
             modelBuilder
             .Entity<Lecturer>()

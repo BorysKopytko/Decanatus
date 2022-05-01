@@ -11,11 +11,21 @@ namespace Decanatus.BLL.ViewModels
 {
     public class LessonViewModel : Entity
     {
-        public Lesson Lesson { get; set; }
-        public List<SelectListItem> LessonNumbers { get; set; }
-        public List<SelectListItem> Subject Subjects { get; set; }
-    public List<SelectListItem> Audiences { get; set; }
-    public List<SelectListItem> Lecturers { get; set; }
-    public List<SelectListItem> Groups { get; set; }
-}
+        public List<SelectListItem> AllLessonNumbers { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> AllSubjects { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> AllAudiences { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> AllLecturers { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> AllGroups { get; set; } = new List<SelectListItem>();
+
+        public LessonType LessonType { get; set; }
+        public IEnumerable <int> Groups { get; set; }
+        public IEnumerable <int> Lecturers { get; set; }
+        public LessonWeekType LessonWeekType { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
+        public int LessonNumber { get; set; }
+        public int Audience { get; set; }
+        public int Subject { get; set; }
+
+
+    }
 }

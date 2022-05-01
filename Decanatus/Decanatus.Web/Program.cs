@@ -38,11 +38,14 @@ try
     builder.Services.AddTransient<ISpecialityRepository, SpecialityRepository>();
     builder.Services.AddTransient<IStudentRepository, StudentRepository>();
     builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
+    builder.Services.AddTransient<ILessonNumberRepository, LessonNumberRepository>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     builder.Services.AddScoped<IScheduleService, ScheduleService>();
     builder.Services.AddScoped<IGradeService, GradeService>();
     builder.Services.AddScoped<IHomeService, HomeService>();
+
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();
