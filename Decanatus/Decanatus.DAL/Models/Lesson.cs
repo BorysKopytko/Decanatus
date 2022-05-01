@@ -61,5 +61,7 @@ namespace Decanatus.DAL.Models
         public ICollection<LessonGroup> LessonGroups { get; set; }
         public ICollection<LessonLecturer> LessonLecturers { get; set; }
 
+        public DateTime CreationDateTime { get; set; } = DateTime.Now;
+
     }
 }

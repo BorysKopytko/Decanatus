@@ -26,6 +26,8 @@ namespace Decanatus.BLL.ViewModels
         public int Audience { get; set; }
         public int Subject { get; set; }
 
+        public DateTime CreationDateTime { get; set; }
+
 
     }
 }

@@ -6,6 +6,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreationDateTime" />
             <div class="form-group">
                 <label asp-for="LessonWeekType" class="control-label"></label>
                 <select asp-for="LessonWeekType" class="form-control"

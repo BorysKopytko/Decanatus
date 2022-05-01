@@ -34,7 +34,7 @@ namespace Decanatus.BLL.Services
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
-            var lessons = await _repositoryWrapper.LessonRepository.Includer(include);
+            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderBy(x=>x.CreationDateTime);
             return lessons;
         }
 
@@ -75,6 +75,7 @@ namespace Decanatus.BLL.Services
             lessonViewModel.Subject = lesson.SubjectId;
             lessonViewModel.Groups = lesson.Groups.Select(g => g.Id);
             lessonViewModel.Lecturers = lesson.Lecturers.Select(l => l.Id);
+            lessonViewModel.CreationDateTime = lesson.CreationDateTime;
 
             var subjects = _repositoryWrapper.SubjectRepository.GetAllAsync().Result;
             var audiences = _repositoryWrapper.AudienceRepository.GetAllAsync().Result;
@@ -113,6 +114,7 @@ namespace Decanatus.BLL.Services
             lesson.Groups = new Collection<Group>();
             lesson.LessonGroups = new Collection<LessonGroup>();
             lesson.LessonLecturers = new Collection<LessonLecturer>();
+            lesson.CreationDateTime = lessonViewModel.CreationDateTime;
 
             foreach (var lecturer in lessonViewModel.Lecturers)
             {
