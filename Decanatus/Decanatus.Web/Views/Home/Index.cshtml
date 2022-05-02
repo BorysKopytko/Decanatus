@@ -132,7 +132,7 @@
                 <div class="card-body">
                     @foreach (var lesson in lessons)
                     {
-                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number:</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
+                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number: (@lesson.LessonNumber.StartTime.Hours:@lesson.LessonNumber.StartTime.Minutes-@lesson.LessonNumber.EndTime.Hours:@lesson.LessonNumber.EndTime.Minutes)</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
                     }
                 </div>
             </div>
