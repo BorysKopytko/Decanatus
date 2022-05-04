@@ -20,5 +20,7 @@ namespace Decanatus.BLL.Services.Interfaces
         Grade GetGradeById(int id);
 
         Task<bool> UpdateGradeAsync(Grade grade);
+
+        Task<bool> DeleteGradeAsync(int id);
     }
 }

@@ -28,6 +28,17 @@ namespace Decanatus.Web.Controllers
             return View(_gradeService.GetAllGrades());
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            await _gradeService.DeleteGradeAsync(id.Value);
+            return RedirectToAction(nameof(Configure));
+        }
+
         //GET
         public IActionResult Edit(int? id)
         {

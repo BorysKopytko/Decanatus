@@ -68,5 +68,15 @@ namespace Decanatus.BLL.Services.Implementations
 
             return true;
         }
+
+        public async Task<bool> DeleteGradeAsync(int id)
+        {
+            var grade = await _repositoryWrapper.GradeRepository.GetByIdAsync(id);
+
+            await _repositoryWrapper.GradeRepository.DeleteAsync(grade);
+            await _unitOfWork.Commit();
+
+            return true;
+        }
     }
 }
