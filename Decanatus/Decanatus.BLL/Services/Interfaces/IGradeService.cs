@@ -16,5 +16,9 @@ namespace Decanatus.BLL.Services.Interfaces
         IEnumerable<Grade> GetAllGrades();
 
         IEnumerable<Grade> GetGradesByStudentId(int id);
+
+        Grade GetGradeById(int id);
+
+        Task<bool> UpdateGradeAsync(Grade grade);
     }
 }
