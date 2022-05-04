@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Decanatus.BLL.Classes;
 using Decanatus.BLL.DTOs;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
@@ -27,14 +28,14 @@ namespace Decanatus.BLL.Services
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> LessonsInclude()
         {
-            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber).Include(k=>k.LessonGroups).Include(k => k.LessonLecturers);
+            Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> expr = x => x.Include(i => i.Audience).Include(c => c.Subject).Include(a => a.Lecturers).Include(b => b.Groups).Include(b => b.LessonNumber).Include(k => k.LessonGroups).Include(k => k.LessonLecturers);
             return expr;
         }
 
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
-            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderBy(x=>x.CreationDateTime);
+            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderBy(x => x.CreationDateTime);
             return lessons;
         }
 
@@ -71,6 +72,7 @@ namespace Decanatus.BLL.Services
             lessonViewModel.LessonType = lesson.LessonType;
             lessonViewModel.Audience = lesson.AudienceId;
             lessonViewModel.DayOfWeek = lesson.DayOfWeek;
+
             lessonViewModel.LessonWeekType = lesson.LessonWeekType;
             lessonViewModel.Subject = lesson.SubjectId;
             lessonViewModel.Groups = lesson.Groups.Select(g => g.Id);
@@ -85,7 +87,7 @@ namespace Decanatus.BLL.Services
             lessonViewModel.AllLessonNumbers = _repositoryWrapper.LessonNumberRepository.GetAllAsync().Result.Select(l => new SelectListItem { Value = l.Id.ToString(), Text = l.Number.ToString() }).ToList();
             lessonViewModel.AllSubjects = _repositoryWrapper.SubjectRepository.GetAllAsync().Result.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
             lessonViewModel.AllAudiences = _repositoryWrapper.AudienceRepository.GetAllAsync().Result.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name }).ToList();
-            lessonViewModel.AllLecturers = _repositoryWrapper.LecturerRepository.GetAllAsync().Result.Select(l => new SelectListItem { Value = l.Id.ToString(), Text = l.LastName + " " + l.FirstName + " " + l.MiddleName + " " + "(" + l.Position.ToString() + ")" }).ToList();
+            lessonViewModel.AllLecturers = _repositoryWrapper.LecturerRepository.GetAllAsync().Result.Select(l => new SelectListItem { Value = l.Id.ToString(), Text = l.LastName + " " + l.FirstName + " " + l.MiddleName + " " + "(" + l.Position.GetDisplayName() + ")" }).ToList();
             lessonViewModel.AllGroups = _repositoryWrapper.GroupRepository.GetAllAsync().Result.Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name }).ToList();
 
             return lessonViewModel;
@@ -104,6 +106,7 @@ namespace Decanatus.BLL.Services
             lesson.LessonType = lessonViewModel.LessonType;
             lesson.LessonWeekType = lessonViewModel.LessonWeekType;
             lesson.DayOfWeek = lessonViewModel.DayOfWeek;
+
             lesson.LessonNumber = _repositoryWrapper.LessonNumberRepository.GetByIdAsync(lessonViewModel.LessonNumber).Result;
             lesson.Audience = _repositoryWrapper.AudienceRepository.GetByIdAsync(lessonViewModel.Audience).Result;
             lesson.Subject = _repositoryWrapper.SubjectRepository.GetByIdAsync(lessonViewModel.Subject).Result;

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Decanatus.DAL.Models.Lesson>
-
+@using Decanatus.BLL.Classes;
 @{
     ViewData["Title"] = "Розклад занять";
 }
@@ -19,7 +19,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.LessonNumber)
                         </th>
-
                         <th>
                             @Html.DisplayNameFor(model => model.Subject)
                         </th>
@@ -48,12 +47,7 @@
                                 @Html.DisplayFor(les => lesson.LessonWeekType)
                             </td>
                             <td>
-                                @{
-                                    var culture = new System.Globalization.CultureInfo("uk-UA");
-                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeek);
-                                    day = char.ToUpper(day[0]) + day.Substring(1, day.Length - 1);
-                                }
-                                @day
+                                @lesson.DayOfWeek.GetDisplayName()
                             </td>
                             <td>
                                 @Html.DisplayFor(les => lesson.LessonNumber.Number)

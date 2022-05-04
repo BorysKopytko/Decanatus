@@ -21,6 +21,24 @@ namespace Decanatus.DAL.Models
         Both,
     }
 
+    public enum UkrainianDayOfWeek
+    {
+        [Display(Name ="Понеділок")]
+        Monday,
+        [Display(Name ="Вівторок")]
+        Tuesday,
+        [Display(Name ="Середа")]
+        Wednesday,
+        [Display(Name ="Четвер")]
+        Thursday,
+        [Display(Name ="П'ятниця")]
+        Friday,
+        [Display(Name ="Субота")]
+        Saturday,
+        [Display(Name ="Неділя")]
+        Sunday
+    }
+
     public class Lesson : Entity
     {
         [Required]
@@ -38,7 +56,7 @@ namespace Decanatus.DAL.Models
 
         [Required]
         [Display(Name = "День тижня")]
-        public DayOfWeek DayOfWeek { get; set; }
+        public UkrainianDayOfWeek DayOfWeek { get; set; }
 
         [Display(Name = "Номер пари")]
         public LessonNumber LessonNumber { get; set; }

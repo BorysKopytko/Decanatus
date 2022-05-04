@@ -1,12 +1,17 @@
 ﻿@model Decanatus.BLL.ViewModels.LessonViewModel
 @using Decanatus.DAL.Models;
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CreationDateTime" />
+@{
+    ViewData["Title"] = "Редагувати заняття";
+}
+
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CreationDateTime" />
+    <div class="row">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label asp-for="LessonWeekType" class="control-label"></label>
                 <select asp-for="LessonWeekType" class="form-control"
@@ -17,7 +22,7 @@
             <div class="form-group">
                 <label asp-for="DayOfWeek" class="control-label"></label>
                 <select asp-for="DayOfWeek" class="form-control"
-                        asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+                        asp-items="Html.GetEnumSelectList<UkrainianDayOfWeek>()">
                 </select>
                 <span asp-validation-for="DayOfWeek" class="text-danger"></span>
             </div>
@@ -26,6 +31,9 @@
                 <select asp-for="LessonNumber" asp-items="Model.AllLessonNumbers"></select>
                 <span asp-validation-for="LessonNumber" class="text-danger"></span>
             </div>
+
+        </div>
+        <div class="col-lg-6">
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
                 <select asp-for="Subject" asp-items="Model.AllSubjects"></select>
@@ -43,28 +51,33 @@
                 <select asp-for="Audience" asp-items="Model.AllAudiences"></select>
                 <span asp-validation-for="Audience" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Lecturers" class="control-label"></label>
-                <select asp-for="Lecturers" asp-items="Model.AllLecturers"></select>
-                <span asp-validation-for="Lecturers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Groups" class="control-label"></label>
-                <select asp-for="Groups" asp-items="Model.AllGroups"></select>
-                <span asp-validation-for="Groups" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Зберегти" class="btn btn-primary" />
-            </div>
-        </form>
+
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <label asp-for="Lecturers" class="control-label"></label>
+        <select asp-for="Lecturers" asp-items="Model.AllLecturers"></select>
+        <span asp-validation-for="Lecturers" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Groups" class="control-label"></label>
+        <select asp-for="Groups" asp-items="Model.AllGroups"></select>
+        <span asp-validation-for="Groups" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Зберегти" class="btn btn-primary" />
+        <button asp-controller="Schedule" asp-action="Configure" class="btn btn-secondary">Скасувати</button>  
+    </div>
+
+</form>
+
 
 @section Scripts {
-    @{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap4.min.css"/>
 }
-}
+
