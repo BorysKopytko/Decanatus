@@ -81,7 +81,7 @@
                             <td>
                                 <div class="btn-group-vertical w-100">
                                     <a class="btn btn-warning" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
-                                    <a class="btn btn-danger" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    <a class="btn btn-danger" asp-controller="Schedule" asp-action="Delete" asp-route-Id="@lesson.Id"><i class="fa fa-trash"></i><br>Видалити</a>
                                 </div>
                             </td>
                         </tr>
@@ -92,8 +92,7 @@
     </div>
 </div>
 
-@section Scripts
-{
+@section Scripts{
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
 <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
