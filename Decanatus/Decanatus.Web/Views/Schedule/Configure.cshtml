@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Decanatus.DAL.Models.Lesson>
-
+@using Decanatus.BLL.Classes;
 @{
     ViewData["Title"] = "Розклад занять";
 }
@@ -9,7 +9,7 @@
         <div class="table-responsive">
             <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
                 <thead>
-                    <tr >
+                    <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.LessonWeekType)
                         </th>
@@ -19,7 +19,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.LessonNumber)
                         </th>
-
                         <th>
                             @Html.DisplayNameFor(model => model.Subject)
                         </th>
@@ -48,12 +47,7 @@
                                 @Html.DisplayFor(les => lesson.LessonWeekType)
                             </td>
                             <td>
-                                @{
-                                    var culture = new System.Globalization.CultureInfo("uk-UA");
-                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeek);
-                                    day = char.ToUpper(day[0]) + day.Substring(1, day.Length - 1);
-                                }
-                                @day
+                                @lesson.DayOfWeek.GetDisplayName()
                             </td>
                             <td>
                                 @Html.DisplayFor(les => lesson.LessonNumber.Number)
@@ -86,8 +80,8 @@
                             </td>
                             <td>
                                 <div class="btn-group-vertical w-100">
-                                    <button type="button" class="btn btn-warning"><i class="fa fa-edit"></i><br>Редагувати</button>
-                                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i><br>Видалити</button>
+                                    <a class="btn btn-warning" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                    <a class="btn btn-danger" asp-controller="Schedule" asp-action="Edit" asp-route-Id="@lesson.Id"><i class="fa fa-trash"></i><br>Видалити</a>
                                 </div>
                             </td>
                         </tr>

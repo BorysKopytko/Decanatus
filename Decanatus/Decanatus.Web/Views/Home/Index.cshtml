@@ -2,7 +2,7 @@
 
 @{
     @using Decanatus.BLL.Classes;
-    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek == DateTime.Today.DayOfWeek);
+    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek.ToString() == DateTime.Today.DayOfWeek.ToString());
     ViewData["Title"] = "Головна сторінка";
 }
 

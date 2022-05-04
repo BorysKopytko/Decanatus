@@ -22,6 +22,7 @@ namespace Decanatus.DAL.Repositories.Realizations
         private ISpecialityRepository _specialityRepository;
 
         private IStudentRepository _studentRepository;
+        private ILessonNumberRepository _lessonNumberRepository;
 
         private ISubjectRepository _subjectRepository;
 
@@ -130,6 +131,19 @@ namespace Decanatus.DAL.Repositories.Realizations
                     _subjectRepository = new SubjectRepository(_dbContext);
                 }
                 return _subjectRepository;
+            }
+        }
+
+
+        public ILessonNumberRepository LessonNumberRepository
+        {
+            get
+            {
+                if (_lessonNumberRepository == null)
+                {
+                    _lessonNumberRepository = new LessonNumberRepository(_dbContext);
+                }
+                return _lessonNumberRepository;
             }
         }
 

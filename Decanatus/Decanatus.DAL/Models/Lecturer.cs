@@ -21,5 +21,7 @@ namespace Decanatus.DAL.Models
         public Position Position { get; set; }
 
         public ICollection<Lesson> Lessons { get; set; }
+
+        public ICollection<LessonLecturer> LessonLecturers { get; set; }
     }
 }

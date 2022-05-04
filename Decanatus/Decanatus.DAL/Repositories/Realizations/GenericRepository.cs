@@ -56,5 +56,7 @@ namespace Decanatus.DAL.Repositories.Realizations
 
             return query;
         }
+
+
     }
 }

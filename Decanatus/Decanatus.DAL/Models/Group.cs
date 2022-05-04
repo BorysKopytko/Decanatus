@@ -16,5 +16,7 @@ namespace Decanatus.DAL.Models
         public ICollection<Student> Students { get; set; }
 
         public ICollection<Lesson> Lessons { get; set; }
+
+        public ICollection<LessonGroup> LessonGroups { get; set; }
     }
 }
