@@ -9,7 +9,6 @@
         language: {
             url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/uk.json'
         },
-        "order": [],
         orderCellsTop: true,
         
         fixedHeader: true,
@@ -28,6 +27,7 @@
                     var title = $(cell).text();
 
                     if ($(cell).hasClass('dontNeedFilter')) {
+                        //$(cell).html('<div class="btn-group-vertical w-100"><button type = "button" class= "btn btn-success"><i class="fa fa-plus-square"></i><br>Створити</button></div>');
                         $(cell).html('<div class="btn-group-vertical w-100"><a class="btn btn-success" href="Create"><i class="fa fa-plus-square"></i><br>Створити</a></div>');
                     }
                     else

@@ -2,7 +2,7 @@
 
 @{
     @using Decanatus.BLL.Classes;
-    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek == DateTime.Today.DayOfWeek);
+    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek.ToString() == DateTime.Today.DayOfWeek.ToString());
     ViewData["Title"] = "Головна сторінка";
 }
 
@@ -70,7 +70,7 @@
             @{
             <div class="card bg-info text-white shadow">
                 <div class="card-body">
-                    @if (lessons == null)
+                    @if (lessons.Count() == 0)
                     {
                         <p>Сьогодні пар немає</p>
                     }
@@ -100,8 +100,9 @@
         <div class="col-lg-14 mb-4">
             @{
                 var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
+                double border = 0.5;
 
-                if (latestGrade.Amount / latestGrade.MaxAmount > 0.5)
+                if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
                 {
                     <div class="card bg-danger text-white shadow">
                         <div class="card-body">
@@ -123,7 +124,7 @@
         </div>
     </div>
     <div class="col-lg-6 mb-4">
-        @if (lessons != null)
+        @if (lessons.Count() > 0)
         {
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -132,7 +133,7 @@
                 <div class="card-body">
                     @foreach (var lesson in lessons)
                     {
-                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number:</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
+                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number: (@lesson.LessonNumber.StartTime.Hours:@lesson.LessonNumber.StartTime.Minutes-@lesson.LessonNumber.EndTime.Hours:@lesson.LessonNumber.EndTime.Minutes)</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
                     }
                 </div>
             </div>

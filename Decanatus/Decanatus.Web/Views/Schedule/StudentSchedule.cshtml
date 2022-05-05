@@ -37,7 +37,7 @@
                             <td>
                                 @{
                                     var culture = new System.Globalization.CultureInfo("uk-UA");
-                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeek);
+                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeekTime);
                                     day = char.ToUpper(day[0]) + day.Substring(1, day.Length - 1);
                                 }
                                 @day

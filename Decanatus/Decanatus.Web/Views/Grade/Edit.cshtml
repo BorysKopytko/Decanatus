@@ -1,0 +1,81 @@
+﻿@model Decanatus.DAL.Models.Grade
+@using Decanatus.DAL.Models;
+
+@{
+    ViewData["Title"] = "Редагувати оцінку";
+}
+
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="card shadow mb-4 col-lg-6">
+        <div class="card-body">
+            <div>
+                <label asp-for="Student.LastName"></label>
+                <a>: @Model.Student.LastName</a>
+            </div>
+            <div>
+                <label asp-for="Student.FirstName"></label>
+                <a>: @Model.Student.FirstName</a>
+            </div>
+            <div>
+                <label asp-for="Student.MiddleName"></label>
+                <a>: @Model.Student.MiddleName</a>
+            </div>
+            <div>
+                <label asp-for="Student.Group.Name"></label>
+                <a>: @Model.Student.Group.Name</a>
+            </div>
+            <div>
+                <label asp-for="Subject.Name"></label>
+                <a>: @Model.Subject.Name</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxAmount" class="control-label"></label>
+                <input asp-for="MaxAmount" class="form-control" />
+                <span asp-validation-for="MaxAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradeType" class="control-label"></label>
+                <select asp-for="GradeType" class="form-control"
+                        asp-items="Html.GetEnumSelectList<GradeType>()">
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Зберегти" class="btn btn-primary" />
+        <button asp-controller="Grade" asp-action="Configure" class="btn btn-secondary">Скасувати</button>
+    </div>
+</form>
+
+
+@section Scripts {
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap4.min.css" />
+}
+

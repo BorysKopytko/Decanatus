@@ -20,9 +20,13 @@ namespace Decanatus.DAL.Models
     public class Grade : Entity
     {
         [Required]
+        [Range(0, 100)]
+        [Display(Name = "Максимальна оцінка")]
+        public int MaxAmount { get; set; }
+
+        [Required]
         [Display(Name = "Оцінка")]
-        [Range(0,100)]
-        [MaxLength(3)]
+        [Range(0, 100)]
         public int Amount { get; set; }
 
         public int StudentId { get; set; }
@@ -47,11 +51,5 @@ namespace Decanatus.DAL.Models
         [Required]
         [DataType(DataType.Text)]
         public string Description { get; set; }
-
-        [Required]
-        [MaxLength(3)]
-        [Range(0,100)]
-        [Display(Name = "Максимальна оцінка")]
-        public int MaxAmount { get; set; }
     }
 }

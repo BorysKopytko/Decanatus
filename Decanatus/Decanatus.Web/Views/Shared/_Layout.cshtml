@@ -85,8 +85,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Grade" asp-action="GradesByStudentId" asp-route-id="1">
-                @*<a class="nav-link" href="tables.html">*@
+                <a class="nav-link" asp-controller="Grade" asp-action="Student" asp-route-id="1">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Оцінки</span>
                 </a>
@@ -151,6 +150,10 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
+                    @if (@ViewData["Title"] == "Розклад занять")
+                    {
+                        
+                    }
 
 
                     @RenderBody()
