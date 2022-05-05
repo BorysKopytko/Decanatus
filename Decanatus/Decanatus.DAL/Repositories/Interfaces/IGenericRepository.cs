@@ -6,7 +6,7 @@ namespace Decanatus.DAL.Repositories.Interfaces
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
-        Task<T> AddAsync(T entity);
+        Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task<IEnumerable<T>> Includer(Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null/*, Expression<Func<T, T>> selector = null*/);

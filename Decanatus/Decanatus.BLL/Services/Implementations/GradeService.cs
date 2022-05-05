@@ -94,15 +94,34 @@ namespace Decanatus.BLL.Services.Implementations
 
             var gradeViewModel = new GradeViewModel
             {
+                SubjectId = subjectId,
                 Groups = groups.Select(group => new SelectListItem { Value = group.Id.ToString(), Text = group.Name.ToString() }).ToList(),
             };
 
             return gradeViewModel;
         }
 
-        public void AddGrades(GradeViewModel gradeViewModel)
+        public async Task AddGrades(GradeViewModel gradeViewModel)
         {
+            foreach (var groupId in gradeViewModel.GroupsId)
+            {
+                var students = _repositoryWrapper.StudentRepository.GetAllAsync().Result.Where(student => student.GroupId == groupId);
+                foreach (var student in students)
+                {
+                    await _repositoryWrapper.GradeRepository.AddAsync(new Grade
+                    {
+                        MaxAmount = gradeViewModel.MaxAmount,
+                        StudentId = student.Id,
+                        GradeType = gradeViewModel.GradeType,
+                        Date = gradeViewModel.Date,
+                        Amount = null,
+                        SubjectId = gradeViewModel.SubjectId,
+                        Description = string.Empty,
+                    });
+                }
+            }
 
+            await _unitOfWork.Commit();
         }
 
         public async Task<bool> UpdateGradeAsync(Grade grade)

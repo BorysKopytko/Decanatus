@@ -19,11 +19,9 @@ namespace Decanatus.DAL.Repositories.Realizations
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-
-            return entity;
+            await this._dbContext.Set<T>().AddAsync(entity);
         }
 
         public Task UpdateAsync(T entity)

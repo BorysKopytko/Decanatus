@@ -30,6 +30,6 @@ namespace Decanatus.BLL.Services.Interfaces
 
         GradeViewModel CreateGradeViewModel(int lecturerId, int subjectId);
 
-        void AddGrades(GradeViewModel gradeViewModel);
+        Task AddGrades(GradeViewModel gradeViewModel);
     }
 }
