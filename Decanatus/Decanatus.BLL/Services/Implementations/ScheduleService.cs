@@ -35,7 +35,7 @@ namespace Decanatus.BLL.Services
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
-            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderBy(x => x.CreationDateTime);
+            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderByDescending(x => x.CreationDateTime);
             return lessons;
         }
 
