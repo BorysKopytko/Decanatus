@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Decanatus.DAL.Models.Lesson>
+
+@{
+    ViewData["Title"] = "Розклад занять";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th>
+                            @Html.DisplayNameFor(model => model.DayOfWeek)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Subject)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LessonType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Audience)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Lecturers)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Groups)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lesson in Model)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    var culture = new System.Globalization.CultureInfo("uk-UA");
+                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeekTime);
+                                    day = char.ToUpper(day[0]) + day.Substring(1, day.Length - 1);
+                                }
+                                @day
+                            </td>
+                            <td>
+                                @Html.DisplayFor(les => lesson.Subject.Name)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(les => lesson.LessonType)
+
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(les => lesson.Audience.Name)
+                            </td>
+                            <td>
+                                @foreach (var lecturer in lesson.Lecturers)
+                                {
+                                    <p>@Html.DisplayFor(lec => lecturer.LastName) @Html.DisplayFor(lec => lecturer.FirstName) @Html.DisplayFor(lec => lecturer.MiddleName) (@Html.DisplayFor(lec => lecturer.Position))</p>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var group in lesson.Groups)
+                                {
+                                    <p>
+                                        @Html.DisplayFor(gro => group.Name)
+                                    </p>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+@*<script src="~/js/StudentScheduleDatatable.js"></script>*@
+}
+
+
+
+
+
+

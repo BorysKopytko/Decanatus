@@ -3,6 +3,7 @@ using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace Decanatus.BLL.Services.Implementations
 {
@@ -31,7 +32,7 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetAllGrades()
         {
             var include = GetInclude();
-            var grades = _repositoryWrapper.GradeRepository.Includer(include);
+            var grades = _repositoryWrapper.GradeRepository.GetData(null, null, null, include);
 
             return grades.Result;
         }
@@ -39,15 +40,22 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetGradesByStudentId(int id)
         {
             var include = GetInclude();
-            var grades = _repositoryWrapper.GradeRepository.Includer(include).Result.Where(grade => grade.StudentId == id);
+            var filter = FilterGradesByStudentId(id);
+            var grades = _repositoryWrapper.GradeRepository.GetData(filter, null, null, include).Result;//Includer(include).Result.Where(grade => grade.StudentId == id);
 
             return grades;
+        }
+
+        private Expression<Func<Grade, bool>> FilterGradesByStudentId(int id)
+        {
+            Expression<Func<Grade, bool>> searchedGrades = x => x.StudentId == id;
+            return searchedGrades;
         }
 
         public Grade GetGradeById(int id)
         {
             var include = GetInclude();
-            var grade = _repositoryWrapper.GradeRepository.Includer(include).Result.FirstOrDefault(grade => grade.Id == id);
+            var grade = _repositoryWrapper.GradeRepository.GetData(null, null, null, include).Result.FirstOrDefault(grade => grade.Id == id);
 
             return grade;
         }
@@ -55,7 +63,7 @@ namespace Decanatus.BLL.Services.Implementations
         public async Task<bool> UpdateGradeAsync(Grade grade)
         {
             var include = GetInclude();
-            var _grade = _repositoryWrapper.GradeRepository.Includer(include).Result.FirstOrDefault(x => x.Id == grade.Id);
+            var _grade = _repositoryWrapper.GradeRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == grade.Id);
 
             _grade.Amount = grade.Amount;
             _grade.MaxAmount = grade.MaxAmount;

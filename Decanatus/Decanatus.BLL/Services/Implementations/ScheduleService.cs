@@ -1,15 +1,15 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Decanatus.BLL.Classes;
-using Decanatus.BLL.DTOs;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
-using Decanatus.DAL.Data;
 using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq.Expressions;
 
 namespace Decanatus.BLL.Services
 {
@@ -35,15 +35,19 @@ namespace Decanatus.BLL.Services
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
-            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderByDescending(x => x.CreationDateTime);
+            var lessons = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.OrderByDescending(x => x.CreationDateTime);
+
             return lessons;
         }
 
-        public async Task<IEnumerable<Lesson>> GetStudentLessonsAsync(string dayType)
+        public Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType) 
         {
-
             var include = LessonsInclude();
-            var lessons = await _repositoryWrapper.LessonRepository.Includer(include);
+            var filterLessons = GetLessonByPeriod(periodType);
+            var sortingLessons = OrderLessonByTime();
+
+            var lessons = _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
+
             return lessons;
         }
 
@@ -53,14 +57,73 @@ namespace Decanatus.BLL.Services
             _unitOfWork.Commit();
         }
 
+        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime) 
+        {
+            var startWeekNumber = DateTime.Now.Month >= 9 ?
+                CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(new DateTime(DateTime.Now.Year, 9, 1), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false
+                :
+                CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(new DateTime(DateTime.Now.Year - 1, 9, 1), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false;
+
+            var now = DateTime.Now.DayOfWeek;
+            var tomorrow = DateTime.Today.AddDays(1).DayOfWeek;
+            var dayAfterTomorrow = DateTime.Today.AddDays(2).DayOfWeek;
+            var currentWeekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(DateTime.Now.Date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false;
+
+            bool evenOrOddWeek = startWeekNumber == currentWeekNumber ? true : false;
+
+            Expression<Func<Lesson, bool>> numerator = x => x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both;
+            Expression<Func<Lesson, bool>> denominator = x => x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both;
+            Func<Lesson, bool> isNumerator = numerator.Compile();
+            Func<Lesson, bool> isDenominator = denominator.Compile();
+
+            Expression<Func<Lesson, bool>> searchedLessons = periodOfTime switch
+            {
+                EnumPeriodOfTime.Today => evenOrOddWeek switch
+                {
+                    true => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both),
+                    false => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both)
+                },
+
+                EnumPeriodOfTime.Tomorrow => evenOrOddWeek switch
+                {
+                    true => x => x.DayOfWeekTime == tomorrow && isNumerator(x),
+                    false => x => x.DayOfWeekTime == tomorrow && isDenominator(x)
+                },
+
+                EnumPeriodOfTime.DayAfterTomorrow => evenOrOddWeek switch
+                {
+                    true => x => x.DayOfWeekTime == dayAfterTomorrow && isNumerator(x),
+                    false => x => x.DayOfWeekTime == dayAfterTomorrow && isDenominator(x)
+                },
+
+                EnumPeriodOfTime.OneWeek => evenOrOddWeek switch
+                {
+                    true => x => isNumerator(x),
+                    false => x => isDenominator(x)
+                },
+
+                EnumPeriodOfTime.TwoWeek => !evenOrOddWeek switch
+                {
+                    true => x => isNumerator(x),
+                    false => x => isDenominator(x)
+                }
+            };
+
+            return searchedLessons;
+        }
+
+        private Func<IQueryable<Lesson>, IQueryable<Lesson>> OrderLessonByTime()
+        {
+            Func<IQueryable<Lesson>, IQueryable<Lesson>> sortedLessons = x => x.OrderBy(a => a.DayOfWeekTime).ThenBy(a => a.LessonNumber.Number);
+            return sortedLessons;
+        }
+
         public Lesson FindLessonAsync(int? id)
         {
             var include = LessonsInclude();
-            var lesson = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == id);
+            var lesson = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == id);
             return lesson;
         }
-
-
 
         public LessonViewModel CreateLessonViewModel()
         {
@@ -94,7 +157,7 @@ namespace Decanatus.BLL.Services
             var lessonViewModel = new LessonViewModel();
 
             var include = LessonsInclude();
-            var lesson = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == id);
+            var lesson = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == id);
 
             lessonViewModel.Id = lesson.Id;
             lessonViewModel.LessonNumber = lesson.LessonNumberId;
@@ -125,7 +188,7 @@ namespace Decanatus.BLL.Services
         public async Task<bool> UpdateLessonAsync(LessonViewModel lessonViewModel)
         {
             var include = LessonsInclude();
-            var preLesson = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == lessonViewModel.Id);
+            var preLesson = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == lessonViewModel.Id);
 
             var lesson = new Lesson();
 
