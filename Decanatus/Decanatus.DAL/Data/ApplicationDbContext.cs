@@ -349,7 +349,7 @@ namespace Decanatus.DAL.Data
                         DayOfWeek = UkrainianDayOfWeek.Tuesday,
                         LessonNumberId = 1,
                         AudienceId = 2,
-                        SubjectId = 2,
+                        SubjectId = 1,
                     },
                     new Lesson
                     {
@@ -359,7 +359,7 @@ namespace Decanatus.DAL.Data
                         DayOfWeek = UkrainianDayOfWeek.Tuesday,
                         LessonNumberId = 2,
                         AudienceId = 3,
-                        SubjectId = 3,
+                        SubjectId = 2,
                     },
                     new Lesson
                     {
