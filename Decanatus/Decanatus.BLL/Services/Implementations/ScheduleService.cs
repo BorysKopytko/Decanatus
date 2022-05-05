@@ -35,7 +35,7 @@ namespace Decanatus.BLL.Services
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
-            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderBy(x => x.CreationDateTime);
+            var lessons = _repositoryWrapper.LessonRepository.Includer(include).Result.OrderByDescending(x => x.CreationDateTime);
             return lessons;
         }
 
@@ -58,6 +58,35 @@ namespace Decanatus.BLL.Services
             var include = LessonsInclude();
             var lesson = _repositoryWrapper.LessonRepository.Includer(include).Result.FirstOrDefault(x => x.Id == id);
             return lesson;
+        }
+
+
+
+        public LessonViewModel CreateLessonViewModel()
+        {
+            var lessonViewModel = new LessonViewModel();
+
+            var subjects = _repositoryWrapper.SubjectRepository.GetAllAsync().Result;
+            var audiences = _repositoryWrapper.AudienceRepository.GetAllAsync().Result;
+            var lecturers = _repositoryWrapper.LecturerRepository.GetAllAsync().Result;
+            var groups = _repositoryWrapper.GroupRepository.GetAllAsync().Result;
+
+            lessonViewModel.AllLessonNumbers = _repositoryWrapper.LessonNumberRepository.GetAllAsync().Result.Select(l => new SelectListItem { Value = l.Id.ToString(), Text = l.Number.ToString() }).ToList();
+            lessonViewModel.AllSubjects = _repositoryWrapper.SubjectRepository.GetAllAsync().Result.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
+            lessonViewModel.AllAudiences = _repositoryWrapper.AudienceRepository.GetAllAsync().Result.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name }).ToList();
+            lessonViewModel.AllLecturers = _repositoryWrapper.LecturerRepository.GetAllAsync().Result.Select(l => new SelectListItem { Value = l.Id.ToString(), Text = l.LastName + " " + l.FirstName + " " + l.MiddleName + " " + "(" + l.Position.GetDisplayName() + ")" }).ToList();
+            lessonViewModel.AllGroups = _repositoryWrapper.GroupRepository.GetAllAsync().Result.Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name }).ToList();
+
+            return lessonViewModel;
+        }
+
+        public async Task<bool> DeleteLessonAsync(int? id)
+        {
+            var lesson = FindLessonAsync(id);
+            await _repositoryWrapper.LessonRepository.DeleteAsync(lesson);
+            await _unitOfWork.Commit();
+
+            return true;
         }
 
         public LessonViewModel GetLessonViewModel(int? id)
@@ -118,6 +147,41 @@ namespace Decanatus.BLL.Services
             lesson.LessonGroups = new Collection<LessonGroup>();
             lesson.LessonLecturers = new Collection<LessonLecturer>();
             lesson.CreationDateTime = lessonViewModel.CreationDateTime;
+
+            foreach (var lecturer in lessonViewModel.Lecturers)
+            {
+                lesson.Lecturers.Add(_repositoryWrapper.LecturerRepository.GetByIdAsync(lecturer).Result);
+            }
+
+            foreach (var group in lessonViewModel.Groups)
+            {
+                lesson.Groups.Add(_repositoryWrapper.GroupRepository.GetByIdAsync(group).Result);
+            }
+
+            await _repositoryWrapper.LessonRepository.AddAsync(lesson);
+            await _unitOfWork.Commit();
+
+            return true;
+        }
+
+        public async Task<bool> CreateLessonAsync(LessonViewModel lessonViewModel)
+        {
+            var lesson = new Lesson();
+
+            lesson.LessonType = lessonViewModel.LessonType;
+            lesson.LessonWeekType = lessonViewModel.LessonWeekType;
+            lesson.DayOfWeek = lessonViewModel.DayOfWeek;
+
+            lesson.LessonNumber = _repositoryWrapper.LessonNumberRepository.GetByIdAsync(lessonViewModel.LessonNumber).Result;
+            lesson.Audience = _repositoryWrapper.AudienceRepository.GetByIdAsync(lessonViewModel.Audience).Result;
+            lesson.Subject = _repositoryWrapper.SubjectRepository.GetByIdAsync(lessonViewModel.Subject).Result;
+            lesson.LessonNumberId = lessonViewModel.LessonNumber;
+            lesson.AudienceId = _repositoryWrapper.AudienceRepository.GetByIdAsync(lessonViewModel.Audience).Result.Id;
+            lesson.SubjectId = _repositoryWrapper.SubjectRepository.GetByIdAsync(lessonViewModel.Subject).Result.Id;
+            lesson.Lecturers = new Collection<Lecturer>();
+            lesson.Groups = new Collection<Group>();
+            lesson.LessonGroups = new Collection<LessonGroup>();
+            lesson.LessonLecturers = new Collection<LessonLecturer>();
 
             foreach (var lecturer in lessonViewModel.Lecturers)
             {

@@ -13,5 +13,9 @@ namespace Decanatus.BLL.Services.Interfaces
         Lesson FindLessonAsync(int? id);
         LessonViewModel GetLessonViewModel(int? id);
         Task <bool> UpdateLessonAsync(LessonViewModel obj);
+
+        LessonViewModel CreateLessonViewModel();
+        Task<bool> CreateLessonAsync(LessonViewModel lessonViewModel);
+        Task<bool> DeleteLessonAsync(int? id);
     }
 }

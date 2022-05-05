@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Decanatus.BLL.Services.Interfaces;
+﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +9,10 @@ namespace Decanatus.Web.Controllers
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;
-        //public readonly IMapper _mapper;
 
-        public ScheduleController(IScheduleService scheduleService, IMapper mapper)
+        public ScheduleController(IScheduleService scheduleService)
         {
             _scheduleService = scheduleService;
-            //_mapper = mapper;
-
         }
 
         public async Task<IActionResult> Configure()
@@ -56,6 +52,22 @@ namespace Decanatus.Web.Controllers
         }
 
         //GET
+        public IActionResult Create()
+        {
+            var lessonViewModel = _scheduleService.CreateLessonViewModel();
+            return View(lessonViewModel);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(LessonViewModel lessonViewModel)
+        {
+            await _scheduleService.CreateLessonAsync(lessonViewModel);
+            return RedirectToAction(nameof(Configure));
+        }
+
+        //GET
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -78,6 +90,35 @@ namespace Decanatus.Web.Controllers
         public async Task<IActionResult> Edit(LessonViewModel lessonViewModel)
         {
             await _scheduleService.UpdateLessonAsync(lessonViewModel);
+            return RedirectToAction(nameof(Configure));
+        }
+
+        //GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var lessonViewModel = _scheduleService.GetLessonViewModel(id);
+
+            if (lessonViewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(lessonViewModel);
+        }
+
+
+        //POST
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePOST(int? id)
+        {
+            await _scheduleService.DeleteLessonAsync(id);
             return RedirectToAction(nameof(Configure));
         }
     }
