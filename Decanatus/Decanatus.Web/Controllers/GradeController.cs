@@ -39,6 +39,23 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Create(Grade grade)
+        //{
+        //    if (grade == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    await _gradeService.AddGradeAsync(grade);
+        //    return RedirectToAction(nameof(Configure));
+        //}
+
         //GET
         public IActionResult Edit(int? id)
         {
