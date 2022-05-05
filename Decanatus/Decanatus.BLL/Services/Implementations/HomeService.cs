@@ -41,7 +41,7 @@ namespace Decanatus.BLL.Services.Implementations
         public Student GetStudent(int id)
         {
             var include = GetInclude();
-            var students = _repositoryWrapper.StudentRepository.Includer(include);
+            var students = _repositoryWrapper.StudentRepository.GetData(null, null, null, include);
             var student = students.Result.FirstOrDefault(student => student.Id == id);
 
             return student;

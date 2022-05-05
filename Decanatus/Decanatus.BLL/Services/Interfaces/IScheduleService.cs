@@ -1,4 +1,5 @@
-﻿using Decanatus.DAL.Models;
+﻿using Decanatus.BLL.Classes;
+using Decanatus.DAL.Models;
 
 namespace Decanatus.BLL.Services.Interfaces
 {
@@ -8,6 +9,6 @@ namespace Decanatus.BLL.Services.Interfaces
 
         void AddNewLessonAsync(Lesson lesson);
 
-        Task<IEnumerable<Lesson>> GetStudentLessonsAsync(string dayType);
+        Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType);
     }
 }

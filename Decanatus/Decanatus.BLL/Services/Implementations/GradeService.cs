@@ -3,6 +3,7 @@ using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace Decanatus.BLL.Services.Implementations
 {
@@ -29,7 +30,7 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetAllGrades()
         {
             var include = GetInclude();
-            var grades = _repositoryWrapper.GradeRepository.Includer(include);
+            var grades = _repositoryWrapper.GradeRepository.GetData(null, null, null, include);
 
             return grades.Result;
         }
@@ -37,9 +38,16 @@ namespace Decanatus.BLL.Services.Implementations
         public IEnumerable<Grade> GetGradesByStudentId(int id)
         {
             var include = GetInclude();
-            var grades = _repositoryWrapper.GradeRepository.Includer(include).Result.Where(grade => grade.StudentId == id);
+            var filter = FilterGradesByStudentId(id);
+            var grades = _repositoryWrapper.GradeRepository.GetData(filter, null, null, include).Result;//Includer(include).Result.Where(grade => grade.StudentId == id);
 
             return grades;
+        }
+
+        private Expression<Func<Grade, bool>> FilterGradesByStudentId(int id)
+        {
+            Expression<Func<Grade, bool>> searchedGrades = x => x.StudentId == id;
+            return searchedGrades;
         }
     }
 }

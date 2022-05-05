@@ -14,7 +14,7 @@ namespace Decanatus.Web.Controllers
 
         public IActionResult AllGrades()
         {
-            return View("AllGrades", _gradeService.GetAllGrades());
+            return View(_gradeService.GetAllGrades());
         }
 
         public IActionResult GradesByStudentId(int id = 1)

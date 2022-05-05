@@ -1,4 +1,5 @@
-﻿using Decanatus.BLL.Services.Interfaces;
+﻿using Decanatus.BLL.Classes;
+using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,10 @@ namespace Decanatus.Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> StudentSchedule(string dayType)
+        public async Task<IActionResult> StudentSchedule(EnumPeriodOfTime periodOfTime)
         {
-            var model = await _scheduleService.GetStudentLessonsAsync(dayType);
-            return View(model);
+            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime);            
+            return View("StudentSchedule", model);
         }
 
         [HttpPost]
