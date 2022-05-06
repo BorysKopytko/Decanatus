@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Decanatus.DAL.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,11 +28,11 @@
 
 
 
-
 </head>
 <body>
     <!-- Page Wrapper -->
     <div id="wrapper">
+
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -40,61 +45,66 @@
                 <div class="sidebar-brand-text mx-3">Decanatus</div>
             </a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Головна сторінка</span>
-                </a>
-            </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Розділи
-            </div>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Головна сторінка</span>
+                    </a>
+                </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                   aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Розклад</span>
-                </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Автоматично</h6>
-                        <a class="collapse-item">Сьогодні</a>
-                        <a class="collapse-item">Завтра</a>
-                        <a class="collapse-item">Післязавтра</a>
-                        <a class="collapse-item">Тиждень</a>
-                        <a class="collapse-item">2 тижні</a>
-                        <a class="collapse-item">Місяць</a>
-                        <a class="collapse-item">Півроку</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Вручну</h6>
-                        <a class="collapse-item">Задати період</a>
-                    </div>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Розділи
                 </div>
-            </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Grade" asp-action="Student" asp-route-id="1">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Оцінки</span>
-                </a>
-            </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                   aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Розклад</span>
+                    </a>
+                    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                     data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Автоматично</h6>
+                            <a class="collapse-item">Сьогодні</a>
+                            <a class="collapse-item">Завтра</a>
+                            <a class="collapse-item">Післязавтра</a>
+                            <a class="collapse-item">Тиждень</a>
+                            <a class="collapse-item">2 тижні</a>
+                            <a class="collapse-item">Місяць</a>
+                            <a class="collapse-item">Півроку</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Вручну</h6>
+                            <a class="collapse-item">Задати період</a>
+                        </div>
+                    </div>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+                <!-- Nav Item - Tables -->
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Grade" asp-action="Student" asp-route-id="1">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Оцінки</span>
+                    </a>
+                </li>
 
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+            }
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -108,38 +118,23 @@
             <!-- Main Content -->
             <div id="content">
 
+
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow">
+
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ім'я Прізвище</span>
-                                <img class="img-profile rounded-circle"
-                                     src="~/img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
+                            @await Html.PartialAsync("_LoginPartial")
                         </li>
 
                     </ul>
@@ -150,10 +145,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
+                    <h1 class="h3 mt-4 mb-4 text-gray-800">@ViewData["Title"]</h1>
                     @if (@ViewData["Title"] == "Розклад занять")
                     {
-                        
+
                     }
 
 

@@ -1,9 +1,11 @@
 ﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Decanatus.Web.Controllers
 {
+    [Authorize(Roles = "Викладач")]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
