@@ -353,7 +353,7 @@ namespace Decanatus.DAL.Data
                         LessonNumberId = 1,
                         DayOfWeekTime = DayOfWeek.Friday,
                         AudienceId = 2,
-                        SubjectId = 2,
+                        SubjectId = 1,
                     },
                     new Lesson
                     {
@@ -364,7 +364,7 @@ namespace Decanatus.DAL.Data
                         LessonNumberId = 2,
                         DayOfWeekTime = DayOfWeek.Tuesday,
                         AudienceId = 3,
-                        SubjectId = 3,
+                        SubjectId = 2,
                     },
                     new Lesson
                     {

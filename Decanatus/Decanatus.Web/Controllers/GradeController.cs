@@ -1,4 +1,5 @@
 ﻿using Decanatus.BLL.Services.Interfaces;
+using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,24 +40,37 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        public async Task<IActionResult> CreateChooseSubject(int id = 1) // lecturerId
+        {
+            var gradeViewModel = _gradeService.CreateGradeViewModel(id);
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(Grade grade)
-        //{
-        //    if (grade == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return View(gradeViewModel);
+        }
 
-        //    await _gradeService.AddGradeAsync(grade);
-        //    return RedirectToAction(nameof(Configure));
-        //}
+        [HttpPost]
+        [ActionName("CreateChooseSubject")]
+        public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
+        {
+            var gradeViewModel = _gradeService.CreateGradeViewModel(LecturerId, SubjectId);
+            //_gradeService.AddGrades(gradeViewModel);
 
-        //GET
+            return View(nameof(Create), gradeViewModel);
+        }
+
+        public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
+        {
+            return View(gradeViewModel);
+        }
+
+        [HttpPost]
+        [ActionName("Create")]
+        public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
+        {
+            await _gradeService.AddGrades(gradeViewModel);
+
+            return RedirectToAction(nameof(Configure));
+        }
+
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -74,7 +88,6 @@ namespace Decanatus.Web.Controllers
             return View(grade);
         }
 
-        //POST
         [HttpPost]
         public async Task<IActionResult> Edit(Grade grade)
         {
