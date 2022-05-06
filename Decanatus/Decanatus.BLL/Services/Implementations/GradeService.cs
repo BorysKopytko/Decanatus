@@ -79,7 +79,7 @@ namespace Decanatus.BLL.Services.Implementations
         public GradeViewModel CreateGradeViewModel(int id)
         {
             var include = GetIncludeLecturer();
-            var lecturer = _repositoryWrapper.LecturerRepository.Includer(include).Result.FirstOrDefault(lecturer => lecturer.Id == id);
+            var lecturer = _repositoryWrapper.LecturerRepository.GetData(null, null, null, include).Result.FirstOrDefault(lecturer => lecturer.Id == id);
             var gradeViewModel = new GradeViewModel
             {
                 LecturerId = lecturer.Id,
@@ -92,7 +92,7 @@ namespace Decanatus.BLL.Services.Implementations
         public GradeViewModel CreateGradeViewModel(int lecturerId, int subjectId)
         {
             var include = GetIncludeLecturer();
-            var lecturer = _repositoryWrapper.LecturerRepository.Includer(include).Result.FirstOrDefault(lecturer => lecturer.Id == lecturerId);
+            var lecturer = _repositoryWrapper.LecturerRepository.GetData(null, null, null, include).Result.FirstOrDefault(lecturer => lecturer.Id == lecturerId);
             var lessons = lecturer.Lessons.Where(lesson => lesson.SubjectId == subjectId);
             var groups = new HashSet<Group>();
 
