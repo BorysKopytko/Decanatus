@@ -29,7 +29,7 @@ try
 
     builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     builder.Services.AddTransient<IAudienceRepository, AudienceRepository>();
-    builder.Services.AddTransient<IFacultyRepository, FacultyRepository>();       
+    builder.Services.AddTransient<IFacultyRepository, FacultyRepository>();
     builder.Services.AddTransient<IGradeRepository, GradeRepository>();
     builder.Services.AddTransient<IGroupRepository, GroupRepository>();
     builder.Services.AddTransient<ILecturerRepository, LecturerRepository>();

@@ -55,8 +55,12 @@ namespace Decanatus.DAL.Models
         public LessonWeekType LessonWeekType { get; set; }
 
         [Required]
-        [Display(Name = "День тижня")]
+        [Display(Name = "День тижня модал")]
         public UkrainianDayOfWeek DayOfWeek { get; set; }
+
+        [Required]
+        [Display(Name = "День тижня")]
+        public DayOfWeek DayOfWeekTime { get; set; }
 
         [Display(Name = "Номер пари")]
         public LessonNumber LessonNumber { get; set; }
