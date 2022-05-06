@@ -40,7 +40,7 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
-        public IActionResult CreateChooseSubject(int id = 1) // lecturerId
+        public async Task<IActionResult> CreateChooseSubject(int id = 1) // lecturerId
         {
             var gradeViewModel = _gradeService.CreateGradeViewModel(id);
 
@@ -49,23 +49,24 @@ namespace Decanatus.Web.Controllers
 
         [HttpPost]
         [ActionName("CreateChooseSubject")]
-        public IActionResult CreateChooseSubjectPost(int SubjectId, int LecturerId)
+        public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
         {
             var gradeViewModel = _gradeService.CreateGradeViewModel(LecturerId, SubjectId);
+            //_gradeService.AddGrades(gradeViewModel);
 
             return View(nameof(Create), gradeViewModel);
         }
 
-        public IActionResult Create(GradeViewModel gradeViewModel)
+        public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
         {
             return View(gradeViewModel);
         }
 
         [HttpPost]
         [ActionName("Create")]
-        public IActionResult CreatePost(GradeViewModel gradeViewModel)
+        public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
-            _gradeService.AddGrades(gradeViewModel);
+            await _gradeService.AddGrades(gradeViewModel);
 
             return RedirectToAction(nameof(Configure));
         }

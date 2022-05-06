@@ -1,5 +1,6 @@
 ﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
+using Decanatus.DAL.Data;
 using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,16 +13,18 @@ namespace Decanatus.BLL.Services.Implementations
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
 
-        public GradeService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork)
+        public GradeService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, ApplicationDbContext context)
         {
             _repositoryWrapper = repositoryWrapper;
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         public Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> GetInclude()
         {
-            Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> expr = 
+            Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> expr =
                 x => x.Include(grade => grade.Student)
                 .ThenInclude(student => student.Group)
                 .ThenInclude(group => group.Speciality)
@@ -35,6 +38,7 @@ namespace Decanatus.BLL.Services.Implementations
             Func<IQueryable<Lecturer>, IIncludableQueryable<Lecturer, object>> expr =
                 x => x.Include(lecturer => lecturer.Lessons)
                 .ThenInclude(lesson => lesson.Groups)
+                .ThenInclude(group => group.Students)
                 .Include(lecturer => lecturer.Lessons)
                 .ThenInclude(lesson => lesson.Subject);
             return expr;
@@ -106,18 +110,17 @@ namespace Decanatus.BLL.Services.Implementations
             foreach (var groupId in gradeViewModel.GroupsId)
             {
                 var students = _repositoryWrapper.StudentRepository.GetAllAsync().Result.Where(student => student.GroupId == groupId);
-                foreach (var student in students)
+                foreach (var item in students)
                 {
-                    await _repositoryWrapper.GradeRepository.AddAsync(new Grade
-                    {
-                        MaxAmount = gradeViewModel.MaxAmount,
-                        StudentId = student.Id,
-                        GradeType = gradeViewModel.GradeType,
-                        Date = gradeViewModel.Date,
-                        Amount = null,
-                        SubjectId = gradeViewModel.SubjectId,
-                        Description = string.Empty,
-                    });
+                    var grade = new Grade();
+                    grade.MaxAmount = gradeViewModel.MaxAmount;
+                    grade.Student = _repositoryWrapper.StudentRepository.GetAllAsync().Result.FirstOrDefault(student => student.Id == item.Id);
+                    grade.GradeType = gradeViewModel.GradeType;
+                    grade.Date = gradeViewModel.Date;
+                    grade.Amount = null;
+                    grade.Subject = _repositoryWrapper.SubjectRepository.GetAllAsync().Result.FirstOrDefault(subject => subject.Id == gradeViewModel.SubjectId);
+                    grade.Description = string.Empty;
+                    await _repositoryWrapper.GradeRepository.AddAsync(grade);
                 }
             }
 
