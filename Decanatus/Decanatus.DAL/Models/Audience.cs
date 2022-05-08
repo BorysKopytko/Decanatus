@@ -7,6 +7,7 @@ namespace Decanatus.DAL.Models
     {
         [Required]
         [DataType(DataType.Text)]
-        public string Name { get; set; } = string.Empty;
+        [Display(Name = "Аудиторія")]
+        public string Name { get; set; }
     }
 }
