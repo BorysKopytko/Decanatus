@@ -48,6 +48,7 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("CreateChooseSubject")]
         public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
         {
@@ -63,6 +64,7 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Create")]
         public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
@@ -89,6 +91,7 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Grade grade)
         {
             await _gradeService.UpdateGradeAsync(grade);
