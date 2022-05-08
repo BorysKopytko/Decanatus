@@ -101,25 +101,27 @@
             @{
                 var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
                 double border = 0.5;
-
-                if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
+                if (latestGrade != null && latestGrade.Amount != null)
                 {
-                    <div class="card bg-danger text-white shadow">
-                        <div class="card-body">
-                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                            <div class="text-white-50 small">Остання оцінка</div>
+                    if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
+                    {
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                <div class="text-white-50 small">Остання оцінка</div>
+                            </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="card bg-success text-white shadow">
-                        <div class="card-body">
-                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                            <div class="text-white-50 small">Остання оцінка</div>
+                    }
+                    else
+                    {
+                        <div class="card bg-success text-white shadow">
+                            <div class="card-body">
+                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                <div class="text-white-50 small">Остання оцінка</div>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                }                
             }
         </div>
     </div>

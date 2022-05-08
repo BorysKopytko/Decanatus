@@ -40,9 +40,9 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
-        public async Task<IActionResult> CreateChooseSubject(int id = 1) // lecturerId
+        public IActionResult CreateChooseSubject(int lecturerId = 1)
         {
-            var gradeViewModel = _gradeService.CreateGradeViewModel(id);
+            var gradeViewModel = _gradeService.CreateGradeViewModel(lecturerId);
 
             return View(gradeViewModel);
         }
@@ -50,15 +50,17 @@ namespace Decanatus.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("CreateChooseSubject")]
-        public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
+        public IActionResult CreateChooseSubjectPost(int subjectId, int lecturerId)
         {
-            var gradeViewModel = _gradeService.CreateGradeViewModel(LecturerId, SubjectId);
+            // TODO: Add validation
+
+            var gradeViewModel = _gradeService.CreateGradeViewModel(lecturerId, subjectId);
             //_gradeService.AddGrades(gradeViewModel);
 
             return View(nameof(Create), gradeViewModel);
         }
 
-        public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
+        public IActionResult Create(GradeViewModel gradeViewModel)
         {
             return View(gradeViewModel);
         }
@@ -68,9 +70,13 @@ namespace Decanatus.Web.Controllers
         [ActionName("Create")]
         public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
-            await _gradeService.AddGrades(gradeViewModel);
+            if (ModelState.IsValid)
+            {
+                await _gradeService.AddGrades(gradeViewModel);
+                return RedirectToAction(nameof(Configure));
+            }
 
-            return RedirectToAction(nameof(Configure));
+            return View(gradeViewModel);
         }
 
         public IActionResult Edit(int? id)
@@ -94,8 +100,13 @@ namespace Decanatus.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Grade grade)
         {
-            await _gradeService.UpdateGradeAsync(grade);
-            return RedirectToAction(nameof(Configure));
+            if (ModelState.IsValid)
+            {
+                await _gradeService.UpdateGradeAsync(grade);
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(grade);
         }
     }
 }

@@ -64,8 +64,13 @@ namespace Decanatus.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LessonViewModel lessonViewModel)
         {
-            await _scheduleService.CreateLessonAsync(lessonViewModel);
-            return RedirectToAction(nameof(Configure));
+            if (ModelState.IsValid)
+            {
+                await _scheduleService.CreateLessonAsync(lessonViewModel);
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(lessonViewModel);
         }
 
         //GET
@@ -88,10 +93,16 @@ namespace Decanatus.Web.Controllers
 
         //POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(LessonViewModel lessonViewModel)
         {
-            await _scheduleService.UpdateLessonAsync(lessonViewModel);
-            return RedirectToAction(nameof(Configure));
+            if (ModelState.IsValid)
+            {
+                await _scheduleService.UpdateLessonAsync(lessonViewModel);
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(lessonViewModel);
         }
 
         //GET
@@ -117,8 +128,10 @@ namespace Decanatus.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeletePOST(int? id)
+        public async Task<IActionResult> DeletePost(int? id)
         {
+            // TODO: Add validation 
+
             await _scheduleService.DeleteLessonAsync(id);
             return RedirectToAction(nameof(Configure));
         }
