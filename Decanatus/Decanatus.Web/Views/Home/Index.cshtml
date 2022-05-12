@@ -1,142 +1,166 @@
 ﻿@model Decanatus.DAL.Models.Student
+@using Microsoft.AspNetCore.Identity
+@using Decanatus.DAL.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     @using Decanatus.BLL.Classes;
     var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek.ToString() == DateTime.Today.DayOfWeek.ToString());
     ViewData["Title"] = "Головна сторінка";
 }
+@if (SignInManager.IsSignedIn(User))
+{
+    if (UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(user => user.Id == UserManager.GetUserId(User))).Result.Contains("Студент"))
+    {
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Факультет
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Faculty.Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Факультет</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Faculty.Name</div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Спеціальність
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Група
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Форма навчання
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(model => model.StudyingForm)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Спеціальність</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Speciality.Name</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="col-lg-14 mb-4">
+                    @{
+                        <div class="card bg-info text-white shadow">
+                            <div class="card-body">
+                                @if (lessons.Count() == 0)
+                                {
+                                    <p>Сьогодні пар немає</p>
+                                }
+                                else
+                                {
+                                    bool found = false;
+                                    foreach (var lesson in lessons)
+                                    {
+                                        if (DateTime.Now.TimeOfDay > lesson.LessonNumber.StartTime
+                                        && DateTime.Now.TimeOfDay < lesson.LessonNumber.EndTime)
+                                        {
+                                            found = true;
+                                            <p>
+                                                @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers)
+                                                {
+                                                    <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>
+                                                }
+                                            </p>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Група</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Group.Name</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-       
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Форма навчання</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(model => model.StudyingForm)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-     <div class="col-lg-6 mb-4">
-        <div class="col-lg-14 mb-4">
-            @{
-            <div class="card bg-info text-white shadow">
-                <div class="card-body">
-                    @if (lessons.Count() == 0)
-                    {
-                        <p>Сьогодні пар немає</p>
+                                        }
+                                    }
+                                    if (!found)
+                                    {
+                                        <p>Зараз пари немає</p>
+                                    }
+                                }
+                                <div class="text-white-50 small">Поточна пара</div>
+                            </div>
+                        </div>
                     }
-                    else
-                    {
-                        bool found = false;
-                        foreach (var lesson in lessons)
+                </div>
+                <div class="col-lg-14 mb-4">
+                    @{
+                        var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
+                        double border = 0.5;
+
+                        if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
                         {
-                            if (DateTime.Now.TimeOfDay > lesson.LessonNumber.StartTime
-                                && DateTime.Now.TimeOfDay < lesson.LessonNumber.EndTime)
+                            <div class="card bg-danger text-white shadow">
+                                <div class="card-body">
+                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                    <div class="text-white-50 small">Остання оцінка</div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card bg-success text-white shadow">
+                                <div class="card-body">
+                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                    <div class="text-white-50 small">Остання оцінка</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                @if (lessons.Count() > 0)
+                {
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Розклад на сьогодні</h6>
+                        </div>
+                        <div class="card-body">
+                            @foreach (var lesson in lessons)
                             {
-                                found = true;
-                                <p> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>} </p>
-
+                                <p>
+                                    <a style="font-weight: bold">Пара №@lesson.LessonNumber.Number: (@lesson.LessonNumber.StartTime.Hours:@lesson.LessonNumber.StartTime.Minutes-@lesson.LessonNumber.EndTime.Hours:@lesson.LessonNumber.EndTime.Minutes)</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers)
+                                    {
+                                        <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>
+                                    }
+                                </p>
                             }
-                        }
-                        if (!found)
-                        {
-                            <p>Зараз пари немає</p>
-                        }
-                    }
-                    <div class="text-white-50 small">Поточна пара</div>
-                </div>
+                        </div>
+                    </div>
+                }
             </div>
-            }
         </div>
-        <div class="col-lg-14 mb-4">
-            @{
-                var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
-                double border = 0.5;
+    }
+}
 
-                if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
-                {
-                    <div class="card bg-danger text-white shadow">
-                        <div class="card-body">
-                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                            <div class="text-white-50 small">Остання оцінка</div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="card bg-success text-white shadow">
-                        <div class="card-body">
-                                @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                            <div class="text-white-50 small">Остання оцінка</div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-        @if (lessons.Count() > 0)
-        {
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Розклад на сьогодні</h6>
-                </div>
-                <div class="card-body">
-                    @foreach (var lesson in lessons)
-                    {
-                        <p><a style="font-weight: bold">Пара №@lesson.LessonNumber.Number: (@lesson.LessonNumber.StartTime.Hours:@lesson.LessonNumber.StartTime.Minutes-@lesson.LessonNumber.EndTime.Hours:@lesson.LessonNumber.EndTime.Minutes)</a> @lesson.Subject.Name, @lesson.LessonType.GetDisplayName(), аудиторія @lesson.Audience.Name, викладачі - @foreach (var lecturer in lesson.Lecturers) { <a>@lecturer.LastName @lecturer.FirstName @lecturer.MiddleName, </a>}</p>
-                    }
-                </div>
-            </div>
-        }
-    </div>
-</div>

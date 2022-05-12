@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Decanatus.Web.Controllers
 {
-    [Authorize(Roles = "Викладач")]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
@@ -16,21 +15,25 @@ namespace Decanatus.Web.Controllers
             _gradeService = gradeService;
         }
 
+        [Authorize(Roles = "Адмін")]
         public IActionResult All()
         {
             return View(_gradeService.GetAllGrades());
         }
 
+        [Authorize(Roles = "Студент")]
         public IActionResult Student(int id = 1)
         {
             return View(_gradeService.GetGradesByStudentId(id));
         }
 
+        [Authorize(Roles = "Викладач")]
         public IActionResult Configure()
         {
             return View(_gradeService.GetAllGrades());
         }
 
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
@@ -42,6 +45,7 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> CreateChooseSubject(int id = 1) // lecturerId
         {
             var gradeViewModel = _gradeService.CreateGradeViewModel(id);
@@ -51,6 +55,7 @@ namespace Decanatus.Web.Controllers
 
         [HttpPost]
         [ActionName("CreateChooseSubject")]
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
         {
             var gradeViewModel = _gradeService.CreateGradeViewModel(LecturerId, SubjectId);
@@ -59,6 +64,7 @@ namespace Decanatus.Web.Controllers
             return View(nameof(Create), gradeViewModel);
         }
 
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
         {
             return View(gradeViewModel);
@@ -66,6 +72,7 @@ namespace Decanatus.Web.Controllers
 
         [HttpPost]
         [ActionName("Create")]
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
             await _gradeService.AddGrades(gradeViewModel);
@@ -73,6 +80,7 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
+        [Authorize(Roles = "Викладач")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -91,6 +99,7 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Edit(Grade grade)
         {
             await _gradeService.UpdateGradeAsync(grade);

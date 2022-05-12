@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Decanatus.Web.Controllers
 {
-    [Authorize(Roles = "СТУДЕНТ")]
+    [Authorize(Roles = "Адмін, Студент, Викладач")]
     public class HomeController : Controller
     {
         private readonly IHomeService _homeService;
