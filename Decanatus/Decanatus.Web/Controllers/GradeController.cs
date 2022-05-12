@@ -15,7 +15,7 @@ namespace Decanatus.Web.Controllers
             _gradeService = gradeService;
         }
 
-        [Authorize(Roles = "Адмін")]
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult All()
         {
             return View(_gradeService.GetAllGrades());
