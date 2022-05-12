@@ -1,8 +1,8 @@
-﻿@using Decanatus.DAL.Models
+@using Decanatus.DAL.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@using Decanatus.BLL.Classes
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,19 +77,16 @@
                     </a>
                     <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
                      data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Автоматично</h6>
-                            <a class="collapse-item">Сьогодні</a>
-                            <a class="collapse-item">Завтра</a>
-                            <a class="collapse-item">Післязавтра</a>
-                            <a class="collapse-item">Тиждень</a>
-                            <a class="collapse-item">2 тижні</a>
-                            <a class="collapse-item">Місяць</a>
-                            <a class="collapse-item">Півроку</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Вручну</h6>
-                            <a class="collapse-item">Задати період</a>
-                        </div>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Автоматично</h6>
+                        <a class="collapse-item" asp-controller="Schedule" asp-action="StudentSchedule" asp-route-periodOfTime="@EnumPeriodOfTime.Today">Сьогодні</a>
+                        <a class="collapse-item" asp-controller="Schedule" asp-action="StudentSchedule" asp-route-periodOfTime="@EnumPeriodOfTime.Tomorrow">Завтра</a>
+                        <a class="collapse-item" asp-controller="Schedule" asp-action="StudentSchedule" asp-route-periodOfTime="@EnumPeriodOfTime.DayAfterTomorrow">Післязавтра</a>
+                        <a class="collapse-item" asp-controller="Schedule" asp-action="StudentSchedule" asp-route-periodOfTime="@EnumPeriodOfTime.OneWeek">Тиждень</a>
+                        <a class="collapse-item" asp-controller="Schedule" asp-action="StudentSchedule" asp-route-periodOfTime="@EnumPeriodOfTime.TwoWeek">2 тижні</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Вручну</h6>
+                        <a class="collapse-item">Задати період</a>
                     </div>
                 </li>
 

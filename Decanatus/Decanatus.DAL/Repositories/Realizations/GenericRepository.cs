@@ -2,6 +2,7 @@
 using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace Decanatus.DAL.Repositories.Realizations
 {
@@ -19,11 +20,9 @@ namespace Decanatus.DAL.Repositories.Realizations
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-
-            return entity;
+            await this._dbContext.Set<T>().AddAsync(entity);
         }
 
         public Task UpdateAsync(T entity)
@@ -45,13 +44,31 @@ namespace Decanatus.DAL.Repositories.Realizations
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> Includer(Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        public async Task<IEnumerable<T>> GetData(Expression<Func<T, bool>> filter = null,
+                                                       Expression<Func<T, T>> selector = null,
+                                                       Func<IQueryable<T>, IQueryable<T>> sorting = null,
+                                                       Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             var query = _dbContext.Set<T>().AsNoTracking();
 
             if (include != null)
             {
                 query = include(query);
+            }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (selector != null)
+            {
+                query = query.Select(selector);
+            }
+
+            if (sorting != null)
+            {
+                query = sorting(query);
             }
 
             return query;
