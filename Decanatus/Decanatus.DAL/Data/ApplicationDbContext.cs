@@ -554,7 +554,7 @@ namespace Decanatus.DAL.Data
                     j.HasKey(t => new { t.LessonId, t.LecturerId });
                 });
 
-            
+
 
             modelBuilder.Entity<LessonLecturer>().HasData(
                     new { Id = 1, LessonId = 1, LecturerId = 1 },
@@ -581,6 +581,7 @@ namespace Decanatus.DAL.Data
             //        new { LessonsId = 4, LecturersId = 4 },
             //        new { LessonsId = 5, LecturersId = 4 },
             //        new { LessonsId = 6, LecturersId = 4 }));
+
 
             base.OnModelCreating(modelBuilder);
         }
