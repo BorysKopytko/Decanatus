@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Decanatus.DAL.Repositories.Interfaces
@@ -9,7 +9,7 @@ namespace Decanatus.DAL.Repositories.Interfaces
 
         Task<IReadOnlyList<T>> GetAllAsync();
 
-        Task<T> AddAsync(T entity);
+        Task AddAsync(T entity);
 
         Task UpdateAsync(T entity);
 

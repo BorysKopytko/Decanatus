@@ -2,11 +2,13 @@ using Decanatus.BLL.Classes;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.Web.Controllers
 {
+    //[Authorize(Roles = "Адміністраторістратор")]
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;
@@ -16,12 +18,14 @@ namespace Decanatus.Web.Controllers
             _scheduleService = scheduleService;
         }
 
+        [Authorize(Roles = "Адміністратор")]
         public async Task<IActionResult> Configure()
         {
             var model = await _scheduleService.GetLessonsAsync();
             return View(model);
         }
 
+        [Authorize(Roles = "Студент")]
         public async Task<IActionResult> StudentSchedule(EnumPeriodOfTime periodOfTime)
         {
             var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime, new Student
@@ -46,6 +50,7 @@ namespace Decanatus.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult Add(int id, Lesson lesson)
         {
             if (id != lesson.Id)
@@ -69,6 +74,8 @@ namespace Decanatus.Web.Controllers
         }
 
         //GET
+       
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult Create()
         {
             var lessonViewModel = _scheduleService.CreateLessonViewModel();
@@ -78,6 +85,7 @@ namespace Decanatus.Web.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Адміністратор")]
         public async Task<IActionResult> Create(LessonViewModel lessonViewModel)
         {
             await _scheduleService.CreateLessonAsync(lessonViewModel);
@@ -85,6 +93,7 @@ namespace Decanatus.Web.Controllers
         }
 
         //GET
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -104,6 +113,7 @@ namespace Decanatus.Web.Controllers
 
         //POST
         [HttpPost]
+        [Authorize(Roles = "Адміністратор")]
         public async Task<IActionResult> Edit(LessonViewModel lessonViewModel)
         {
             await _scheduleService.UpdateLessonAsync(lessonViewModel);
@@ -111,6 +121,7 @@ namespace Decanatus.Web.Controllers
         }
 
         //GET
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -133,6 +144,7 @@ namespace Decanatus.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Адміністратор")]
         public async Task<IActionResult> DeletePOST(int? id)
         {
             await _scheduleService.DeleteLessonAsync(id);
