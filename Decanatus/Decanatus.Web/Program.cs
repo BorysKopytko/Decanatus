@@ -1,3 +1,4 @@
+using Decanatus.BLL.Classes;
 using Decanatus.BLL.Services;
 using Decanatus.BLL.Services.Implementations;
 using Decanatus.BLL.Services.Interfaces;
@@ -109,7 +110,13 @@ try
 
     app.UseRouting();
 
-
+    using (var scope = app.Services.CreateScope())
+    {
+        var serviceProvider = scope.ServiceProvider;
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        await SeedRoleAndUser.Initialize(roleManager, userManager);
+    }
 
     app.UseAuthentication();
     app.UseAuthorization();
