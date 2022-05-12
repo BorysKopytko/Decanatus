@@ -1,3 +1,6 @@
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq.Expressions;
 using AutoMapper;
 using Decanatus.BLL.Classes;
 using Decanatus.BLL.Services.Interfaces;
@@ -7,9 +10,6 @@ using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq.Expressions;
 
 namespace Decanatus.BLL.Services
 {
@@ -17,13 +17,11 @@ namespace Decanatus.BLL.Services
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, IMapper mapper)
+        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork)
         {
             _repositoryWrapper = repositoryWrapper;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> LessonsInclude()
@@ -40,10 +38,10 @@ namespace Decanatus.BLL.Services
             return lessons;
         }
 
-        public Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType) 
+        public Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType, Student student) 
         {
             var include = LessonsInclude();
-            var filterLessons = GetLessonByPeriod(periodType);
+            var filterLessons = GetLessonByPeriod(periodType, student);
             var sortingLessons = OrderLessonByTime();
 
             var lessons = _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
@@ -57,7 +55,7 @@ namespace Decanatus.BLL.Services
             _unitOfWork.Commit();
         }
 
-        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime) 
+        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime, Student student)
         {
             var startWeekNumber = DateTime.Now.Month >= 9 ?
                 CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(new DateTime(DateTime.Now.Year, 9, 1), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false
@@ -71,51 +69,57 @@ namespace Decanatus.BLL.Services
 
             bool evenOrOddWeek = startWeekNumber == currentWeekNumber ? true : false;
 
-            Expression<Func<Lesson, bool>> numerator = x => x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both;
-            Expression<Func<Lesson, bool>> denominator = x => x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both;
-            Func<Lesson, bool> isNumerator = numerator.Compile();
-            Func<Lesson, bool> isDenominator = denominator.Compile();
+            Expression<Func<Lesson, bool>> numerator = x => x.Groups.Contains(student.Group) && (x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both);
+            Expression<Func<Lesson, bool>> denominator = x => x.Groups.Contains(student.Group) && (x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both);
 
             Expression<Func<Lesson, bool>> searchedLessons = periodOfTime switch
             {
-                EnumPeriodOfTime.Today => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both),
-                    false => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both)
-                },
+                EnumPeriodOfTime.Today => x => x.DayOfWeekTime == now,
 
-                EnumPeriodOfTime.Tomorrow => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == tomorrow && isNumerator(x),
-                    false => x => x.DayOfWeekTime == tomorrow && isDenominator(x)
-                },
+                EnumPeriodOfTime.Tomorrow => x => x.DayOfWeekTime == tomorrow,
 
-                EnumPeriodOfTime.DayAfterTomorrow => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == dayAfterTomorrow && isNumerator(x),
-                    false => x => x.DayOfWeekTime == dayAfterTomorrow && isDenominator(x)
-                },
+                EnumPeriodOfTime.DayAfterTomorrow => x => x.DayOfWeekTime == dayAfterTomorrow,
 
-                EnumPeriodOfTime.OneWeek => evenOrOddWeek switch
-                {
-                    true => x => isNumerator(x),
-                    false => x => isDenominator(x)
-                },
+                EnumPeriodOfTime.OneWeek => x => true,
 
-                EnumPeriodOfTime.TwoWeek => !evenOrOddWeek switch
-                {
-                    true => x => isNumerator(x),
-                    false => x => isDenominator(x)
-                }
+                EnumPeriodOfTime.TwoWeek => x => true
             };
 
-            return searchedLessons;
+            if (periodOfTime == EnumPeriodOfTime.TwoWeek)
+            {
+                evenOrOddWeek = !evenOrOddWeek;
+            }
+
+            Expression<Func<Lesson, bool>> resultExpression = evenOrOddWeek ? Combine(searchedLessons, numerator) : Combine(searchedLessons, denominator);
+
+            return resultExpression;
         }
 
         private Func<IQueryable<Lesson>, IQueryable<Lesson>> OrderLessonByTime()
         {
             Func<IQueryable<Lesson>, IQueryable<Lesson>> sortedLessons = x => x.OrderBy(a => a.DayOfWeekTime).ThenBy(a => a.LessonNumber.Number);
             return sortedLessons;
+        }
+
+        private static Expression<T> Combine<T>(Expression<T> firstExpression, Expression<T> secondExpression)
+        {
+            if (firstExpression is null)
+            {
+                return secondExpression;
+            }
+
+            if (secondExpression is null)
+            {
+                return firstExpression;
+            }
+
+            var invokedExpression = Expression.Invoke(
+                secondExpression,
+                firstExpression.Parameters);
+
+            var combinedExpression = Expression.AndAlso(firstExpression.Body, invokedExpression);
+
+            return Expression.Lambda<T>(combinedExpression, firstExpression.Parameters);
         }
 
         public Lesson FindLessonAsync(int? id)

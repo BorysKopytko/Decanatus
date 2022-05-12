@@ -7,66 +7,100 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
+            <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0"> 
                 <thead>
-                    <tr >
-                        <th>
+                    <tr>
+                        <th width="10%" align="center">
                             @Html.DisplayNameFor(model => model.DayOfWeek)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Subject)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.LessonType)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Audience)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Lecturers)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Groups)
+                        <th width="90%" align="center">
+                            <table>
+                                <tr>
+                                    <th width="9%" align="center">
+                                        @Html.DisplayNameFor(model => model.LessonNumber)
+                                    </th>
+                                    <th width="15%" align="center">
+                                        @Html.DisplayNameFor(model => model.LessonWeekType)
+                                    </th>
+                                    <th width="20%" align="center">
+                                        @Html.DisplayNameFor(model => model.Subject)
+                                    </th>
+                                    <th width="11%" align="center">
+                                        @Html.DisplayNameFor(model => model.LessonType)
+                                    </th>
+                                    <th width="8%"  align="center">
+                                        @Html.DisplayNameFor(model => model.Audience)
+                                    </th>
+                                    <th width="29%" align="center">
+                                        @Html.DisplayNameFor(model => model.Lecturers)
+                                    </th>
+                                    <th width="8%" align="center">
+                                        @Html.DisplayNameFor(model => model.Groups)
+                                    </th>
+                                </tr>
+                            </table>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var lesson in Model)
+                    @{
+                        SortedSet<DayOfWeek> days = new();
+                        foreach (var lesson in Model)
+                        {
+                            days.Add(lesson.DayOfWeekTime);
+                        }
+                    }
+                    @foreach (var day in days)
                     {
                         <tr>
-                            <td>
+                            <td width="10%" align="center" valign="middle">
                                 @{
                                     var culture = new System.Globalization.CultureInfo("uk-UA");
-                                    var day = culture.DateTimeFormat.GetDayName(lesson.DayOfWeekTime);
-                                    day = char.ToUpper(day[0]) + day.Substring(1, day.Length - 1);
+                                    var uaDay = culture.DateTimeFormat.GetDayName(day);
+                                    uaDay = char.ToUpper(uaDay[0]) + uaDay.Substring(1, uaDay.Length - 1);
                                 }
-                                @day
+                                <p>@uaDay</p>
                             </td>
-                            <td>
-                                @Html.DisplayFor(les => lesson.Subject.Name)
-                            </td>
-                            <td>
-
-                                @Html.DisplayFor(les => lesson.LessonType)
-
-
-                            </td>
-                            <td>
-                                @Html.DisplayFor(les => lesson.Audience.Name)
-                            </td>
-                            <td>
-                                @foreach (var lecturer in lesson.Lecturers)
-                                {
-                                    <p>@Html.DisplayFor(lec => lecturer.LastName) @Html.DisplayFor(lec => lecturer.FirstName) @Html.DisplayFor(lec => lecturer.MiddleName) (@Html.DisplayFor(lec => lecturer.Position))</p>
-                                }
-                            </td>
-                            <td>
-                                @foreach (var group in lesson.Groups)
-                                {
-                                    <p>
-                                        @Html.DisplayFor(gro => group.Name)
-                                    </p>
-                                }
+                            <td width="90%" align="center">
+                                <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
+                                    @foreach (var lesson in Model)
+                                    {
+                                        if (day == lesson.DayOfWeekTime)
+                                        {
+                                            <tr>
+                                                <td width="9%" align="center">
+                                                    <p>@lesson.LessonNumber.StartTime.Hours.ToString():@lesson.LessonNumber.StartTime.Minutes.ToString()  -  @lesson.LessonNumber.EndTime.Hours.ToString():@lesson.LessonNumber.EndTime.Minutes.ToString()</p>
+                                                </td>
+                                                <td width="15%" align="center">
+                                                    @Html.DisplayFor(les => lesson.LessonWeekType)
+                                                </td>
+                                                <td width="20%" align="center">
+                                                    @Html.DisplayFor(les => lesson.Subject.Name)
+                                                </td>
+                                                <td width="11%" align="center">
+                                                    @Html.DisplayFor(les => lesson.LessonType)
+                                                </td>
+                                                <td width="8%" align="center">
+                                                    @Html.DisplayFor(les => lesson.Audience.Name)
+                                                </td>
+                                                <td width="29%" align="center">
+                                                    @foreach (var lecturer in lesson.Lecturers)
+                                                    {
+                                                        <p>@Html.DisplayFor(lec => lecturer.LastName) @Html.DisplayFor(lec => lecturer.FirstName) @Html.DisplayFor(lec => lecturer.MiddleName) (@Html.DisplayFor(lec => lecturer.Position))</p>
+                                                    }
+                                                </td>
+                                                <td width="8%" align="center">
+                                                    @foreach (var group in lesson.Groups)
+                                                    {
+                                                        <p>
+                                                            @Html.DisplayFor(gro => group.Name)
+                                                        </p>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
                             </td>
                         </tr>
                     }

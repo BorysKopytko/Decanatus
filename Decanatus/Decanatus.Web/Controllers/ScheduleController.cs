@@ -24,7 +24,23 @@ namespace Decanatus.Web.Controllers
 
         public async Task<IActionResult> StudentSchedule(EnumPeriodOfTime periodOfTime)
         {
-            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime);            
+            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime, new Student
+            {
+                Id = 1,
+                FirstName = "Святослав",
+                LastName = "Боліщук",
+                MiddleName = "Андрійович",
+                //Sex = Abstractions.Sex.Male,
+                BirthDate = DateTime.Parse("01.01.2021"),
+                EmailAdress = "asdasd@gmail.com",
+                MobilePhoneNumber = "393848543",
+                GradebookNumber = "c214c12",
+                OrderNumber = 123123,
+                OrderDate = DateTime.Parse("01.01.2021"),
+                GraduateDate = DateTime.Parse("01.01.2021"),
+                StudyingForm = StudyingForm.FullTime,
+                GroupId = 1,
+            });
             return View("StudentSchedule", model);
         }
 
