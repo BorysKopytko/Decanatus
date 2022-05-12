@@ -103,7 +103,7 @@
                     <!-- Divider -->
                     <hr class="sidebar-divider d-none d-md-block">
                 }
-                else if (UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(user => user.Id == UserManager.GetUserId(User))).Result.Contains("Адмін"))
+                else if (UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(user => user.Id == UserManager.GetUserId(User))).Result.Contains("Адміністратор"))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Grade" asp-action="All">
