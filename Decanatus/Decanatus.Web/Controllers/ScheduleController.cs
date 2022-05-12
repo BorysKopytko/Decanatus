@@ -2,11 +2,13 @@ using Decanatus.BLL.Classes;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.Web.Controllers
 {
+    [Authorize(Roles = "Адміністратор")]
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;

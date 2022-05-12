@@ -17,13 +17,11 @@ namespace Decanatus.BLL.Services
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, IMapper mapper)
+        public ScheduleService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork)
         {
             _repositoryWrapper = repositoryWrapper;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         private Func<IQueryable<Lesson>, IIncludableQueryable<Lesson, object>> LessonsInclude()

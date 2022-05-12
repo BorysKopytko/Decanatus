@@ -2,6 +2,7 @@ using Decanatus.BLL.Services;
 using Decanatus.BLL.Services.Implementations;
 using Decanatus.BLL.Services.Interfaces;
 using Decanatus.DAL.Data;
+using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
 using Decanatus.DAL.Repositories.Realizations;
 using Microsoft.AspNetCore.Identity;
@@ -47,9 +48,46 @@ try
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+    builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+        .AddRoles<ApplicationRole>()
+             .AddEntityFrameworkStores<ApplicationDbContext>()
+             .AddDefaultTokenProviders();
+
+    builder.Services.AddMvc();
+
     builder.Services.AddControllersWithViews();
+
+    builder.Services.Configure<IdentityOptions>(options =>
+    {
+        // Password settings.
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequiredLength = 8;
+        options.Password.RequiredUniqueChars = 1;
+
+        // Lockout settings.
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        options.Lockout.MaxFailedAccessAttempts = 3;
+        options.Lockout.AllowedForNewUsers = true;
+
+        // User settings.
+        options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        options.User.RequireUniqueEmail = true;
+    });
+
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        // Cookie settings
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.SlidingExpiration = true;
+    });
 
     var app = builder.Build();
     app.UseSerilogRequestLogging();
@@ -71,6 +109,8 @@ try
 
     app.UseRouting();
 
+
+
     app.UseAuthentication();
     app.UseAuthorization();
 
@@ -78,6 +118,8 @@ try
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
     app.MapRazorPages();
+
+
 
     app.Run();
 

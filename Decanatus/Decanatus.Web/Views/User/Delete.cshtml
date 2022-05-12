@@ -1,0 +1,28 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Видалити користувача";
+}
+
+<form method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label">Електронна пошта</label>
+                <input class="form-control" value="@Model" disabled />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Видалити" class="btn btn-danger" />
+            <button asp-controller="User" asp-action="Configure" class="btn btn-secondary">Скасувати</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap4.min.css" />
+}

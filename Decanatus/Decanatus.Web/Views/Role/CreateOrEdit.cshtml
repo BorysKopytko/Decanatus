@@ -1,0 +1,36 @@
+﻿@model RoleViewModel  
+@using Decanatus.BLL.ViewModels
+  
+@{
+    if (@Model.RoleName == null)
+    {
+        ViewData["Title"] = "Створити роль";
+    }
+    else
+    {
+        ViewData["Title"] = "Редагувати роль";
+    }
+}
+
+<form method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Зберегти" class="btn btn-primary" />
+        <button asp-controller="Role" asp-action="Configure" class="btn btn-secondary">Скасувати</button>  
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap4.min.css"/>
+}
