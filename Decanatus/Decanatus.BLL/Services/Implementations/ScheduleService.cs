@@ -1,3 +1,6 @@
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq.Expressions;
 using AutoMapper;
 using Decanatus.BLL.Classes;
 using Decanatus.BLL.Services.Interfaces;
@@ -7,9 +10,6 @@ using Decanatus.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq.Expressions;
 
 namespace Decanatus.BLL.Services
 {
@@ -30,6 +30,18 @@ namespace Decanatus.BLL.Services
             return expr;
         }
 
+        private Func<IQueryable<Student>, IIncludableQueryable<Student, object>> StudentsInclude()
+        {
+            Func<IQueryable<Student>, IIncludableQueryable<Student, object>> expr = x => x.Include(i => i.Group);
+            return expr;
+        }
+
+        private Func<IQueryable<Lecturer>, IIncludableQueryable<Lecturer, object>> LectrersInclude()
+        {
+            Func<IQueryable<Lecturer>, IIncludableQueryable<Lecturer, object>> expr = x => x.Include(i => i.Lessons);
+            return expr;
+        }
+
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
@@ -38,13 +50,30 @@ namespace Decanatus.BLL.Services
             return lessons;
         }
 
-        public Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType) 
+        public async Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType, int studentId)
         {
+            var studentInclude = StudentsInclude();
+            var student = _repositoryWrapper.StudentRepository.GetData(null, null, null, studentInclude).Result.FirstOrDefault(x => x.Id == studentId);
+
             var include = LessonsInclude();
-            var filterLessons = GetLessonByPeriod(periodType);
+            var filterLessons = GetLessonByPeriod(periodType, student, null);
             var sortingLessons = OrderLessonByTime();
 
-            var lessons = _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
+            var lessons = await _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
+
+            return lessons;
+        }
+
+        public async Task<IEnumerable<Lesson>> GetLecturerLessonsAsync(EnumPeriodOfTime periodType, int lecturerId)
+        {
+            var lecturerInclude = LectrersInclude();
+            var lecturer = _repositoryWrapper.LecturerRepository.GetData(null, null, null, lecturerInclude).Result.FirstOrDefault(x => x.Id == lecturerId);
+
+            var include = LessonsInclude();
+            var filterLessons = GetLessonByPeriod(periodType, null, lecturer);
+            var sortingLessons = OrderLessonByTime();
+
+            var lessons = await _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
 
             return lessons;
         }
@@ -55,7 +84,7 @@ namespace Decanatus.BLL.Services
             _unitOfWork.Commit();
         }
 
-        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime) 
+        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime, Student? student = null, Lecturer? lecturer = null)
         {
             var startWeekNumber = DateTime.Now.Month >= 9 ?
                 CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(new DateTime(DateTime.Now.Year, 9, 1), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false
@@ -71,49 +100,68 @@ namespace Decanatus.BLL.Services
 
             Expression<Func<Lesson, bool>> numerator = x => x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both;
             Expression<Func<Lesson, bool>> denominator = x => x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both;
-            Func<Lesson, bool> isNumerator = numerator.Compile();
-            Func<Lesson, bool> isDenominator = denominator.Compile();
+            Expression<Func<Lesson, bool>> groupCheck = x => x.Groups.Contains(student.Group);
+            Expression<Func<Lesson, bool>> lecturerCheck = x => x.Lecturers.Contains(lecturer);
+
+            if (student != null)
+            {
+                numerator = Combine(groupCheck, numerator);
+                denominator = Combine(groupCheck, denominator);
+            }
+            else
+            {
+                numerator = Combine(lecturerCheck, numerator);
+                denominator = Combine(lecturerCheck, denominator);
+            }
 
             Expression<Func<Lesson, bool>> searchedLessons = periodOfTime switch
             {
-                EnumPeriodOfTime.Today => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both),
-                    false => x => x.DayOfWeekTime == now && (x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both)
-                },
+                EnumPeriodOfTime.Today => x => x.DayOfWeekTime == now,
 
-                EnumPeriodOfTime.Tomorrow => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == tomorrow && isNumerator(x),
-                    false => x => x.DayOfWeekTime == tomorrow && isDenominator(x)
-                },
+                EnumPeriodOfTime.Tomorrow => x => x.DayOfWeekTime == tomorrow,
 
-                EnumPeriodOfTime.DayAfterTomorrow => evenOrOddWeek switch
-                {
-                    true => x => x.DayOfWeekTime == dayAfterTomorrow && isNumerator(x),
-                    false => x => x.DayOfWeekTime == dayAfterTomorrow && isDenominator(x)
-                },
+                EnumPeriodOfTime.DayAfterTomorrow => x => x.DayOfWeekTime == dayAfterTomorrow,
 
-                EnumPeriodOfTime.OneWeek => evenOrOddWeek switch
-                {
-                    true => x => isNumerator(x),
-                    false => x => isDenominator(x)
-                },
+                EnumPeriodOfTime.OneWeek => x => true,
 
-                EnumPeriodOfTime.TwoWeek => !evenOrOddWeek switch
-                {
-                    true => x => isNumerator(x),
-                    false => x => isDenominator(x)
-                }
+                EnumPeriodOfTime.TwoWeek => x => true
             };
 
-            return searchedLessons;
+            if (periodOfTime == EnumPeriodOfTime.TwoWeek)
+            {
+                evenOrOddWeek = !evenOrOddWeek;
+            }
+
+            Expression<Func<Lesson, bool>> resultExpression = evenOrOddWeek ? Combine(searchedLessons, numerator) : Combine(searchedLessons, denominator);
+
+            return resultExpression;
         }
 
         private Func<IQueryable<Lesson>, IQueryable<Lesson>> OrderLessonByTime()
         {
             Func<IQueryable<Lesson>, IQueryable<Lesson>> sortedLessons = x => x.OrderBy(a => a.DayOfWeekTime).ThenBy(a => a.LessonNumber.Number);
             return sortedLessons;
+        }
+
+        private static Expression<T> Combine<T>(Expression<T> firstExpression, Expression<T> secondExpression)
+        {
+            if (firstExpression is null)
+            {
+                return secondExpression;
+            }
+
+            if (secondExpression is null)
+            {
+                return firstExpression;
+            }
+
+            var invokedExpression = Expression.Invoke(
+                secondExpression,
+                firstExpression.Parameters);
+
+            var combinedExpression = Expression.AndAlso(firstExpression.Body, invokedExpression);
+
+            return Expression.Lambda<T>(combinedExpression, firstExpression.Parameters);
         }
 
         public Lesson FindLessonAsync(int? id)

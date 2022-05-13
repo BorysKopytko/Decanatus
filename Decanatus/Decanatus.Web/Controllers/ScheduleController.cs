@@ -28,8 +28,15 @@ namespace Decanatus.Web.Controllers
         [Authorize(Roles = "Студент")]
         public async Task<IActionResult> StudentSchedule(EnumPeriodOfTime periodOfTime)
         {
-            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime);            
+            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime, 1);
             return View("StudentSchedule", model);
+        }
+
+        [Authorize(Roles = "Викладач")]
+        public async Task<IActionResult> LecturerSchedule(EnumPeriodOfTime periodOfTime)
+        {
+            var model = await _scheduleService.GetLecturerLessonsAsync(periodOfTime, 4);
+            return View("LecturerSchedule", model);
         }
 
         [HttpPost]
