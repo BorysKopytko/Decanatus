@@ -30,6 +30,18 @@ namespace Decanatus.BLL.Services
             return expr;
         }
 
+        private Func<IQueryable<Student>, IIncludableQueryable<Student, object>> StudentsInclude()
+        {
+            Func<IQueryable<Student>, IIncludableQueryable<Student, object>> expr = x => x.Include(i => i.Group);
+            return expr;
+        }
+
+        private Func<IQueryable<Lecturer>, IIncludableQueryable<Lecturer, object>> LectrersInclude()
+        {
+            Func<IQueryable<Lecturer>, IIncludableQueryable<Lecturer, object>> expr = x => x.Include(i => i.Lessons);
+            return expr;
+        }
+
         public async Task<IEnumerable<Lesson>> GetLessonsAsync()
         {
             var include = LessonsInclude();
@@ -38,13 +50,30 @@ namespace Decanatus.BLL.Services
             return lessons;
         }
 
-        public Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType, Student student) 
+        public async Task<IEnumerable<Lesson>> GetStudentLessonsAsync(EnumPeriodOfTime periodType, int studentId)
         {
+            var studentInclude = StudentsInclude();
+            var student = _repositoryWrapper.StudentRepository.GetData(null, null, null, studentInclude).Result.FirstOrDefault(x => x.Id == studentId);
+
             var include = LessonsInclude();
-            var filterLessons = GetLessonByPeriod(periodType, student);
+            var filterLessons = GetLessonByPeriod(periodType, student, null);
             var sortingLessons = OrderLessonByTime();
 
-            var lessons = _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
+            var lessons = await _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
+
+            return lessons;
+        }
+
+        public async Task<IEnumerable<Lesson>> GetLecturerLessonsAsync(EnumPeriodOfTime periodType, int lecturerId)
+        {
+            var lecturerInclude = LectrersInclude();
+            var lecturer = _repositoryWrapper.LecturerRepository.GetData(null, null, null, lecturerInclude).Result.FirstOrDefault(x => x.Id == lecturerId);
+
+            var include = LessonsInclude();
+            var filterLessons = GetLessonByPeriod(periodType, null, lecturer);
+            var sortingLessons = OrderLessonByTime();
+
+            var lessons = await _repositoryWrapper.LessonRepository.GetData(filterLessons, null, sortingLessons, include);
 
             return lessons;
         }
@@ -55,7 +84,7 @@ namespace Decanatus.BLL.Services
             _unitOfWork.Commit();
         }
 
-        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime, Student student)
+        private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime, Student? student = null, Lecturer? lecturer = null)
         {
             var startWeekNumber = DateTime.Now.Month >= 9 ?
                 CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(new DateTime(DateTime.Now.Year, 9, 1), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) % 2 == 0 ? true : false
@@ -69,8 +98,21 @@ namespace Decanatus.BLL.Services
 
             bool evenOrOddWeek = startWeekNumber == currentWeekNumber ? true : false;
 
-            Expression<Func<Lesson, bool>> numerator = x => x.Groups.Contains(student.Group) && (x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both);
-            Expression<Func<Lesson, bool>> denominator = x => x.Groups.Contains(student.Group) && (x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both);
+            Expression<Func<Lesson, bool>> numerator = x => x.LessonWeekType == LessonWeekType.Numerator || x.LessonWeekType == LessonWeekType.Both;
+            Expression<Func<Lesson, bool>> denominator = x => x.LessonWeekType == LessonWeekType.Denominator || x.LessonWeekType == LessonWeekType.Both;
+            Expression<Func<Lesson, bool>> groupCheck = x => x.Groups.Contains(student.Group);
+            Expression<Func<Lesson, bool>> lecturerCheck = x => x.Lecturers.Contains(lecturer);
+
+            if (student != null)
+            {
+                numerator = Combine(groupCheck, numerator);
+                denominator = Combine(groupCheck, denominator);
+            }
+            else
+            {
+                numerator = Combine(lecturerCheck, numerator);
+                denominator = Combine(lecturerCheck, denominator);
+            }
 
             Expression<Func<Lesson, bool>> searchedLessons = periodOfTime switch
             {
