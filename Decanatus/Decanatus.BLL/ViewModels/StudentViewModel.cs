@@ -27,6 +27,7 @@ namespace Decanatus.BLL.ViewModels
         [Display(Name = "Дата закінчення навчання")]
         public DateTime GraduateDate { get; set; }
 
+        [Display(Name = "Група")]
         public int GroupId { get; set; }
 
 

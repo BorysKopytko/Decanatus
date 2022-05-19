@@ -1,10 +1,9 @@
-﻿@model LecturerViewModel
+﻿@model AdministratorViewModel
 @using Decanatus.BLL.ViewModels
 @using Decanatus.DAL.Abstractions
-@using Decanatus.DAL.Models
 
 @{
-    ViewData["Title"] = "Створити користувача";
+    ViewData["Title"] = "Видалити користувача";
 }
 
 <form method="post">
@@ -13,61 +12,44 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" disabled/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="FirstName" class="form-control" disabled/>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="LastName" class="form-control" disabled/>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MiddleName" class="control-label"></label>
-                <input asp-for="MiddleName" class="form-control" />
+                <input asp-for="MiddleName" class="form-control" disabled/>
                 <span asp-validation-for="MiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
+                <input asp-for="BirthDate" class="form-control" disabled/>
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MobilePhoneNumber" class="control-label"></label>
-                <input asp-for="MobilePhoneNumber" class="form-control" />
+                <input asp-for="MobilePhoneNumber" class="form-control" disabled/>
                 <span asp-validation-for="MobilePhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Sex" class="control-label"></label>
                 <select asp-for="Sex" class="form-control"
-                        asp-items="Html.GetEnumSelectList<Sex>()">
+                        asp-items="Html.GetEnumSelectList<Sex>()" disabled>
                 </select>
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Position" class="control-label"></label>
-                <select asp-for="Position" class="form-control"
-                        asp-items="Html.GetEnumSelectList<Position>()">
-                </select>
-                <span asp-validation-for="Position" class="text-danger"></span>
-            </div>
         </div>
         <div class="form-group">
-            <input type="submit" value="Зберегти" class="btn btn-primary" />
+            <input type="submit" value="Видалити" class="btn btn-danger" />
             <button asp-controller="User" asp-action="Configure" class="btn btn-secondary">Скасувати</button>
         </div>
     </div>

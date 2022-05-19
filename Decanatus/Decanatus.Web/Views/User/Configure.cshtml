@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserListViewModel>  
+﻿@model IEnumerable<UserListViewModel>
 @using Decanatus.BLL.ViewModels
 
 @{
@@ -14,6 +14,15 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Email)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LNM)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
                         <th class="dontNeedFilter">
                             Дії
                         </th>
@@ -27,9 +36,32 @@
                                 @Html.DisplayFor(u => user.Email)
                             </td>
                             <td>
+                                @Html.DisplayFor(u => user.LNM)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(u => user.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(u => user.Role)
+                            </td>
+
+                            <td>
                                 <div class="btn-group-vertical w-100">
-                                    <a class="btn btn-warning" asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
-                                    <a class="btn btn-danger" asp-controller="User" asp-action="Delete" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    @if (user.Role == "Студент")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditStudent" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteStudent" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
+                                    @if (user.Role == "Викладач")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditLecturer" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteLecturer" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
+                                    @if (user.Role == "Адміністратор")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditAdministrator" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteAdministrator" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
                                 </div>
                             </td>
                         </tr>
@@ -46,4 +78,3 @@
 <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
 <script src="~/js/userDatatable.js"></script>
 }
-    
