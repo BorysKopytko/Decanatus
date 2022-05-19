@@ -32,9 +32,7 @@ namespace Decanatus.DAL.Data
 
         public DbSet<LessonNumber> LessonNumbers { get; set; }
 
-        //public DbSet<LessonGroup> LessonGroups { get; set; }
-
-        //public DbSet<LessonLecturer> LessonLecturers { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

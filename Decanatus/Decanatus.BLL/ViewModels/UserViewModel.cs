@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Decanatus.DAL.Abstractions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace Decanatus.BLL.ViewModels
 {
-    public class UserViewModel
+    public abstract class UserViewModel: Person
     {
-        public string Id { get; set; }
 
         [Display(Name = "Електронна пошта")]
         public string Email { get; set; }
@@ -22,7 +22,7 @@ namespace Decanatus.BLL.ViewModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         
-        public List<SelectListItem> ApplicationRoles { get; set; }
+        public List<SelectListItem> ApplicationRoles { get; set; } = new List<SelectListItem>();
         [Display(Name = "Роль")]
         public string ApplicationRoleId { get; set; }
     }

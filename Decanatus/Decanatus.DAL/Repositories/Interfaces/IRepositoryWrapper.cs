@@ -22,6 +22,7 @@ namespace Decanatus.DAL.Repositories.Interfaces
         ISubjectRepository SubjectRepository { get; }
 
         ILessonNumberRepository LessonNumberRepository { get; }
+        IAdministratorRepository AdministratorRepository { get; }
         void Save();
 
         Task SaveAsync();
