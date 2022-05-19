@@ -5,6 +5,6 @@ namespace Decanatus.DAL.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        
+        public int PersonId { get; set; }
     }
 }

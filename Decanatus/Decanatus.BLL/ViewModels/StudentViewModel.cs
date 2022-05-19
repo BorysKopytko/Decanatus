@@ -1,17 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Decanatus.DAL.Abstractions;
+﻿using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Decanatus.DAL.Models
+namespace Decanatus.BLL.ViewModels
 {
-    public enum StudyingForm
-    {
-        [Display(Name = "Денна")]
-        FullTime,
-        [Display(Name = "Заочна")]
-        External,
-    }
-
-    public class Student : Person
+    public class StudentViewModel : UserViewModel
     {
         [Required]
         [DataType(DataType.Text)]
@@ -34,13 +29,12 @@ namespace Decanatus.DAL.Models
 
         public int GroupId { get; set; }
 
-        public Group Group { get; set; }
 
         [Required]
         [EnumDataType(typeof(StudyingForm))]
         [Display(Name = "Форма навчання")]
         public StudyingForm StudyingForm { get; set; }
 
-        public ICollection<Grade> Grades { get; set; }
+        public List<SelectListItem> Groups { get; set; } = new List<SelectListItem>();
     }
 }
