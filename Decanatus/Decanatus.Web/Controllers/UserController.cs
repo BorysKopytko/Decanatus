@@ -41,7 +41,7 @@ namespace Decanatus.Web.Controllers
             return View(model);
         }
 
-        //GET
+        //POST
         [HttpPost]
         public async Task<IActionResult> CreateChoose(ChooseRoleViewModel chooseRoleViewModel)
         {
@@ -62,7 +62,6 @@ namespace Decanatus.Web.Controllers
 
         public IActionResult CreateAdministrator()
         {
-
             var administratorViewModel = new AdministratorViewModel();
             administratorViewModel.ApplicationRoles.Add(new SelectListItem { Value = roleManager.Roles.FirstOrDefault(x => x.Name == "Адміністратор").Id, Text = "Адміністратор" });
             return View(administratorViewModel);
@@ -93,7 +92,7 @@ namespace Decanatus.Web.Controllers
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                ApplicationRole applicationRole = await roleManager.FindByIdAsync(model.ApplicationRoleId);
+                ApplicationRole applicationRole = await roleManager.FindByNameAsync("Адміністратор");
                 if (applicationRole != null)
                 {
                     IdentityResult roleResult = await userManager.AddToRoleAsync(user, applicationRole.Name);
@@ -140,7 +139,7 @@ namespace Decanatus.Web.Controllers
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                ApplicationRole applicationRole = await roleManager.FindByIdAsync(model.ApplicationRoleId);
+                ApplicationRole applicationRole = await roleManager.FindByNameAsync("Викладач");
                 if (applicationRole != null)
                 {
                     IdentityResult roleResult = await userManager.AddToRoleAsync(user, applicationRole.Name);
@@ -193,7 +192,7 @@ namespace Decanatus.Web.Controllers
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                ApplicationRole applicationRole = await roleManager.FindByIdAsync(model.ApplicationRoleId);
+                ApplicationRole applicationRole = await roleManager.FindByNameAsync("Студент");
                 if (applicationRole != null)
                 {
                     IdentityResult roleResult = await userManager.AddToRoleAsync(user, applicationRole.Name);
@@ -208,64 +207,201 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> EditAdministrator(string id)
         {
-            EditUserViewModel model = new EditUserViewModel();
-            model.ApplicationRoles = roleManager.Roles.Select(r => new SelectListItem
-            {
-                Text = r.Name,
-                Value = r.Id
-            }).ToList();
+            AdministratorViewModel model = new AdministratorViewModel();
+
+            var administrator = await repositoryWrapper.AdministratorRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = administrator.MobilePhoneNumber;
+            model.LastName = administrator.LastName;
+            model.FirstName = administrator.FirstName;
+            model.MiddleName = administrator.MiddleName;
+            model.BirthDate = administrator.BirthDate;
+            model.Sex = administrator.Sex;
+            model.Email = administrator.EmailAdress;
 
             if (!String.IsNullOrEmpty(id))
             {
-                ApplicationUser user = await userManager.FindByIdAsync(id);
+                ApplicationUser user = await userManager.FindByEmailAsync(administrator.EmailAdress);
                 if (user != null)
                 {
                     model.Email = user.Email;
-                    model.ApplicationRoleId = roleManager.Roles.Single(r => r.Name == userManager.GetRolesAsync(user).Result.Single()).Id;
                 }
             }
-            return View(nameof(Edit), model);
+            return View(nameof(EditAdministrator), model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, EditUserViewModel model)
+        public async Task<IActionResult> EditAdministrator(string id, AdministratorViewModel model)
         {
-            ApplicationUser user = await userManager.FindByIdAsync(id);
+            ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
+            var administrator = await repositoryWrapper.AdministratorRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            administrator.MobilePhoneNumber = model.MobilePhoneNumber;
+            administrator.LastName = model.LastName;
+            administrator.FirstName = model.FirstName;
+            administrator.MiddleName = model.MiddleName;
+            administrator.BirthDate = model.BirthDate;
+            administrator.Sex = model.Sex;
+            administrator.EmailAdress = model.Email;
+
+            await repositoryWrapper.AdministratorRepository.UpdateAsync(administrator);
+            await unitOfWork.Commit();
+
             if (user != null)
             {
                 user.Email = model.Email;
                 user.UserName = model.Email;
-                string existingRole = userManager.GetRolesAsync(user).Result.Single();
-                string existingRoleId = roleManager.Roles.Single(r => r.Name == existingRole).Id;
                 IdentityResult result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    if (existingRoleId != model.ApplicationRoleId)
-                    {
-                        IdentityResult roleResult = await userManager.RemoveFromRoleAsync(user, existingRole);
-                        if (roleResult.Succeeded)
-                        {
-                            ApplicationRole applicationRole = await roleManager.FindByIdAsync(model.ApplicationRoleId);
-                            if (applicationRole != null)
-                            {
-                                IdentityResult newRoleResult = await userManager.AddToRoleAsync(user, applicationRole.Name);
-                                if (newRoleResult.Succeeded)
-                                {
-                                    return RedirectToAction(nameof(Configure));
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        return RedirectToAction(nameof(Configure));
-                    }
-
+                    return RedirectToAction(nameof(Configure));
                 }
             }
-            return View(nameof(Edit), model);
+            else
+            {
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(nameof(EditAdministrator), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditLecturer(string id)
+        {
+            var model = new LecturerViewModel();
+
+            var lecturer = await repositoryWrapper.LecturerRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = lecturer.MobilePhoneNumber;
+            model.LastName = lecturer.LastName;
+            model.FirstName = lecturer.FirstName;
+            model.MiddleName = lecturer.MiddleName;
+            model.BirthDate = lecturer.BirthDate;
+            model.Sex = lecturer.Sex;
+            model.Email = lecturer.EmailAdress;
+            model.Position = lecturer.Position;
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await userManager.FindByEmailAsync(lecturer.EmailAdress);
+                if (user != null)
+                {
+                    model.Email = user.Email;
+                }
+            }
+            return View(nameof(EditLecturer), model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditLecturer(string id, LecturerViewModel model)
+        {
+            ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
+            var lecturer = await repositoryWrapper.LecturerRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            lecturer.MobilePhoneNumber = model.MobilePhoneNumber;
+            lecturer.LastName = model.LastName;
+            lecturer.FirstName = model.FirstName;
+            lecturer.MiddleName = model.MiddleName;
+            lecturer.BirthDate = model.BirthDate;
+            lecturer.Sex = model.Sex;
+            lecturer.EmailAdress = model.Email;
+            lecturer.Position = model.Position;
+
+            await repositoryWrapper.LecturerRepository.UpdateAsync(lecturer);
+            await unitOfWork.Commit();
+
+            if (user != null)
+            {
+                user.Email = model.Email;
+                user.UserName = model.Email;
+                IdentityResult result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Configure));
+                }
+            }
+            else
+            {
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(nameof(EditLecturer), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditStudent(string id)
+        {
+            var model = new StudentViewModel();
+
+            var student = await repositoryWrapper.StudentRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = student.MobilePhoneNumber;
+            model.LastName = student.LastName;
+            model.FirstName = student.FirstName;
+            model.MiddleName = student.MiddleName;
+            model.BirthDate = student.BirthDate;
+            model.Sex = student.Sex;
+            model.Email = student.EmailAdress;
+            model.OrderNumber = student.OrderNumber;
+            model.GradebookNumber = student.GradebookNumber;
+            model.OrderDate = student.OrderDate;
+            model.GraduateDate = student.GraduateDate;
+            model.GroupId = student.GroupId;
+            model.StudyingForm = student.StudyingForm;
+            model.Groups = repositoryWrapper.GroupRepository.GetAllAsync().Result.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await userManager.FindByEmailAsync(student.EmailAdress);
+                if (user != null)
+                {
+                    model.Email = user.Email;
+                }
+            }
+            return View(nameof(EditStudent), model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditStudent(string id, StudentViewModel model)
+        {
+            ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
+            var student = await repositoryWrapper.StudentRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            student.MobilePhoneNumber = model.MobilePhoneNumber;
+            student.LastName = model.LastName;
+            student.FirstName = model.FirstName;
+            student.MiddleName = model.MiddleName;
+            student.BirthDate = model.BirthDate;
+            student.Sex = model.Sex;
+            student.EmailAdress = model.Email;
+            student.OrderNumber = model.OrderNumber;
+            student.GradebookNumber = model.GradebookNumber;
+            student.OrderDate = model.OrderDate;
+            student.GraduateDate = model.GraduateDate;
+            student.GroupId = model.GroupId;
+            student.StudyingForm = model.StudyingForm;
+
+            await repositoryWrapper.StudentRepository.UpdateAsync(student);
+            await unitOfWork.Commit();
+
+            if (user != null)
+            {
+                user.Email = model.Email;
+                user.UserName = model.Email;
+                IdentityResult result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Configure));
+                }
+            }
+            else
+            {
+                return RedirectToAction(nameof(Configure));
+            }
+
+            return View(nameof(EditStudent), model);
         }
 
         [HttpGet]
@@ -283,23 +419,156 @@ namespace Decanatus.Web.Controllers
             return View(nameof(Delete), name);
         }
 
-        [HttpPost]
-        [ActionName("Delete")]
-        public async Task<IActionResult> DeletePOST(string id)
+        [HttpGet]
+        public async Task<IActionResult> DeleteAdministrator(string id)
         {
+            AdministratorViewModel model = new AdministratorViewModel();
+
+            var administrator = await repositoryWrapper.AdministratorRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = administrator.MobilePhoneNumber;
+            model.LastName = administrator.LastName;
+            model.FirstName = administrator.FirstName;
+            model.MiddleName = administrator.MiddleName;
+            model.BirthDate = administrator.BirthDate;
+            model.Sex = administrator.Sex;
+            model.Email = administrator.EmailAdress;
+
             if (!String.IsNullOrEmpty(id))
             {
-                ApplicationUser applicationUser = await userManager.FindByIdAsync(id);
+                ApplicationUser user = await userManager.FindByEmailAsync(administrator.EmailAdress);
+                if (user != null)
+                {
+                    model.Email = user.Email;
+                }
+            }
+            return View(nameof(DeleteAdministrator), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteLecturer(string id)
+        {
+            var model = new LecturerViewModel();
+
+            var lecturer = await repositoryWrapper.LecturerRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = lecturer.MobilePhoneNumber;
+            model.LastName = lecturer.LastName;
+            model.FirstName = lecturer.FirstName;
+            model.MiddleName = lecturer.MiddleName;
+            model.BirthDate = lecturer.BirthDate;
+            model.Sex = lecturer.Sex;
+            model.Email = lecturer.EmailAdress;
+            model.Position = lecturer.Position;
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await userManager.FindByEmailAsync(lecturer.EmailAdress);
+                if (user != null)
+                {
+                    model.Email = user.Email;
+                }
+            }
+            return View(nameof(DeleteLecturer), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteStudent(string id)
+        {
+            var model = new StudentViewModel();
+
+            var student = await repositoryWrapper.StudentRepository.GetByIdAsync(Convert.ToInt32(id));
+
+            model.MobilePhoneNumber = student.MobilePhoneNumber;
+            model.LastName = student.LastName;
+            model.FirstName = student.FirstName;
+            model.MiddleName = student.MiddleName;
+            model.BirthDate = student.BirthDate;
+            model.Sex = student.Sex;
+            model.Email = student.EmailAdress;
+            model.OrderNumber = student.OrderNumber;
+            model.GradebookNumber = student.GradebookNumber;
+            model.OrderDate = student.OrderDate;
+            model.GraduateDate = student.GraduateDate;
+            model.GroupId = student.GroupId;
+            model.StudyingForm = student.StudyingForm;
+            model.Groups = repositoryWrapper.GroupRepository.GetAllAsync().Result.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await userManager.FindByEmailAsync(student.EmailAdress);
+                if (user != null)
+                {
+                    model.Email = user.Email;
+                }
+            }
+            return View(nameof(DeleteStudent), model);
+        }
+
+        [HttpPost]
+        [ActionName("DeleteAdministrator")]
+        public async Task<IActionResult> DeleteAdministratorPOST(string id)
+        {
+            var administrator = await repositoryWrapper.AdministratorRepository.GetByIdAsync(Convert.ToInt32(id));
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser applicationUser = await userManager.FindByEmailAsync(administrator.EmailAdress);
                 if (applicationUser != null)
                 {
                     IdentityResult result = await userManager.DeleteAsync(applicationUser);
                     if (result.Succeeded)
                     {
+                        await repositoryWrapper.AdministratorRepository.DeleteAsync(administrator);
+                        await unitOfWork.Commit();
                         return RedirectToAction(nameof(Configure));
                     }
                 }
             }
-            return View();
+            return RedirectToAction(nameof(Configure));
+        }
+
+        [HttpPost]
+        [ActionName("DeleteLecturer")]
+        public async Task<IActionResult> DeleteLecturerPOST(string id)
+        {
+            var lecturer = await repositoryWrapper.LecturerRepository.GetByIdAsync(Convert.ToInt32(id));
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser applicationUser = await userManager.FindByEmailAsync(lecturer.EmailAdress);
+                if (applicationUser != null)
+                {
+                    IdentityResult result = await userManager.DeleteAsync(applicationUser);
+                    if (result.Succeeded)
+                    {
+                        await repositoryWrapper.LecturerRepository.DeleteAsync(lecturer);
+                        await unitOfWork.Commit();
+                        return RedirectToAction(nameof(Configure));
+                    }
+                }
+            }
+            return RedirectToAction(nameof(Configure));
+        }
+
+        [HttpPost]
+        [ActionName("DeleteStudent")]
+        public async Task<IActionResult> DeleteStudentPOST(string id)
+        {
+            var student = await repositoryWrapper.StudentRepository.GetByIdAsync(Convert.ToInt32(id));
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser applicationUser = await userManager.FindByEmailAsync(student.EmailAdress);
+                if (applicationUser != null)
+                {
+                    IdentityResult result = await userManager.DeleteAsync(applicationUser);
+                    if (result.Succeeded)
+                    {
+                        await repositoryWrapper.StudentRepository.DeleteAsync(student);
+                        await unitOfWork.Commit();
+                        return RedirectToAction(nameof(Configure));
+                    }
+                }
+            }
+            return RedirectToAction(nameof(Configure));
         }
     }
 }
