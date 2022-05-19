@@ -86,7 +86,7 @@
                                                 <td width="29%" align="center">
                                                     @foreach (var lecturer in lesson.Lecturers)
                                                     {
-                                                        <p>@Html.DisplayFor(lec => lecturer.LastName) @Html.DisplayFor(lec => lecturer.FirstName) @Html.DisplayFor(lec => lecturer.MiddleName) (@Html.DisplayFor(lec => lecturer.Position))</p>
+                                                        <p>@Html.DisplayFor(lec => lecturer.LastName) @Html.DisplayFor(lec => lecturer.FirstName[0]). @Html.DisplayFor(lec => lecturer.MiddleName[0]). (@Html.DisplayFor(lec => lecturer.Position))</p>
                                                     }
                                                 </td>
                                                 <td width="8%" align="center">
