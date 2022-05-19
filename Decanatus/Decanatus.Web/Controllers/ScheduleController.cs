@@ -3,6 +3,7 @@ using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +13,12 @@ namespace Decanatus.Web.Controllers
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ScheduleController(IScheduleService scheduleService)
+        public ScheduleController(IScheduleService scheduleService, UserManager<ApplicationUser> userManager)
         {
             _scheduleService = scheduleService;
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Адміністратор")]
@@ -28,14 +31,14 @@ namespace Decanatus.Web.Controllers
         [Authorize(Roles = "Студент")]
         public async Task<IActionResult> StudentSchedule(EnumPeriodOfTime periodOfTime)
         {
-            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime, 1);
+            var model = await _scheduleService.GetStudentLessonsAsync(periodOfTime, _userManager.GetUserAsync(User).Result.PersonId);
             return View("StudentSchedule", model);
         }
 
         [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> LecturerSchedule(EnumPeriodOfTime periodOfTime)
         {
-            var model = await _scheduleService.GetLecturerLessonsAsync(periodOfTime, 4);
+            var model = await _scheduleService.GetLecturerLessonsAsync(periodOfTime, _userManager.GetUserAsync(User).Result.PersonId);
             return View("LecturerSchedule", model);
         }
 
