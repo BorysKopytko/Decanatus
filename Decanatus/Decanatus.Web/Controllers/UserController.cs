@@ -22,14 +22,26 @@ namespace Decanatus.Web.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        public IActionResult Configure()
+        public async Task<IActionResult> Configure()
         {
             List<UserListViewModel> model = new List<UserListViewModel>();
-            model = userManager.Users.Select(u => new UserListViewModel
+            var students = await repositoryWrapper.StudentRepository.GetAllAsync();
+            var lecturers = await repositoryWrapper.LecturerRepository.GetAllAsync();
+            var administrators = await repositoryWrapper.AdministratorRepository.GetAllAsync();
+            
+            foreach (var student in students)
             {
-                Id = u.Id,
-                Email = u.Email
-            }).ToList();
+                model.Add(new UserListViewModel { Id = student.Id, Email = student.EmailAdress, LNM = student.LastName + " " + student.FirstName + " " + student.MiddleName, Phone = student.MobilePhoneNumber, Role = "Студент" });
+            }
+            foreach (var lecturer in lecturers)
+            {
+                model.Add(new UserListViewModel { Id = lecturer.Id, Email = lecturer.EmailAdress, LNM = lecturer.LastName + " " + lecturer.FirstName + " " + lecturer.MiddleName, Phone = lecturer.MobilePhoneNumber, Role = "Викладач" });
+            }
+            foreach (var administrator in administrators)
+            {
+                model.Add(new UserListViewModel { Id = administrator.Id, Email = administrator.EmailAdress, LNM = administrator.LastName + " " + administrator.FirstName + " " + administrator.MiddleName, Phone = administrator.MobilePhoneNumber, Role = "Адміністратор" });
+            }
+
             return View(model);
         }
 
