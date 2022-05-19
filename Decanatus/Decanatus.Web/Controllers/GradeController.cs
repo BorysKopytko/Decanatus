@@ -2,17 +2,21 @@
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Decanatus.Web.Controllers
 {
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GradeController(IGradeService gradeService)
+        public GradeController(IGradeService gradeService, UserManager<ApplicationUser> userManager)
         {
             _gradeService = gradeService;
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Адміністратор")]
@@ -22,9 +26,9 @@ namespace Decanatus.Web.Controllers
         }
 
         [Authorize(Roles = "Студент")]
-        public IActionResult Student(int id = 1)
+        public IActionResult Student()
         {
-            return View(_gradeService.GetGradesByStudentId(id));
+            return View(_gradeService.GetGradesByStudentId(_userManager.GetUserAsync(User).Result.PersonId));
         }
 
         [Authorize(Roles = "Викладач")]
@@ -46,9 +50,9 @@ namespace Decanatus.Web.Controllers
         }
 
         [Authorize(Roles = "Викладач")]
-        public async Task<IActionResult> CreateChooseSubject(int id = 1) // lecturerId
+        public async Task<IActionResult> CreateChooseSubject()
         {
-            var gradeViewModel = _gradeService.CreateGradeViewModel(id);
+            var gradeViewModel = _gradeService.CreateGradeViewModel(_userManager.GetUserAsync(User).Result.PersonId);
 
             return View(gradeViewModel);
         }
