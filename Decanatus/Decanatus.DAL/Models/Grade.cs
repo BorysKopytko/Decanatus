@@ -40,6 +40,7 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Дата")]
         public DateTime Date { get; set; } = DateTime.Now;
 
+        [Display(Name = "Опис")]
         [DataType(DataType.Text)]
         public string Description { get; set; }
     }
