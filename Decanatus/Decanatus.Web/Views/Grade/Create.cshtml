@@ -8,35 +8,30 @@
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="SubjectId" />
-
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
                 <div class="form-group">
                     <label class="control-label">Оберіть групу</label>
                     <select asp-for="GroupsId" asp-items="Model.Groups"></select>
-                    <span asp-validation-for="GroupsId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group">
                     <label class="control-label">Введіть максимальну оцінку</label>
                     <input asp-for="MaxAmount" class="form-control"></input>
-                    <span asp-validation-for="MaxAmount" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group">
                     <label class="control-label">Оберіть тип оцінки</label>
                     <select asp-for="GradeType" asp-items="Html.GetEnumSelectList<GradeType>()"></select>
-                    <span asp-validation-for="GradeType" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group">
                     <label class="control-label">Оберіть дату</label>
                     <input asp-for="Date" class="form-control"></input>
-                    <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
             </div>
         </div>

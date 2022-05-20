@@ -58,14 +58,11 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ActionName("CreateChooseSubject")]
         [Authorize(Roles = "Викладач")]
-        public async Task<IActionResult> CreateChooseSubjectPost(int subjectId, int lecturerId)
+        public async Task<IActionResult> CreateChooseSubjectPost(int SubjectId, int LecturerId)
         {
-            // TODO: Add validation
-
-            var gradeViewModel = _gradeService.CreateGradeViewModel(lecturerId, subjectId);
+            var gradeViewModel = _gradeService.CreateGradeViewModel(LecturerId, SubjectId);
             //_gradeService.AddGrades(gradeViewModel);
 
             return View(nameof(Create), gradeViewModel);
@@ -78,18 +75,13 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ActionName("Create")]
         [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                await _gradeService.AddGrades(gradeViewModel);
-                return RedirectToAction(nameof(Configure));
-            }
+            await _gradeService.AddGrades(gradeViewModel);
 
-            return View(gradeViewModel);
+            return RedirectToAction(nameof(Configure));
         }
 
         [Authorize(Roles = "Викладач")]
@@ -111,17 +103,11 @@ namespace Decanatus.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Edit(Grade grade)
         {
-            if (ModelState.IsValid)
-            {
-                await _gradeService.UpdateGradeAsync(grade);
-                return RedirectToAction(nameof(Configure));
-            }
-
-            return View(grade);
+            await _gradeService.UpdateGradeAsync(grade);
+            return RedirectToAction(nameof(Configure));
         }
     }
 }

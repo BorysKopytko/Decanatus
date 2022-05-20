@@ -5,7 +5,6 @@ namespace Decanatus.DAL.Models
 {
     public class Speciality : Entity
     {
-        [Required]
         [Display(Name = "Спеціальність")]
         [DataType(DataType.Text)]
         public string Name { get; set; }

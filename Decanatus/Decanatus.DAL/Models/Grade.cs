@@ -25,7 +25,6 @@ namespace Decanatus.DAL.Models
         [Display(Name = "Оцінка")]
         public int? Amount { get; set; }
 
-        [Required]
         public int StudentId { get; set; }
 
         public Student Student { get; set; }
@@ -34,7 +33,6 @@ namespace Decanatus.DAL.Models
         [EnumDataType(typeof(GradeType))]
         public GradeType GradeType { get; set; }
 
-        [Required]
         public int SubjectId { get; set; }
 
         public Subject Subject { get; set; }
@@ -44,6 +42,6 @@ namespace Decanatus.DAL.Models
 
         [Display(Name = "Опис")]
         [DataType(DataType.Text)]
-        public string Description { get; set; } = String.Empty;
+        public string Description { get; set; }
     }
 }

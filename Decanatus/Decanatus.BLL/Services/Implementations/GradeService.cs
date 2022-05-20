@@ -57,8 +57,7 @@ namespace Decanatus.BLL.Services.Implementations
         {
             var include = GetInclude();
             var filter = FilterGradesByStudentId(id);
-            var grades = _repositoryWrapper.GradeRepository.GetData(filter, null, null, include).Result;
-            //Includer(include).Result.Where(grade => grade.StudentId == id);
+            var grades = _repositoryWrapper.GradeRepository.GetData(filter, null, null, include).Result;//Includer(include).Result.Where(grade => grade.StudentId == id);
 
             return grades;
         }
@@ -139,15 +138,15 @@ namespace Decanatus.BLL.Services.Implementations
         public async Task<bool> UpdateGradeAsync(Grade grade)
         {
             var include = GetInclude();
-            var gradeData = _repositoryWrapper.GradeRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == grade.Id);
+            var _grade = _repositoryWrapper.GradeRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == grade.Id);
 
-            gradeData.Amount = grade.Amount;
-            gradeData.MaxAmount = grade.MaxAmount;
-            gradeData.GradeType = grade.GradeType;
-            gradeData.Description = grade.Description;
-            gradeData.Date = grade.Date;
+            _grade.Amount = grade.Amount;
+            _grade.MaxAmount = grade.MaxAmount;
+            _grade.GradeType = grade.GradeType;
+            _grade.Description = grade.Description;
+            _grade.Date = grade.Date;
 
-            await _repositoryWrapper.GradeRepository.UpdateAsync(gradeData);
+            await _repositoryWrapper.GradeRepository.UpdateAsync(_grade);
             await _unitOfWork.Commit();
 
             return true;
