@@ -17,35 +17,35 @@ namespace Decanatus.BLL.ViewModels
 
         public List<SelectListItem> AllGroups { get; set; } = new List<SelectListItem>();
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть тип заняття")]
         [Display(Name = "Тип заняття")]
         public LessonType LessonType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть групи")]
         [Display(Name = "Групи")]
         public IEnumerable<int> Groups { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть викладачів")]
         [Display(Name = "Викладачі")]
         public IEnumerable<int> Lecturers { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть тип тижня")]
         [Display(Name = "Чисельник / Знаменник")]
         public LessonWeekType LessonWeekType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть день тижня")]
         [Display(Name = "День тижня")]
         public UkrainianDayOfWeek DayOfWeek { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть номер заняття")]
         [Display(Name = "Номер заняття")]
         public int LessonNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть аудиторію")]
         [Display(Name = "Аудиторія")]
         public int Audience { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть предмет")]
         [Display(Name = "Предмет")]
         public int Subject { get; set; }
 

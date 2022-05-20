@@ -44,7 +44,6 @@ namespace Decanatus.DAL.Models
 
         [Display(Name = "Опис")]
         [DataType(DataType.Text)]
-        [Display(Name = "Опис")]
         public string Description { get; set; } = String.Empty;
     }
 }

@@ -9,25 +9,25 @@ namespace Decanatus.BLL.ViewModels
     {
         public List<SelectListItem> Subjects { get; set; } = new List<SelectListItem>();
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть предмет")]
         [Display(Name = "Предмет")]
         public int SubjectId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть викладача")]
         [Display(Name = "Викладач")]
         public int LecturerId { get; set; }
 
         public List<SelectListItem> Groups { get; set; } = new List<SelectListItem>();
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть групи")]
         [Display(Name = "Групи")]
         public IEnumerable<int> GroupsId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть максимальну оцінку")]
         [Display(Name = "Масимальна оцінка")]
         public int MaxAmount { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Виберіть тип оцінки")]
         [Display(Name = "Тип оцінки")]
         public GradeType GradeType { get; set; }
 

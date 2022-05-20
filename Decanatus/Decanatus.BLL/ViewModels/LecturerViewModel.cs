@@ -8,7 +8,7 @@ namespace Decanatus.BLL.ViewModels
 {
     public class LecturerViewModel: UserViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Виберіть посаду")]
         [Display(Name = "Посада")]
         [EnumDataType(typeof(Position))]
         public Position Position { get; set; }
