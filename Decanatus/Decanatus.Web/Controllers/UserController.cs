@@ -1,6 +1,7 @@
 ﻿using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
 using Decanatus.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,6 +23,7 @@ namespace Decanatus.Web.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "Адміністратор")]
         public async Task<IActionResult> Configure()
         {
             List<UserListViewModel> model = new List<UserListViewModel>();
