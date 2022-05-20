@@ -24,7 +24,7 @@ namespace Decanatus.DAL.Models
 
         [Required]
         [DataType(DataType.DateTime)]
-        [Display(Name ="Дата наказу")]
+        [Display(Name = "Дата наказу")]
         public DateTime OrderDate { get; set; }
 
         [Required]

@@ -1,10 +1,12 @@
 ﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Decanatus.Web.Controllers
 {
+    [Authorize(Roles = "Адміністратор, Студент, Викладач")]
     public class HomeController : Controller
     {
         private readonly IHomeService _homeService;

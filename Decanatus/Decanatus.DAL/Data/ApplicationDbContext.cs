@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Decanatus.DAL.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -32,9 +32,7 @@ namespace Decanatus.DAL.Data
 
         public DbSet<LessonNumber> LessonNumbers { get; set; }
 
-        //public DbSet<LessonGroup> LessonGroups { get; set; }
-
-        //public DbSet<LessonLecturer> LessonLecturers { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -554,7 +552,7 @@ namespace Decanatus.DAL.Data
                     j.HasKey(t => new { t.LessonId, t.LecturerId });
                 });
 
-            
+
 
             modelBuilder.Entity<LessonLecturer>().HasData(
                     new { Id = 1, LessonId = 1, LecturerId = 1 },
@@ -581,6 +579,7 @@ namespace Decanatus.DAL.Data
             //        new { LessonsId = 4, LecturersId = 4 },
             //        new { LessonsId = 5, LecturersId = 4 },
             //        new { LessonsId = 6, LecturersId = 4 }));
+
 
             base.OnModelCreating(modelBuilder);
         }

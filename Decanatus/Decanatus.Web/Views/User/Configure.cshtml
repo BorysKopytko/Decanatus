@@ -1,0 +1,80 @@
+﻿@model IEnumerable<UserListViewModel>
+@using Decanatus.BLL.ViewModels
+
+@{
+    ViewData["Title"] = "Користувачі";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered align-content-center" id="Datatable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LNM)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th class="dontNeedFilter">
+                            Дії
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(u => user.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(u => user.LNM)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(u => user.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(u => user.Role)
+                            </td>
+
+                            <td>
+                                <div class="btn-group-vertical w-100">
+                                    @if (user.Role == "Студент")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditStudent" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteStudent" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
+                                    @if (user.Role == "Викладач")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditLecturer" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteLecturer" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
+                                    @if (user.Role == "Адміністратор")
+                                    {
+                                        <a class="btn btn-warning" asp-controller="User" asp-action="EditAdministrator" asp-route-Id="@user.Id"><i class="fa fa-edit"></i><br>Редагувати</a>
+                                        <a class="btn btn-danger" asp-controller="User" asp-action="DeleteAdministrator" asp-route-Id="@user.Id"><i class="fa fa-trash"></i><br>Видалити</a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/js/userDatatable.js"></script>
+}

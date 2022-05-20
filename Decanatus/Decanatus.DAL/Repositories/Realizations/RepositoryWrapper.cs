@@ -26,6 +26,8 @@ namespace Decanatus.DAL.Repositories.Realizations
 
         private ISubjectRepository _subjectRepository;
 
+        private IAdministratorRepository _administratorRepository;
+
         public IAudienceRepository AudienceRepository
         {
             get
@@ -144,6 +146,18 @@ namespace Decanatus.DAL.Repositories.Realizations
                     _lessonNumberRepository = new LessonNumberRepository(_dbContext);
                 }
                 return _lessonNumberRepository;
+            }
+        }
+
+        public IAdministratorRepository AdministratorRepository
+        {
+            get
+            {
+                if (_administratorRepository == null)
+                {
+                    _administratorRepository = new AdministratorRepository(_dbContext);
+                }
+                return _administratorRepository;
             }
         }
 

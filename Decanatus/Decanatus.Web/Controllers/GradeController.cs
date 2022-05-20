@@ -1,34 +1,43 @@
 ﻿using Decanatus.BLL.Services.Interfaces;
 using Decanatus.BLL.ViewModels;
 using Decanatus.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Decanatus.Web.Controllers
 {
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GradeController(IGradeService gradeService)
+        public GradeController(IGradeService gradeService, UserManager<ApplicationUser> userManager)
         {
             _gradeService = gradeService;
+            _userManager = userManager;
         }
 
+        [Authorize(Roles = "Адміністратор")]
         public IActionResult All()
         {
             return View(_gradeService.GetAllGrades());
         }
 
-        public IActionResult Student(int id = 1)
+        [Authorize(Roles = "Студент")]
+        public IActionResult Student()
         {
-            return View(_gradeService.GetGradesByStudentId(id));
+            return View(_gradeService.GetGradesByStudentId(_userManager.GetUserAsync(User).Result.PersonId));
         }
 
+        [Authorize(Roles = "Викладач")]
         public IActionResult Configure()
         {
             return View(_gradeService.GetAllGrades());
         }
 
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
@@ -40,9 +49,10 @@ namespace Decanatus.Web.Controllers
             return RedirectToAction(nameof(Configure));
         }
 
-        public IActionResult CreateChooseSubject(int lecturerId = 1)
+        [Authorize(Roles = "Викладач")]
+        public async Task<IActionResult> CreateChooseSubject()
         {
-            var gradeViewModel = _gradeService.CreateGradeViewModel(lecturerId);
+            var gradeViewModel = _gradeService.CreateGradeViewModel(_userManager.GetUserAsync(User).Result.PersonId);
 
             return View(gradeViewModel);
         }
@@ -50,7 +60,8 @@ namespace Decanatus.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("CreateChooseSubject")]
-        public IActionResult CreateChooseSubjectPost(int subjectId, int lecturerId)
+        [Authorize(Roles = "Викладач")]
+        public async Task<IActionResult> CreateChooseSubjectPost(int subjectId, int lecturerId)
         {
             // TODO: Add validation
 
@@ -60,7 +71,8 @@ namespace Decanatus.Web.Controllers
             return View(nameof(Create), gradeViewModel);
         }
 
-        public IActionResult Create(GradeViewModel gradeViewModel)
+        [Authorize(Roles = "Викладач")]
+        public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
         {
             return View(gradeViewModel);
         }
@@ -68,6 +80,7 @@ namespace Decanatus.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Create")]
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> CreatePost(GradeViewModel gradeViewModel)
         {
             if (ModelState.IsValid)
@@ -79,6 +92,7 @@ namespace Decanatus.Web.Controllers
             return View(gradeViewModel);
         }
 
+        [Authorize(Roles = "Викладач")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -98,6 +112,7 @@ namespace Decanatus.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Викладач")]
         public async Task<IActionResult> Edit(Grade grade)
         {
             if (ModelState.IsValid)
