@@ -13,6 +13,7 @@
             <div class="form-group">
                 <label class="control-label">Оберіть предмет</label>
                 <select asp-for="SubjectId" class="form-control" asp-items="Model.Subjects">
+                 <span asp-validation-for="SubjectId" class="text-danger"></span>
                 </select>
             </div>
         </div>
