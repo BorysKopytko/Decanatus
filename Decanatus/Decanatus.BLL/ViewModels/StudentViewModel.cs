@@ -8,31 +8,30 @@ namespace Decanatus.BLL.ViewModels
 {
     public class StudentViewModel : UserViewModel
     {
-        [Required(ErrorMessage = "Введіть номер залікової книги")]
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Номер залікової книги")]
         public string GradebookNumber { get; set; }
 
-        [Required(ErrorMessage = "Введіть номер наказу")]
+        [Required]
         [Display(Name = "Номер наказу")]
         public int OrderNumber { get; set; }
 
-        [Required(ErrorMessage = "Введіть дату наказу")]
+        [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Дата наказу")]
         public DateTime OrderDate { get; set; }
 
-        [Required(ErrorMessage = "Введіть дату закінчення навчання")]
+        [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Дата закінчення навчання")]
         public DateTime GraduateDate { get; set; }
 
-        [Required(ErrorMessage = "Виберіть групу")]
         [Display(Name = "Група")]
         public int GroupId { get; set; }
 
 
-        [Required(ErrorMessage = "Виберіть форму навчання")]
+        [Required]
         [EnumDataType(typeof(StudyingForm))]
         [Display(Name = "Форма навчання")]
         public StudyingForm StudyingForm { get; set; }

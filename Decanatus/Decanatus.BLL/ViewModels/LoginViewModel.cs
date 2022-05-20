@@ -9,14 +9,12 @@ namespace Decanatus.BLL.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Введіть ім'я користувача")]
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
-
-        [Required(ErrorMessage = "Введіть пароль")]
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
         [Display(Name = "Запам'ятати мене")]
         public bool RememberMe { get; set; }
     }

@@ -5,12 +5,10 @@ namespace Decanatus.DAL.Models
 {
     public class Group : Entity
     {
-        [Required]
         [Display(Name = "Група")]
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [Required]
         public int SpecialityId { get; set; }
 
         public Speciality Speciality { get; set; }
