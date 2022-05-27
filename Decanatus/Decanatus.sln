@@ -11,12 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.BLL", "Decanatus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.Logging", "Decanatus.Logging\Decanatus.Logging.csproj", "{729C4808-8EE5-4C95-875A-992024C7217F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decanatus.Testing", "Decanatus.Testing\Decanatus.Testing.csproj", "{E14DE721-A5E5-46EB-9043-E8A755B05DA5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AC4176D-7993-4E72-ACE6-A31A3D503A08}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{97053F9D-9AF2-421C-8EDB-63BE135EBE77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +40,10 @@ Global
 		{729C4808-8EE5-4C95-875A-992024C7217F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{729C4808-8EE5-4C95-875A-992024C7217F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{729C4808-8EE5-4C95-875A-992024C7217F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E14DE721-A5E5-46EB-9043-E8A755B05DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E14DE721-A5E5-46EB-9043-E8A755B05DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E14DE721-A5E5-46EB-9043-E8A755B05DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E14DE721-A5E5-46EB-9043-E8A755B05DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97053F9D-9AF2-421C-8EDB-63BE135EBE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97053F9D-9AF2-421C-8EDB-63BE135EBE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97053F9D-9AF2-421C-8EDB-63BE135EBE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97053F9D-9AF2-421C-8EDB-63BE135EBE77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
