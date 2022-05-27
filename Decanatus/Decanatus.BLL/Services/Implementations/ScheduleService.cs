@@ -78,10 +78,19 @@ namespace Decanatus.BLL.Services
             return lessons;
         }
 
-        public void AddNewLessonAsync(Lesson newLesson)
+        public async Task<Lesson> AddNewLessonAsync(Lesson newLesson)
         {
-            _repositoryWrapper.LessonRepository.UpdateAsync(newLesson);
+            var isExist = await _repositoryWrapper.LessonRepository.GetByIdAsync(newLesson.Id);
+
+            if (isExist != null)
+            {
+                throw new ArgumentException("Lesson is exist!");
+            }
+
+            await _repositoryWrapper.LessonRepository.AddAsync(newLesson);
             _unitOfWork.Commit();
+
+            return newLesson;
         }
 
         private Expression<Func<Lesson, bool>> GetLessonByPeriod(EnumPeriodOfTime periodOfTime, Student? student = null, Lecturer? lecturer = null)
@@ -164,10 +173,10 @@ namespace Decanatus.BLL.Services
             return Expression.Lambda<T>(combinedExpression, firstExpression.Parameters);
         }
 
-        public Lesson FindLessonAsync(int? id)
+        public async Task<Lesson> FindLessonAsync(int? id)
         {
             var include = LessonsInclude();
-            var lesson = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == id);
+            var lesson = await _repositoryWrapper.LessonRepository.GetFirstOrDefaultAsync(x => x.Id == id, include);
             return lesson;
         }
 
@@ -191,7 +200,7 @@ namespace Decanatus.BLL.Services
 
         public async Task<bool> DeleteLessonAsync(int? id)
         {
-            var lesson = FindLessonAsync(id);
+            var lesson = await FindLessonAsync(id);
             await _repositoryWrapper.LessonRepository.DeleteAsync(lesson);
             await _unitOfWork.Commit();
 
@@ -234,7 +243,7 @@ namespace Decanatus.BLL.Services
         public async Task<bool> UpdateLessonAsync(LessonViewModel lessonViewModel)
         {
             var include = LessonsInclude();
-            var preLesson = _repositoryWrapper.LessonRepository.GetData(null, null, null, include).Result.FirstOrDefault(x => x.Id == lessonViewModel.Id);
+            var preLesson = await _repositoryWrapper.LessonRepository.GetFirstOrDefaultAsync(x => x.Id == lessonViewModel.Id, include);
 
             var lesson = new Lesson();
 

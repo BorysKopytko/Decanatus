@@ -15,7 +15,7 @@ namespace Decanatus.DAL.Repositories.Interfaces
 
         Task DeleteAsync(T entity);
 
-        //Task<IEnumerable<T>> Includer(Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
+        Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
 
         Task<IEnumerable<T>> GetData(Expression<Func<T, bool>>? filter = null,
                                                        Expression<Func<T, T>>? selector = null,
