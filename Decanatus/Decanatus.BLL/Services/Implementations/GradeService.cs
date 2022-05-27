@@ -14,13 +14,11 @@ namespace Decanatus.BLL.Services.Implementations
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _context;
 
-        public GradeService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork, ApplicationDbContext context)
+        public GradeService(IRepositoryWrapper repositoryWrapper, IUnitOfWork unitOfWork)
         {
             _repositoryWrapper = repositoryWrapper;
             _unitOfWork = unitOfWork;
-            _context = context;
         }
 
         public Func<IQueryable<Grade>, IIncludableQueryable<Grade, object>> GetInclude()

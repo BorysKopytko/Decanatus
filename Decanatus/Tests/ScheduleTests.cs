@@ -22,7 +22,6 @@ namespace Tests
         private ScheduleService _scheduleService;
         private Mock<IRepositoryWrapper> _repoWrapper;
         private Mock<IUnitOfWork> _unitOfWork;
-        private ScheduleController _scheduleController;
 
         [SetUp]
         public void SetUp()
@@ -30,7 +29,6 @@ namespace Tests
             _repoWrapper = new Mock<IRepositoryWrapper>();
             _unitOfWork = new Mock<IUnitOfWork>();
             _scheduleService = new ScheduleService(_repoWrapper.Object, _unitOfWork.Object);
-            _scheduleController = new ScheduleController(_scheduleService);
         }
 
         [Test]
