@@ -6,12 +6,18 @@
 
 @{
     @using Decanatus.BLL.Classes;
-    var lessons = @Model.Group.Lessons.Where(lesson => lesson.DayOfWeek.ToString() == DateTime.Today.DayOfWeek.ToString());
+    var lessons = new List<Lesson>();
+    if (Model != null)
+    {
+        lessons = Model.Group.Lessons.Where(lesson => lesson.DayOfWeek.ToString() == DateTime.Today.DayOfWeek.ToString()).ToList();
+    }
+
     ViewData["Title"] = "Головна сторінка";
 }
+
 @if (SignInManager.IsSignedIn(User))
 {
-    if (UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(user => user.Id == UserManager.GetUserId(User))).Result.Contains("Студент"))
+    if (UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(user => user.Id == UserManager.GetUserId(User))).Result.Contains("Студент") && Model != null)
     {
         <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
@@ -118,23 +124,26 @@
                         var latestGrade = Model.Grades.OrderByDescending(grade => grade.Date).FirstOrDefault();
                         double border = 0.5;
 
-                        if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
+                        if (latestGrade != null)
                         {
-                            <div class="card bg-danger text-white shadow">
-                                <div class="card-body">
-                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                                    <div class="text-white-50 small">Остання оцінка</div>
+                            if ((double)latestGrade.Amount / (double)latestGrade.MaxAmount <= border)
+                            {
+                                <div class="card bg-danger text-white shadow">
+                                    <div class="card-body">
+                                        @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                        <div class="text-white-50 small">Остання оцінка</div>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="card bg-success text-white shadow">
-                                <div class="card-body">
-                                    @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
-                                    <div class="text-white-50 small">Остання оцінка</div>
+                            }
+                            else
+                            {
+                                <div class="card bg-success text-white shadow">
+                                    <div class="card-body">
+                                        @latestGrade.Amount / @latestGrade.MaxAmount - @latestGrade.Subject.Name - @latestGrade.GradeType.GetDisplayName()
+                                        <div class="text-white-50 small">Остання оцінка</div>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                     }
                 </div>
