@@ -80,6 +80,13 @@ Our project goal is to give the university the opportunity to easily manage all 
 - Regular security updates and patches should be applied.
 
 # UML
+Diagram for Login
+
+![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/90e9479a-e972-4473-8af9-0315bc14ae4f)
+
+Diagram for Logout
+
+![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/cb176812-a74a-4b80-a5c7-f668fe165e33)
 
 # Identity Management
 
