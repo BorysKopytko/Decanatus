@@ -98,3 +98,10 @@ TAP is a set of guidelines and conventions for writing asynchronous methods in .
 In TAP, Asynchronous methods are marked with the async keyword.
 They return a Task or Task<T> to represent the ongoing asynchronous operation.
 The await keyword is used to asynchronously wait for the completion of another task without blocking the thread.
+
+![image](https://github.com/BorysKopytko/Decanatus/assets/71780594/304eb690-f7ef-4dea-bc27-7954e41fc5f0)
+
+And here's an example from our project:
+
+![image](https://github.com/BorysKopytko/Decanatus/assets/71780594/5bf701e9-a7cb-4ef1-a378-ccae2f5a2a9a)
+
