@@ -79,7 +79,18 @@ Our project goal is to give the university the opportunity to easily manage all 
 - Code should be well-documented for ease of maintenance.
 - Regular security updates and patches should be applied.
 
-# UML
+# Identity Management
+## Overview
+The system is designed to manage the identities of four types of users: Students, Teachers, Administrators, and Guests. Each user type has a unique set of capabilities within the system, ensuring a secure and efficient user experience.
+
+## Security
+The system ensures the security of user data. Passwords must be no shorter than 8 characters and must contain at least one number and one letter. The registration button is available only when all fields are filled. If a user attempts to register with an email address that already exists in the system, an error message will be displayed. Each user has a unique ID in the system.
+
+## Procedures
+Registration in the system requires the administrator to fill in login data (email address and password). Upon successful registration, the user will be able to access their respective capabilities. Logging into the system requires the user to fill in their account data (email and password). If the user with such data was registered, then the login to the system will take place.
+
+![image](https://github.com/BorysKopytko/Decanatus/assets/71780594/48aa0c24-8bf9-4f19-af9f-4a3523771c5c)
+
 Diagram for Login
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/90e9479a-e972-4473-8af9-0315bc14ae4f)
@@ -87,9 +98,6 @@ Diagram for Login
 Diagram for Logout
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/cb176812-a74a-4b80-a5c7-f668fe165e33)
-
-# Identity Management
-
 
 # Architecture
 N-Tier architecture, also known as multi-tier architecture, is a software design pattern where the components of an application are organized into layers or tiers, each responsible for specific functionalities. The "N" in N-Tier represents the number of layers or tiers in the architecture, and it can vary based on the specific design and requirements of the application.
@@ -103,7 +111,7 @@ MVC stands for Model-View-Controller, and it is a software architectural pattern
 Task-Based Asynchronous Pattern (TAP) is used by our system.
 TAP is a set of guidelines and conventions for writing asynchronous methods in .NET, including ASP.NET. It defines how asynchronous methods should be structured, how they should return results, and how they should handle errors.
 In TAP, Asynchronous methods are marked with the async keyword.
-They return a Task or Task<T> to represent the ongoing asynchronous operation.
+They return a Task to represent the ongoing asynchronous operation.
 The await keyword is used to asynchronously wait for the completion of another task without blocking the thread.
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/71780594/304eb690-f7ef-4dea-bc27-7954e41fc5f0)
