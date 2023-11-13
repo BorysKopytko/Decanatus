@@ -79,6 +79,7 @@ Our project goal is to give the university the opportunity to easily manage all 
 - Code should be well-documented for ease of maintenance.
 - Regular security updates and patches should be applied.
 
+
 # Identity Management
 ## Overview
 The system is designed to manage the identities of four types of users: Students, Teachers, Administrators, and Guests. Each user type has a unique set of capabilities within the system, ensuring a secure and efficient user experience.
@@ -91,11 +92,17 @@ Registration in the system requires the administrator to fill in login data (ema
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/71780594/48aa0c24-8bf9-4f19-af9f-4a3523771c5c)
 
-Diagram for Login
+ ** Diagram for Login**
+   1. User has a logout() method to initiate the logout process.
+   2. AuthenticationService has a logout(username) method to perform the logout operation, usually involving clearing the user's session or token.
+   3. UserInterface represents the user interface, providing methods to show the logout button, confirm the logout action, and display logout messages.
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/90e9479a-e972-4473-8af9-0315bc14ae4f)
 
-Diagram for Logout
+ ** Diagram for Logout**
+   1. User represents the user with a username and password. The authenticate() method is used for authentication.
+   2. AuthenticationService is a service responsible for authenticating users. It has an authenticate(username, password) method.
+   3. UserInterface represents the user interface that interacts with the user. It includes methods for displaying the login form, getting username and password input, and displaying error or success messages.
 
 ![image](https://github.com/BorysKopytko/Decanatus/assets/35666101/cb176812-a74a-4b80-a5c7-f668fe165e33)
 
